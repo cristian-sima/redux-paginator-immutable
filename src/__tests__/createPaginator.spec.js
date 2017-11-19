@@ -1,3 +1,4 @@
+// @flow
 /* eslint-disable max-len, no-undefined, no-magic-numbers */
 
 import expect from "expect";
@@ -66,18 +67,20 @@ describe("requestPageActionCreatorForEndpoint", () => {
     );
     const action = actionCreator(2, "foo=bar");
     expect(action).
-      toEqual(requestPage(
-        "some/endpoint/",
-        "some name",
-        { id       : undefined,
-          fooField : undefined },
-        "results",
-        "count",
-        "p",
-        "id",
-        2,
-        "foo=bar"
-      ));
+      toEqual(requestPage({
+        endpoint    : "some/endpoint/",
+        name        : "some name",
+        initialItem : {
+          id       : undefined,
+          fooField : undefined,
+        },
+        resultsKey  : "results",
+        countKey    : "count",
+        pageArgName : "p",
+        idKey       : "id",
+        page        : 2,
+        params      : "foo=bar",
+      }));
   });
 
 });
@@ -101,31 +104,35 @@ describe("getRequestPageActionCreatorsFor", () => {
     const actionForFoo = actionCreators.foo.requestPage(42, "foo=bar");
     const actionForBar = actionCreators.bar.requestPage(17, "bar=foo");
     expect(actionForFoo).
-      toEqual(requestPage(
-        "some/api/endpoint/",
-        "foo",
-        { id       : undefined,
-          fooField : undefined },
-        "results",
-        "count",
-        "p",
-        "id",
-        42,
-        "foo=bar"
-      ));
+      toEqual(requestPage({
+        endpoint    : "some/api/endpoint/",
+        name        : "foo",
+        initialItem : {
+          id       : undefined,
+          fooField : undefined,
+        },
+        resultsKey  : "results",
+        countKey    : "count",
+        pageArgName : "p",
+        idKey       : "id",
+        page        : 42,
+        params      : "foo=bar",
+      }));
     expect(actionForBar).
-      toEqual(requestPage(
-        "some/api/endpoint/",
-        "bar",
-        { id       : undefined,
-          fooField : undefined },
-        "results",
-        "count",
-        "p",
-        "id",
-        17,
-        "bar=foo"
-      ));
+      toEqual(requestPage({
+        endpoint    : "some/api/endpoint/",
+        name        : "bar",
+        initialItem : {
+          id       : undefined,
+          fooField : undefined,
+        },
+        resultsKey  : "results",
+        countKey    : "count",
+        pageArgName : "p",
+        idKey       : "id",
+        page        : 17,
+        params      : "bar=foo",
+      }));
   });
 
 });
@@ -143,18 +150,20 @@ describe("createPaginator", () => {
     });
     const action = paginator.foo.requestPage(42, "foo=bar");
     expect(action).
-      toEqual(requestPage(
-        "some/api/endpoint",
-        "foo",
-        { id       : undefined,
-          fooField : undefined },
-        "results",
-        "count",
-        "p",
-        "id_field",
-        42,
-        "foo=bar"
-      ));
+      toEqual(requestPage({
+        endpoint    : "some/api/endpoint",
+        name        : "foo",
+        initialItem : {
+          id       : undefined,
+          fooField : undefined,
+        },
+        resultsKey  : "results",
+        countKey    : "count",
+        pageArgName : "p",
+        idKey       : "id_field",
+        page        : 42,
+        params      : "foo=bar",
+      }));
   });
 
 });

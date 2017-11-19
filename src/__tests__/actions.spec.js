@@ -1,4 +1,6 @@
+// @flow
 /* eslint-disable no-undefined, no-magic-numbers */
+/* global describe */
 
 import expect from "expect";
 import { isFSA } from "flux-standard-action";
@@ -15,12 +17,24 @@ import {
 describe("actions", () => {
 
   it("should create receive page action", () => {
-    const action = receivePage("some/api/endpoint/", "name", { id       : undefined,
-      fooField : undefined }, "p", "id", 2, "foo=bar", [
-      "foo",
-      "bar",
-      "baz",
-    ], 42);
+    const action = receivePage({
+      endpoint    : "some/api/endpoint/",
+      name        : "name",
+      initialItem : {
+        id       : undefined,
+        fooField : undefined,
+      },
+      pageArgName : "p",
+      idKey       : "id",
+      page        : 2,
+      params      : "foo=bar",
+      items       : [
+        "foo",
+        "bar",
+        "baz",
+      ],
+      count: 42,
+    });
 
     expect(action).
       toEqual({
@@ -53,8 +67,20 @@ describe("actions", () => {
   });
 
   it("should create request page action", () => {
-    const action = requestPage("some/api/endpoint/", "name", { id       : undefined,
-      fooField : undefined }, "results", "count", "p", "id", 2, "foo=bar");
+    const action = requestPage({
+      endpoint    : "some/api/endpoint/",
+      name        : "name",
+      initialItem : {
+        id       : undefined,
+        fooField : undefined,
+      },
+      resultsKey  : "results",
+      countKey    : "count",
+      pageArgName : "p",
+      idKey       : "id",
+      page        : 2,
+      params      : "foo=bar",
+    });
     expect(action).
       toEqual({
         type : REQUEST_PAGE,

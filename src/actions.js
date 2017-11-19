@@ -1,12 +1,37 @@
-/* eslint-disable max-params */
+// @flow
 
 import {
   RECEIVE_PAGE,
   REQUEST_PAGE,
 } from "./actionTypes";
 
+type RequestPageArgsTypes = {
+  endpoint: string;
+  name: string;
+  initialItem: any;
+  resultsKey: string;
+  countKey: string;
+  pageArgName: string;
+  idKey: string;
+  page: number;
+  params: string;
+};
 
-export const requestPage = (
+type ReceivePageArgsTypes = {
+  endpoint: string;
+  name: string;
+  initialItem: any;
+  pageArgName: string;
+  idKey: string;
+  page: number;
+  params: string;
+  items: Array<string>;
+  count: number;
+  raw?: string;
+  fromCache?: boolean;
+}
+
+export const requestPage = ({
   endpoint,
   name,
   initialItem,
@@ -15,8 +40,8 @@ export const requestPage = (
   pageArgName,
   idKey,
   page,
-  params
-) => ({
+  params,
+} : RequestPageArgsTypes) => ({
   type : REQUEST_PAGE,
   meta : {
     endpoint,
@@ -33,7 +58,7 @@ export const requestPage = (
   },
 });
 
-export const receivePage = (
+export const receivePage = ({
   endpoint,
   name,
   initialItem,
@@ -44,8 +69,8 @@ export const receivePage = (
   items,
   count,
   raw,
-  fromCache = false
-) => ({
+  fromCache = false,
+} : ReceivePageArgsTypes) => ({
   type : RECEIVE_PAGE,
   meta : {
     endpoint,
