@@ -65,15 +65,15 @@ export const fetchPage = (endpoint, pageArgName, page, params) => {
     fromCache = true,
     promise = _promises[hash];
 
-  if (typeof promise === "undefined") {
-    fromCache = false;
-    promise = new Promise((resolve, reject) =>
-      agent.
-        get(url).
-        end((err, res) => err ? reject(err) : resolve(res))
-    );
-    _promises[hash] = promise;
-  }
+  // if (typeof promise === "undefined") {
+  fromCache = false;
+  promise = new Promise((resolve, reject) =>
+    agent.
+      get(url).
+      end((err, res) => err ? reject(err) : resolve(res))
+  );
+  // _promises[hash] = promise;
+  // }
 
   return promise.then((res) => fromCache ? {
     response          : res.body,
