@@ -8,6 +8,7 @@ import {
   getCurrentTotalResultsCount,
   getAllResults,
   isCurrentPageFetching,
+  isCurrentPageFetched,
 } from "../selectors";
 
 const paginator = {
@@ -24,13 +25,15 @@ const paginator = {
         2,
         3,
       ],
-      fetching: false,
+      fetching : false,
+      fetched  : true,
     },
     "foo=bar?page=2": {
       number   : 2,
       params   : "foo=bar",
       ids      : [],
       fetching : true,
+      fetched  : false,
     },
     "foo=bar?page=3": {
       number : 3,
@@ -49,7 +52,8 @@ const paginator = {
         4,
         6,
       ],
-      fetching: false,
+      fetching : false,
+      fetched  : true,
     },
   },
   currentPages: {
@@ -121,5 +125,10 @@ describe("selectors", () => {
   it("isCurrentPageFetching should return whether the current page is fetching or not for the provided name", () => {
     expect(isCurrentPageFetching(paginator, "name1")).
       toEqual(true);
+  });
+
+  it("isCurrentPageFetched should return whether the current page is fetched or not for the provided name", () => {
+    expect(isCurrentPageFetched(paginator, "name1")).
+      toEqual(false);
   });
 });

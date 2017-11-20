@@ -1,9 +1,7 @@
 // @flow
 
-import { REQUEST_PAGE, RECEIVE_PAGE } from "../actionTypes";
-
 type RequestPageAction = {
-  type : REQUEST_PAGE;
+  type : "@@redux-paginator-immutable/REQUEST_PAGE";
   meta : {
     endpoint: string;
     name: string;
@@ -20,7 +18,7 @@ type RequestPageAction = {
 };
 
 type ReceivePageAction = {
-  type : RECEIVE_PAGE;
+  type : "@@redux-paginator-immutable/RECEIVE_PAGE";
   meta : {
     endpoint: string;
     name: string;
@@ -32,7 +30,7 @@ type ReceivePageAction = {
   payload: {
     page: number;
     params: string;
-    items: Array<string>;
+    items: Array<any>;
     count: number;
     raw?: string;
   };

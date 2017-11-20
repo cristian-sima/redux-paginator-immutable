@@ -4,14 +4,14 @@ import type { State } from "./types";
 
 import pick from "lodash.pick";
 
-export const getCurrentPageNumber = (pagination : State, name : string) => {
-  const currentPage = pagination.pages[pagination.currentPages[name]];
+export const getCurrentPageNumber = (state : State, name : string) => {
+  const currentPage = state.pages[state.currentPages[name]];
 
   return typeof currentPage === "undefined" ? 1 : currentPage.number;
 };
 
-export const getCurrentPageResults = (items, pagination, name) => {
-  const currentPage = pagination.pages[pagination.currentPages[name]];
+export const getCurrentPageResults = (items, state, name) => {
+  const currentPage = state.pages[state.currentPages[name]];
 
   if (typeof currentPage === "undefined") {
     return [];
@@ -22,37 +22,53 @@ export const getCurrentPageResults = (items, pagination, name) => {
   );
 };
 
-export const getAllResults = (items, pagination : State, name : string) => {
-  const currentPage = pagination.pages[pagination.currentPages[name]];
+export const getAllResults = (items, state : State, name : string) => {
+  const currentPage = state.pages[state.currentPages[name]];
 
   if (typeof currentPage === "undefined") {
     return [];
   }
 
-  const allPagesKeys = Object.keys(pagination.pages);
+  const allPagesKeys = Object.keys(state.pages);
   let allPagesIds = [];
 
   for (const key of allPagesKeys) {
-    if (pagination.pages[key].params === currentPage.params) {
-      allPagesIds = allPagesIds.concat(pagination.pages[key].ids);
+    if (state.pages[key].params === currentPage.params) {
+      allPagesIds = allPagesIds.concat(state.pages[key].ids);
     }
   }
 
   return Object.values(pick(items || [], allPagesIds));
 };
 
-export const getCurrentTotalResultsCount = (pagination : State, name : string) => {
-  const currentPageUrl = pagination.currentPages[name];
+export const getCurrentTotalResultsCount = (state : State, name : string) => {
+  const currentPageUrl = state.currentPages[name];
 
   if (typeof currentPageUrl === "undefined") {
     return 0;
   }
 
-  const currentPage = pagination.pages[currentPageUrl];
+  const currentPage = state.pages[currentPageUrl];
 
-  return pagination.params[currentPage.params];
+  return state.params[currentPage.params];
 };
 
-export const isCurrentPageFetching = (pagination : State, name : string) => (
-  (pagination.pages[pagination.currentPages[name]] || { fetching: true }).fetching
-);
+export const isCurrentPageFetching = (state : State, name : string) => {
+  const value = state.pages[state.currentPages[name]];
+
+  if (typeof value === "undefined") {
+    return true;
+  }
+
+  return value.fetching;
+};
+
+export const isCurrentPageFetched = (state : State, name : string) => {
+  const value = state.pages[state.currentPages[name]];
+
+  if (typeof value === "undefined") {
+    return false;
+  }
+
+  return value.fetched;
+};
