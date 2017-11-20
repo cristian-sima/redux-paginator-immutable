@@ -9,6 +9,7 @@ import {
   getAllResults,
   isCurrentPageFetching,
   isCurrentPageFetched,
+  getResultsUpToPage,
 } from "../selectors";
 
 const paginator = {
@@ -109,6 +110,15 @@ describe("selectors", () => {
         "foo7",
         "foo8",
         "foo9",
+      ]);
+  });
+
+  it("getResultsUpToPage shoud select all the items ids for pages with same params than the current page", () => {
+    expect(getResultsUpToPage(items, paginator, "name1", 2)).
+      toEqual([
+        "foo1",
+        "foo2",
+        "foo3",
       ]);
   });
 

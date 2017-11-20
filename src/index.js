@@ -10,6 +10,7 @@ import {
   getCurrentTotalResultsCount,
   isCurrentPageFetching,
   isCurrentPageFetched,
+  getResultsUpToPage,
 } from "./selectors";
 
 export {
@@ -21,4 +22,5 @@ export {
   getCurrentTotalResultsCount,
   isCurrentPageFetching,
   isCurrentPageFetched,
+  getResultsUpToPage,
 };

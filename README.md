@@ -229,6 +229,15 @@ import { getAllResults } from 'redux-paginator-immutable'
 
 const allTodosUpToCurrentPage = getAllResults(state.todos, state.pagination, 'todos')
 ```
+* **`getResultsUpToPage(items, pagination, name, page)`**
+Selects all the results up to the current page given a list of items, a `pagination` slice of state and `name`.
+
+example:
+```
+import { getResultsUpToPage } from 'redux-paginator-immutable'
+
+const allTodosUpToCurrentPage = getResultsUpToPage(state.todos, state.pagination, 'todos', 2)
+```
 * **`getCurrentTotalResultsCount(pagination, name)`**
 Selects the total results count for the the provided `pagination` and `name`. If the paginated API returns the total count of items available, you can use this value to generate the pagination UI.
 

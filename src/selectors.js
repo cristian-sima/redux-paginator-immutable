@@ -10,7 +10,7 @@ export const getCurrentPageNumber = (state : State, name : string) => {
   return typeof currentPage === "undefined" ? 1 : currentPage.number;
 };
 
-export const getCurrentPageResults = (items, state, name) => {
+export const getCurrentPageResults = (items : Array<any>, state : State, name : string) => {
   const currentPage = state.pages[state.currentPages[name]];
 
   if (typeof currentPage === "undefined") {
@@ -22,7 +22,7 @@ export const getCurrentPageResults = (items, state, name) => {
   );
 };
 
-export const getAllResults = (items, state : State, name : string) => {
+export const getAllResults = (items : Array<any>, state : State, name : string) => {
   const currentPage = state.pages[state.currentPages[name]];
 
   if (typeof currentPage === "undefined") {
@@ -34,6 +34,31 @@ export const getAllResults = (items, state : State, name : string) => {
 
   for (const key of allPagesKeys) {
     if (state.pages[key].params === currentPage.params) {
+      allPagesIds = allPagesIds.concat(state.pages[key].ids);
+    }
+  }
+
+  return Object.values(pick(items || [], allPagesIds));
+};
+
+export const getResultsUpToPage =
+(items : Array<any>, state : State, name : string, target : number) => {
+  const currentPage = state.pages[state.currentPages[name]];
+
+  if (typeof currentPage === "undefined") {
+    return [];
+  }
+
+  const allPagesKeys = Object.keys(state.pages);
+  let allPagesIds = [];
+
+  for (const key of allPagesKeys) {
+    const shouldInclude = (
+      state.pages[key].params === currentPage.params &&
+      state.pages[key].number <= target
+    );
+
+    if (shouldInclude) {
       allPagesIds = allPagesIds.concat(state.pages[key].ids);
     }
   }
