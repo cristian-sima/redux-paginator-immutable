@@ -249,6 +249,17 @@ import { isCurrentPageFetching } from 'redux-paginator-immutable'
 const isFetching = isCurrentPageFetching(state.pagination, 'todos')
 ```
 
+
+* **`isCurrentPageFetched(pagination, name)`**
+Selects whether the current page is fetched or not. Usefull to load data.
+
+example:
+```
+import { isCurrentPageFetched } from 'redux-paginator-immutable'
+
+const isFetched = isCurrentPageFetched(state.pagination, 'todos')
+```
+
 ### Usage with react
 
 Take a look at the `examples` folder. The `real-world` example is exactly the same as the "official" one in the [redux repo](https://github.com/reactjs/redux/tree/master/examples/real-world) but implements pagination via `redux-paginator-immutable`. This example use [`normalizr`](https://github.com/paularmstrong/normalizr) but you're totally free to not use it.
