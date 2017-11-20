@@ -56,12 +56,14 @@ describe("params reducer", () => {
 
   it("should return the state by default", () => {
     const state = params({ some: "state" }, { type: "some action" });
+
     expect(state).
       toEqual({ some: "state" });
   });
 
   it("should initialize new params key with undefined count when requesting page", () => {
     const state = params(undefined, requestPageAction);
+
     expect(state).
       toEqual({
         "foo=bar": null,
@@ -70,6 +72,7 @@ describe("params reducer", () => {
 
   it("should update results count corresponding to the params when receiving page", () => {
     const state = params({ "foo=bar": undefined }, receivePageAction);
+
     expect(state).
       toEqual({
         "foo=bar": 42,
@@ -82,12 +85,14 @@ describe("pages reducer", () => {
 
   it("should return the state by default", () => {
     const state = pages({ some: "state" }, { type: "some action" });
+
     expect(state).
       toEqual({ some: "state" });
   });
 
   it("should initialize the pages map with a new page entry when requesting new page", () => {
     const state = pages(undefined, requestPageAction);
+
     expect(state).
       toEqual({
         "?foo=bar&p=2": {
@@ -95,6 +100,8 @@ describe("pages reducer", () => {
           params   : "foo=bar",
           ids      : [],
           fetching : true,
+          error    : false,
+          fetched  : false,
         },
       });
   });
@@ -108,6 +115,7 @@ describe("pages reducer", () => {
         fetching : true,
       },
     }, receivePageAction);
+
     expect(state).
       toEqual({
         "?foo=bar&p=2": {
@@ -117,7 +125,9 @@ describe("pages reducer", () => {
             "baz",
             "bar",
           ],
-          fetching: false,
+          fetching : false,
+          fetched  : false,
+          error    : false,
         },
       });
   });
@@ -128,12 +138,14 @@ describe("currentPages reducer", () => {
 
   it("should return the state by default", () => {
     const state = currentPages({ some: "state" }, { type: "some action" });
+
     expect(state).
       toEqual({ some: "state" });
   });
 
   it("should update the current pages map with an entry with the paginator slice name as key and the current page url as value when requesting a page", () => {
     const state = currentPages(undefined, requestPageAction);
+
     expect(state).
       toEqual({
         name: "?foo=bar&p=2",
@@ -146,6 +158,7 @@ describe("items reducer", () => {
 
   it("should populate the items map with item received", () => {
     const state = items(undefined, receivePageAction);
+
     expect(state).
       toEqual({
         "baz": {
@@ -185,6 +198,7 @@ describe("items reducer", () => {
       raw       : {},
       fromCache : true,
     }));
+
     expect(state).
       toEqual({});
   });

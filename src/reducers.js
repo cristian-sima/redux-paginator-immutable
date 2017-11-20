@@ -65,7 +65,7 @@ export const pages = (state : PagesState = {}, action : Action) => {
           ...state[pageUrl],
           ids      : payload.items.map((current) => current[meta.idKey]),
           fetching : false,
-          error    : payload.error,
+          error    : payload.error === true,
           fetched  : false,
         },
       };

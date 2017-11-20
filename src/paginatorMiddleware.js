@@ -31,6 +31,22 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) =>
       } = action;
 
       dispatch((dispatch2) => {
+        const markAsError = () => {
+          dispatch2(receivePage({
+            endpoint,
+            name,
+            initialItem,
+            pageArgName,
+            idKey,
+            page,
+            error     : true,
+            params,
+            items     : [],
+            count     : 0,
+            fromCache : true,
+          }));
+        };
+
         try {
           fetchPage(endpoint, pageArgName, page, params).
             then((res) => {
@@ -59,21 +75,12 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) =>
                 raw       : res,
                 fromCache : !(typeof fromCache === "undefined"),
               }));
+            }).
+            catch(() => {
+              markAsError();
             });
         } catch (err) {
-          dispatch2(receivePage({
-            endpoint,
-            name,
-            initialItem,
-            pageArgName,
-            idKey,
-            page,
-            error     : true,
-            params,
-            items     : [],
-            count     : 0,
-            fromCache : true,
-          }));
+          markAsError();
         }
       });
     }
