@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable max-len, no-undefined, no-magic-numbers */
 
 import expect from "expect";
@@ -65,7 +64,7 @@ describe("params reducer", () => {
     const state = params(undefined, requestPageAction);
     expect(state).
       toEqual({
-        "foo=bar": undefined,
+        "foo=bar": null,
       });
   });
 
@@ -161,24 +160,31 @@ describe("items reducer", () => {
   });
 
   it("should NOT populate the items map with item received if the item is received from cache data", () => {
-    const state = items(undefined, receivePage(
-      "some/api/endpoint/",
-      "name",
-      { id       : undefined,
-        fooField : undefined },
-      "p",
-      "id",
-      2,
-      "foo=bar", [
-        { id       : "baz",
-          fooField : "bazValue" },
-        { id       : "bar",
-          fooField : "barValue" },
+    const state = items(undefined, receivePage({
+      endpoint    : "some/api/endpoint/",
+      name        : "name",
+      initialItem : {
+        id       : undefined,
+        fooField : undefined,
+      },
+      pageArgName : "p",
+      idKey       : "id",
+      page        : 2,
+      params      : "foo=bar",
+      items       : [
+        {
+          id       : "baz",
+          fooField : "bazValue",
+        },
+        {
+          id       : "bar",
+          fooField : "barValue",
+        },
       ],
-      42,
-      {},
-      true
-    ));
+      count     : 42,
+      raw       : {},
+      fromCache : true,
+    }));
     expect(state).
       toEqual({});
   });

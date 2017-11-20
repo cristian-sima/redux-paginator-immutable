@@ -1,7 +1,5 @@
 // @flow
 
-import type { State } from "./types";
-
 type CreatePaginator = (endpoint: string, names: Array<string>, info: {
   initialItem: any;
   resultsKey: string;
@@ -31,7 +29,7 @@ type GetRequestPageActionCreatorsForArgsTyps = {
 }
 
 type OnlyForEndpoint = (endpoint : string, reducer : any) =>
-(state? : State, action : { meta: { endpoint : string }}) => any;
+(state? : any, action : { meta: { endpoint : string }}) => any;
 
 import { combineReducers } from "redux";
 
@@ -45,13 +43,13 @@ import { requestPage } from "./actions";
 
 
 export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) =>
-  (state, action) => {
+  (state = {}, action) => {
     if (typeof action.meta === "undefined") {
       return state;
     }
 
     if (action.meta.endpoint === endpoint) {
-      reducer(state, action);
+      return reducer(state, action);
     }
 
     return state;

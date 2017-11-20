@@ -14,32 +14,35 @@ var config = {
     libraryTarget: 'umd'
   },
   plugins: [
-    {
-      apply: function apply(compiler) {
-        compiler.parser.plugin('expression global', function expressionGlobalPlugin() {
-          this.state.module.addVariable('global', "(function() { return this; }()) || Function('return this')()")
-          return false
-        })
-      }
-    },
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env)
+      "process.env": {
+        "NODE_ENV": JSON.stringify("development"),
+      },
+    }),
+    new webpack.DefinePlugin({
+      "process.env": {
+        "BABEL_ENV": JSON.stringify("developmentTime"),
+      },
     })
   ]
 }
 
 if (env === 'production') {
   config.plugins.push(
+    new webpack.DefinePlugin({
+      "process.env": {
+        "NODE_ENV": JSON.stringify("production"),
+      },
+    }),
+    new webpack.DefinePlugin({
+      "process.env": {
+        "BABEL_ENV": JSON.stringify("production"),
+      },
+    }),
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /ro/),
     new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        pure_getters: true,
-        unsafe: true,
-        unsafe_comps: true,
-        screw_ie8: true,
-        warnings: false
-      }
-    })
+      mangle: false,
+    }),
   )
 }
 

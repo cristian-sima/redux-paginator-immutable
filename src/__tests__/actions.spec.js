@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable no-undefined, no-magic-numbers */
 /* global describe */
 

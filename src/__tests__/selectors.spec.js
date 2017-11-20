@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable max-len, no-undefined, no-magic-numbers */
 
 import expect from "expect";

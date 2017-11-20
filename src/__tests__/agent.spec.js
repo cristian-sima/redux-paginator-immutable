@@ -1,5 +1,3 @@
-// @flow
-
 import expect from "expect";
 
 import { buildSuffix } from "../agent";
