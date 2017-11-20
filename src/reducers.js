@@ -1,40 +1,53 @@
+// @flow
+
+import type {
+  ParamsState,
+  ItemsState,
+  CurrentPagesState,
+  PagesState,
+
+  Action,
+} from "./types";
+
 import {
   REQUEST_PAGE,
   RECEIVE_PAGE,
 } from "./actionTypes";
+
 import { buildSuffix } from "./agent";
 
 const getPageUrlFromAction = ({ meta: { pageArgName }, payload: { params, page } }) =>
   buildSuffix(pageArgName, page, params);
 
-export const params = (params = {}, action = {}) => {
+export const params = (state : ParamsState = {}, action : Action) => {
   const { type, payload } = action;
   switch (type) {
     case REQUEST_PAGE:
       return {
-        ...params,
-        [payload.params]: undefined,
+        ...state,
+        [payload.params]: null,
       };
     case RECEIVE_PAGE:
       return {
-        ...params,
+        ...state,
         [payload.params]: payload.count,
       };
     default:
-      return params;
+      return state;
   }
 };
 
-export const pages = (pages = {}, action = {}) => {
+export const pages = (state : PagesState = {}, action : Action) => {
   const { type, meta, payload } = action;
-  let pageUrl;
+  let pageUrl = "";
+
   switch (type) {
     case REQUEST_PAGE:
       pageUrl = getPageUrlFromAction(action);
       return {
-        ...pages,
+        ...state,
         [pageUrl]: {
-          ...pages[pageUrl],
+          ...state[pageUrl],
           ids      : [],
           params   : payload.params,
           number   : payload.page,
@@ -44,35 +57,37 @@ export const pages = (pages = {}, action = {}) => {
     case RECEIVE_PAGE:
       pageUrl = getPageUrlFromAction(action);
       return {
-        ...pages,
+        ...state,
         [pageUrl]: {
-          ...pages[pageUrl],
-          ids      : payload.items.map((i) => i[meta.idKey]),
+          ...state[pageUrl],
+          ids      : payload.items.map((current) => current[meta.idKey]),
           fetching : false,
         },
       };
     default:
-      return pages;
+      return state;
   }
 };
 
-export const currentPages = (currentPages = {}, action = {}) => {
+export const currentPages = (state : CurrentPagesState = {}, action : Action) => {
   const { type, meta } = action;
-  let pageUrl;
+  let pageUrl = "";
+
   switch (type) {
     case REQUEST_PAGE:
       pageUrl = getPageUrlFromAction(action);
       return {
-        ...currentPages,
+        ...state,
         [meta.name]: pageUrl,
       };
     default:
-      return currentPages;
+      return state;
   }
 };
 
-export const items = (items = {}, action = {}) => {
+export const items = (state : ItemsState, action : Action) => {
   const { type, payload, meta } = action;
+
   switch (type) {
     case RECEIVE_PAGE: {
       const _items = {};
@@ -85,11 +100,11 @@ export const items = (items = {}, action = {}) => {
         }
       }
       return {
-        ...items,
+        ...state,
         ..._items,
       };
     }
     default:
-      return items;
+      return state;
   }
 };

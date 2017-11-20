@@ -1,5 +1,7 @@
 // @flow
 
+import type { Action } from "./types";
+
 import {
   RECEIVE_PAGE,
   REQUEST_PAGE,
@@ -25,7 +27,7 @@ type ReceivePageArgsTypes = {
   idKey: string;
   page: number;
   params: string;
-  items: Array<string>;
+  items: Array<any>;
   count: number;
   raw?: string;
   fromCache?: boolean;
@@ -41,7 +43,7 @@ export const requestPage = ({
   idKey,
   page,
   params,
-} : RequestPageArgsTypes) => ({
+} : RequestPageArgsTypes) : Action => ({
   type : REQUEST_PAGE,
   meta : {
     endpoint,
@@ -70,7 +72,7 @@ export const receivePage = ({
   count,
   raw,
   fromCache = false,
-} : ReceivePageArgsTypes) => ({
+} : ReceivePageArgsTypes) : Action => ({
   type : RECEIVE_PAGE,
   meta : {
     endpoint,

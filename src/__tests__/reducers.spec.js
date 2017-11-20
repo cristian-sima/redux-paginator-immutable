@@ -14,35 +14,44 @@ import {
   items,
 } from "../reducers";
 
-const requestPageAction = requestPage(
-  "some/api/endpoint",
-  "name",
-  { id       : undefined,
-    fooField : undefined },
-  "results",
-  "count",
-  "p",
-  "id",
-  2,
-  "foo=bar"
-);
+const requestPageAction = requestPage({
+  endpoint    : "some/api/endpoint",
+  name        : "name",
+  initialItem : {
+    id       : undefined,
+    fooField : undefined,
+  },
+  resultsKey  : "results",
+  countKey    : "count",
+  pageArgName : "p",
+  idKey       : "id",
+  page        : 2,
+  params      : "foo=bar",
+});
 
-const receivePageAction = receivePage(
-  "some/api/endpoint/",
-  "name",
-  { id       : undefined,
-    fooField : undefined },
-  "p",
-  "id",
-  2,
-  "foo=bar", [
-    { id       : "baz",
-      fooField : "bazValue" },
-    { id       : "bar",
-      fooField : "barValue" },
+const receivePageAction = receivePage({
+  endpoint    : "some/api/endpoint/",
+  name        : "name",
+  initialItem : {
+    id       : undefined,
+    fooField : undefined,
+  },
+  pageArgName : "p",
+  idKey       : "id",
+  page        : 2,
+  params      : "foo=bar",
+  items       : [
+    {
+      id       : "baz",
+      fooField : "bazValue",
+    },
+    {
+      id       : "bar",
+      fooField : "barValue",
+    },
   ],
-  42
-);
+  count: 42,
+});
 
 describe("params reducer", () => {
 

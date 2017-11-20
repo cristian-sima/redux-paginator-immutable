@@ -1,3 +1,5 @@
+// @flow
+
 import { createPaginator } from "./createPaginator";
 import paginatorMiddleware from "./paginatorMiddleware";
 

@@ -1,6 +1,10 @@
+// @flow
+
+import type { State } from "./types";
+
 import pick from "lodash.pick";
 
-export const getCurrentPageNumber = (pagination, name) => {
+export const getCurrentPageNumber = (pagination : State, name : string) => {
   const currentPage = pagination.pages[pagination.currentPages[name]];
   return typeof currentPage === "undefined" ? 1 : currentPage.number;
 };
@@ -17,7 +21,7 @@ export const getCurrentPageResults = (items, pagination, name) => {
   );
 };
 
-export const getAllResults = (items, pagination, name) => {
+export const getAllResults = (items, pagination : State, name : string) => {
   const currentPage = pagination.pages[pagination.currentPages[name]];
   if (typeof currentPage === "undefined") {
     return [];
@@ -35,7 +39,7 @@ export const getAllResults = (items, pagination, name) => {
   return Object.values(pick(items || [], allPagesIds));
 };
 
-export const getCurrentTotalResultsCount = (pagination, name) => {
+export const getCurrentTotalResultsCount = (pagination : State, name : string) => {
   const currentPageUrl = pagination.currentPages[name];
 
   if (typeof currentPageUrl === "undefined") {
@@ -47,6 +51,6 @@ export const getCurrentTotalResultsCount = (pagination, name) => {
   return pagination.params[currentPage.params];
 };
 
-export const isCurrentPageFetching = (pagination, name) => (
+export const isCurrentPageFetching = (pagination : State, name : string) => (
   (pagination.pages[pagination.currentPages[name]] || { fetching: true }).fetching
 );

@@ -20,14 +20,17 @@ describe("onlyForEndpoint", () => {
     const fooReducer = () => ({
       foo: "bar",
     });
-    const endpoint = "some/endpoint/";
-    const fooAction = {
-      type : "FOO",
-      meta : {
-        endpoint,
+
+    const
+      endpoint = "some/endpoint/",
+      fooAction = {
+        type : "FOO",
+        meta : {
+          endpoint,
+        },
       },
-    };
-    const state = onlyForEndpoint(endpoint, fooReducer)(undefined, fooAction);
+      state = onlyForEndpoint(endpoint, fooReducer)(undefined, fooAction);
+
     expect(state).
       toEqual({
         foo: "bar",
@@ -55,16 +58,18 @@ describe("onlyForEndpoint", () => {
 describe("requestPageActionCreatorForEndpoint", () => {
 
   it("should create an action creator for provided options", () => {
-    const actionCreator = requestPageActionCreatorForEndpoint(
-      "some/endpoint/",
-      "some name",
-      "p",
-      "id",
-      { id       : undefined,
-        fooField : undefined },
-      "results",
-      "count"
-    );
+    const actionCreator = requestPageActionCreatorForEndpoint({
+      endpoint    : "some/endpoint/",
+      name        : "some name",
+      pageArgName : "p",
+      idKey       : "id",
+      initialItem : {
+        id       : undefined,
+        fooField : undefined,
+      },
+      resultsKey : "results",
+      countKey   : "count",
+    });
     const action = actionCreator(2, "foo=bar");
     expect(action).
       toEqual(requestPage({
@@ -88,21 +93,25 @@ describe("requestPageActionCreatorForEndpoint", () => {
 describe("getRequestPageActionCreatorsFor", () => {
 
   it("should create action creators for the given endpoint, pageNameArg and names", () => {
-    const actionCreators = getRequestPageActionCreatorsFor(
-      "some/api/endpoint/",
-      [
+    const actionCreators = getRequestPageActionCreatorsFor({
+      endpoint : "some/api/endpoint/",
+      names    : [
         "foo",
         "bar",
       ],
-      "p",
-      "id",
-      { id       : undefined,
-        fooField : undefined },
-      "results",
-      "count"
-    );
+      pageArgName : "p",
+      idKey       : "id",
+      initialItem : {
+        id       : undefined,
+        fooField : undefined,
+      },
+      resultsKey : "results",
+      countKey   : "count",
+    });
+
     const actionForFoo = actionCreators.foo.requestPage(42, "foo=bar");
     const actionForBar = actionCreators.bar.requestPage(17, "bar=foo");
+
     expect(actionForFoo).
       toEqual(requestPage({
         endpoint    : "some/api/endpoint/",
@@ -141,8 +150,10 @@ describe("createPaginator", () => {
 
   it("should create correct request action creator", () => {
     const paginator = createPaginator("some/api/endpoint", ["foo"], {
-      initialItem: { id       : undefined,
-        fooField : undefined },
+      initialItem: {
+        id       : undefined,
+        fooField : undefined,
+      },
       pageArgName : "p",
       idKey       : "id_field",
       resultsKey  : "results",
