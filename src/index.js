@@ -13,6 +13,7 @@ import {
   getResultsUpToPage,
   isPageFetching,
   isPageFetched,
+  hasPageProblems,
 } from "./selectors";
 
 export {
@@ -27,4 +28,5 @@ export {
   getResultsUpToPage,
   isPageFetching,
   isPageFetched,
+  hasPageProblems,
 };

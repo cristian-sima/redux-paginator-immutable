@@ -30,6 +30,7 @@ type ReceivePageArgsTypes = {
   items: Array<any>;
   count: number;
   raw?: string;
+  error: bool;
   fromCache?: boolean;
 }
 

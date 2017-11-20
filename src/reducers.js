@@ -52,7 +52,9 @@ export const pages = (state : PagesState = {}, action : Action) => {
           ids      : [],
           params   : payload.params,
           number   : payload.page,
+          error    : false,
           fetching : true,
+          fetched  : false,
         },
       };
     case RECEIVE_PAGE:
@@ -63,6 +65,8 @@ export const pages = (state : PagesState = {}, action : Action) => {
           ...state[pageUrl],
           ids      : payload.items.map((current) => current[meta.idKey]),
           fetching : false,
+          error    : payload.error,
+          fetched  : false,
         },
       };
     default:

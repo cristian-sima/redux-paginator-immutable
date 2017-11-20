@@ -133,3 +133,14 @@ export const isPageFetched = (state : State, name : string, target : number) => 
 
   return targetPage.fetched;
 };
+
+export const hasPageProblems = (state : State, name : string, target : number) => {
+
+  const targetPage = getPage(state, name, target);
+
+  if (targetPage === null) {
+    return false;
+  }
+
+  return targetPage.error;
+};

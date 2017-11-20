@@ -32,6 +32,7 @@ type ReceivePageAction = {
     params: string;
     items: Array<any>;
     count: number;
+    error: bool;
     raw?: string;
   };
 }

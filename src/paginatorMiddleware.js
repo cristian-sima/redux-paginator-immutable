@@ -52,6 +52,7 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) =>
                 pageArgName,
                 idKey,
                 page,
+                error     : false,
                 params,
                 items     : results,
                 count,
@@ -60,7 +61,19 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) =>
               }));
             });
         } catch (err) {
-          console.log("err", err);
+          dispatch2(receivePage({
+            endpoint,
+            name,
+            initialItem,
+            pageArgName,
+            idKey,
+            page,
+            error     : true,
+            params,
+            items     : [],
+            count     : 0,
+            fromCache : true,
+          }));
         }
       });
     }
