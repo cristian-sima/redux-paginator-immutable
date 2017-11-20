@@ -21,6 +21,7 @@ const getPageUrlFromAction = ({ meta: { pageArgName }, payload: { params, page }
 
 export const params = (state : ParamsState = {}, action : Action) => {
   const { type, payload } = action;
+
   switch (type) {
     case REQUEST_PAGE:
       return {
@@ -91,6 +92,7 @@ export const items = (state : ItemsState, action : Action) => {
   switch (type) {
     case RECEIVE_PAGE: {
       const _items = {};
+
       if (meta.fromCache === false) {
         for (const item of payload.items) {
           _items[item[meta.idKey]] = {
@@ -99,6 +101,7 @@ export const items = (state : ItemsState, action : Action) => {
           };
         }
       }
+
       return {
         ...state,
         ..._items,

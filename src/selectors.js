@@ -6,6 +6,7 @@ import pick from "lodash.pick";
 
 export const getCurrentPageNumber = (pagination : State, name : string) => {
   const currentPage = pagination.pages[pagination.currentPages[name]];
+
   return typeof currentPage === "undefined" ? 1 : currentPage.number;
 };
 
@@ -23,6 +24,7 @@ export const getCurrentPageResults = (items, pagination, name) => {
 
 export const getAllResults = (items, pagination : State, name : string) => {
   const currentPage = pagination.pages[pagination.currentPages[name]];
+
   if (typeof currentPage === "undefined") {
     return [];
   }

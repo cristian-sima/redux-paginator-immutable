@@ -1,5 +1,5 @@
-/* eslint-disable no-use-before-define */
 // @flow
+/* eslint-disable no-use-before-define */
 
 export * from "./actions";
 export * from "./state";

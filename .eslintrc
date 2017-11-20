@@ -31,6 +31,11 @@
     "function-paren-newline": 0,
     "no-nested-ternary": 0,
 
+    "padding-line-between-statements": ["error",
+    { blankLine: "always", prev: ["const", "let", "var"], next: "*"},
+    { blankLine: "any",    prev: ["const", "let", "var"], next: ["const", "let", "var"]}
+    ],
+
     "max-params": ["error", 5],
 
     "multiline-comment-style": 0,

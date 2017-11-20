@@ -1,3 +1,4 @@
+// @flow
 /* eslint-disable no-magic-numbers, no-bitwise*/
 
 import agent from "superagent";
