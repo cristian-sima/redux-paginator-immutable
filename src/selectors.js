@@ -97,3 +97,39 @@ export const isCurrentPageFetched = (state : State, name : string) => {
 
   return value.fetched;
 };
+
+const getPage = (state : State, name : string, target : number) => {
+  const allPagesKeys = Object.keys(state.pages);
+
+  for (const key of allPagesKeys) {
+    const current = state.pages[key];
+
+    if (current.number === target) {
+      return current;
+    }
+  }
+
+  return null;
+};
+
+export const isPageFetching = (state : State, name : string, target : number) => {
+
+  const targetPage = getPage(state, name, target);
+
+  if (targetPage === null) {
+    return true;
+  }
+
+  return targetPage.fetching;
+};
+
+export const isPageFetched = (state : State, name : string, target : number) => {
+
+  const targetPage = getPage(state, name, target);
+
+  if (targetPage === null) {
+    return false;
+  }
+
+  return targetPage.fetched;
+};

@@ -10,6 +10,8 @@ import {
   isCurrentPageFetching,
   isCurrentPageFetched,
   getResultsUpToPage,
+  isPageFetched,
+  isPageFetching,
 } from "../selectors";
 
 const paginator = {
@@ -140,5 +142,15 @@ describe("selectors", () => {
   it("isCurrentPageFetched should return whether the current page is fetched or not for the provided name", () => {
     expect(isCurrentPageFetched(paginator, "name1")).
       toEqual(false);
+  });
+
+  it("isPageFetching should return whether the current page is fetching or not for the provided name", () => {
+    expect(isPageFetching(paginator, "name1", 1)).
+      toEqual(false);
+  });
+
+  it("isPageFetched should return whether the current page is fetched or not for the provided name", () => {
+    expect(isPageFetched(paginator, "name1", 1)).
+      toEqual(true);
   });
 });

@@ -11,6 +11,8 @@ import {
   isCurrentPageFetching,
   isCurrentPageFetched,
   getResultsUpToPage,
+  isPageFetching,
+  isPageFetched,
 } from "./selectors";
 
 export {
@@ -23,4 +25,6 @@ export {
   isCurrentPageFetching,
   isCurrentPageFetched,
   getResultsUpToPage,
+  isPageFetching,
+  isPageFetched,
 };

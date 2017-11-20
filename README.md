@@ -258,6 +258,26 @@ import { isCurrentPageFetching } from 'redux-paginator-immutable'
 const isFetching = isCurrentPageFetching(state.pagination, 'todos')
 ```
 
+* **`isPageFetching(pagination, name, target)`**
+Selects whether the page is fetching or not. Usefull to display some visual information to the user.
+
+example:
+```
+import { isPageFetching } from 'redux-paginator-immutable'
+
+const isFetching = isPageFetching(state.pagination, 'todos')
+```
+
+* **`isPageFetched(pagination, name, target)`**
+Selects whether the page is fetched or not. Usefull to display some visual information to the user.
+
+example:
+```
+import { isPageFetched } from 'redux-paginator-immutable'
+
+const isFetching = isPageFetched(state.pagination, 'todos')
+```
+
 
 * **`isCurrentPageFetched(pagination, name)`**
 Selects whether the current page is fetched or not. Usefull to load data.
