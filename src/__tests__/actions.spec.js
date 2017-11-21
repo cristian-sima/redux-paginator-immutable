@@ -47,7 +47,6 @@ describe("actions", () => {
           },
           pageArgName : "p",
           idKey       : "id",
-          fromCache   : false,
         },
         payload: {
           params : "foo=bar",
@@ -80,6 +79,7 @@ describe("actions", () => {
       page        : 2,
       params      : "foo=bar",
     });
+
     expect(action).
       toEqual({
         type : REQUEST_PAGE,

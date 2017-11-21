@@ -25,7 +25,6 @@ type ReceivePageAction = {
     initialItem: any;
     pageArgName: string;
     idKey: string;
-    fromCache?: boolean;
   };
   payload: {
     page: number;

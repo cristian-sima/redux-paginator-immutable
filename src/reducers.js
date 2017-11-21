@@ -23,11 +23,6 @@ export const params = (state : ParamsState = {}, action : Action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case REQUEST_PAGE:
-      return {
-        ...state,
-        [payload.params]: null,
-      };
     case RECEIVE_PAGE:
       return {
         ...state,
@@ -97,13 +92,11 @@ export const items = (state : ItemsState, action : Action) => {
     case RECEIVE_PAGE: {
       const _items = {};
 
-      if (meta.fromCache === false) {
-        for (const item of payload.items) {
-          _items[item[meta.idKey]] = {
-            ...meta.initialItem,
-            ...item,
-          };
-        }
+      for (const item of payload.items) {
+        _items[item[meta.idKey]] = {
+          ...meta.initialItem,
+          ...item,
+        };
       }
 
       return {

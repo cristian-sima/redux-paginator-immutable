@@ -5,11 +5,7 @@ import type { Dispatch, Action } from "./types";
 
 import { REQUEST_PAGE } from "./actionTypes";
 import { receivePage } from "./actions";
-import {
-  fetchPage,
-  FROM_CACHE_FLAG,
-} from "./agent";
-
+import { fetchPage } from "./agent";
 
 const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) =>
   (next : any) => (action : Action) => {
@@ -39,18 +35,22 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) =>
             pageArgName,
             idKey,
             page,
-            error     : true,
+            error : true,
             params,
-            items     : [],
-            count     : 0,
-            fromCache : true,
+            items : [],
+            count : 0,
           }));
         };
 
         try {
-          fetchPage(endpoint, pageArgName, page, params).
+          fetchPage({
+            endpoint,
+            pageArgName,
+            page,
+            params,
+          }).
             then((res) => {
-              const { response, [FROM_CACHE_FLAG]: fromCache } = res;
+              const { response } = res;
               let
                 results = [],
                 count = 0;
@@ -68,12 +68,11 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) =>
                 pageArgName,
                 idKey,
                 page,
-                error     : false,
+                error : false,
                 params,
-                items     : results,
+                items : results,
                 count,
-                raw       : res,
-                fromCache : !(typeof fromCache === "undefined"),
+                raw   : res,
               }));
             }).
             catch(() => {

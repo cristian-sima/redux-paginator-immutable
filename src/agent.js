@@ -1,33 +1,17 @@
 // @flow
 /* eslint-disable no-magic-numbers, no-bitwise*/
 
+type FetchPageArgs = {
+  endpoint: string;
+  pageArgName: string;
+  page:string;
+  params: string;
+}
+
 import agent from "superagent";
 import qs from "query-string";
 
-export const FROM_CACHE_FLAG = "@@redux-paginator-immutable/FROM_CACHE_FLAG";
-
-const _promises = {};
-
-// based on http://stackoverflow.com/a/7616484/1836434
-const hashUrl = (url) => {
-  let hash = 0;
-
-  if (url.length === 0) {
-    return hash;
-  }
-
-  for (let index = 0, len = url.length; index < len; index += 1) {
-    const
-      chr = url.charCodeAt(index),
-      value = (hash << 5);
-
-    hash = (value - hash) + chr;
-    hash = hash || 0;
-  }
-  return hash;
-};
-
-export const buildSuffix = (pageArgName, page, params) => {
+export const buildSuffix = (pageArgName : string, page : string, params : string) => {
   const parsedParams = qs.parse(params);
   let
     finalParsedParams = {},
@@ -55,30 +39,19 @@ export const buildSuffix = (pageArgName, page, params) => {
   }, { encode: false }).replace(startString, "");
 };
 
-export const fetchPage = (endpoint, pageArgName, page, params) => {
+export const fetchPage = ({ endpoint, pageArgName, page, params } : FetchPageArgs) => {
   const
     suffix = buildSuffix(pageArgName, page, params),
-    url = endpoint + suffix,
-    hash = hashUrl(url);
+    url = endpoint + suffix;
 
-  let
-    fromCache = true,
-    promise = _promises[hash];
 
-  // if (typeof promise === "undefined") {
-  fromCache = false;
-  promise = new Promise((resolve, reject) =>
+  const promise : Promise<*> = new Promise((resolve, reject) =>
     agent.
       get(url).
       end((err, res) => err ? reject(err) : resolve(res))
   );
-  // _promises[hash] = promise;
-  // }
 
-  return promise.then((res) => fromCache ? {
-    response          : res.body,
-    [FROM_CACHE_FLAG] : null,
-  } : {
+  return promise.then((res) => ({
     response: res.body,
-  });
+  }));
 };

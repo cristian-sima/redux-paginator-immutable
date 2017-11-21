@@ -31,7 +31,6 @@ type ReceivePageArgsTypes = {
   count: number;
   raw?: string;
   error: bool;
-  fromCache?: boolean;
 }
 
 export const requestPage = ({
@@ -73,7 +72,6 @@ export const receivePage = ({
   error,
   count,
   raw,
-  fromCache = false,
 } : ReceivePageArgsTypes) : Action => ({
   type : RECEIVE_PAGE,
   meta : {
@@ -82,7 +80,6 @@ export const receivePage = ({
     initialItem,
     pageArgName,
     idKey,
-    fromCache,
   },
   payload: {
     page,
