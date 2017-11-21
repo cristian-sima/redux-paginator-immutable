@@ -79,6 +79,18 @@ describe("params reducer", () => {
       });
   });
 
+  it("should not update results count corresponding to the params when receiving page with errrors", () => {
+    const state = params({
+      "foo=bar" : undefined,
+      "error"   : true,
+    }, receivePageAction);
+
+    expect(state).
+      toEqual({
+        "foo=bar": undefined,
+      });
+  });
+
 });
 
 describe("pages reducer", () => {

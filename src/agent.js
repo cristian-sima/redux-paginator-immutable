@@ -44,10 +44,10 @@ export const fetchPage = ({ endpoint, pageArgName, page, params } : FetchPageArg
     suffix = buildSuffix(pageArgName, page, params),
     url = endpoint + suffix;
 
-  const promise : Promise<*> = new Promise((resolve, reject) =>
+  const promise : Promise<*> = new Promise((resolve : any, reject : any) =>
     agent.
       get(url).
-      end((err, res) => err ? reject(err) : resolve(res))
+      end((err : any, res : any) => err ? reject(err) : resolve(res))
   );
 
   return promise.then((res : { body : any }) => ({

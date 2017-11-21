@@ -24,6 +24,10 @@ export const params = (state : ParamsState = {}, action : Action) => {
 
   switch (type) {
     case RECEIVE_PAGE:
+      if (payload.error === true) {
+        return state;
+      }
+
       return {
         ...state,
         [payload.params]: payload.count,
