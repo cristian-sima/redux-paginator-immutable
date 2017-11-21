@@ -81,9 +81,14 @@ describe("params reducer", () => {
 
   it("should not update results count corresponding to the params when receiving page with errrors", () => {
     const state = params({
-      "foo=bar" : undefined,
-      "error"   : true,
-    }, receivePageAction);
+      "foo=bar": undefined,
+    }, {
+      ...receivePageAction,
+      payload: {
+        ...receivePageAction.payload,
+        error: true,
+      },
+    });
 
     expect(state).
       toEqual({
