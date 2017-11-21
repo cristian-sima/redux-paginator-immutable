@@ -4,14 +4,14 @@
 type FetchPageArgs = {
   endpoint: string;
   pageArgName: string;
-  page:string;
+  page: number;
   params: string;
 }
 
 import agent from "superagent";
 import qs from "query-string";
 
-export const buildSuffix = (pageArgName : string, page : string, params : string) => {
+export const buildSuffix = (pageArgName : string, page : number, params : string) => {
   const parsedParams = qs.parse(params);
   let
     finalParsedParams = {},
@@ -44,14 +44,13 @@ export const fetchPage = ({ endpoint, pageArgName, page, params } : FetchPageArg
     suffix = buildSuffix(pageArgName, page, params),
     url = endpoint + suffix;
 
-
   const promise : Promise<*> = new Promise((resolve, reject) =>
     agent.
       get(url).
       end((err, res) => err ? reject(err) : resolve(res))
   );
 
-  return promise.then((res) => ({
+  return promise.then((res : { body : any }) => ({
     response: res.body,
   }));
 };
