@@ -71,11 +71,11 @@ export const pages = (state : PagesState = Immutable.Map(), action : Action) => 
       return state.update(pageUrl, (current) => {
         const elements = Immutable.Map({
           ids: Immutable.List(
-            payload.items.map((item) => item[meta.idKey])
+            payload.items.map((item) => String(item[meta.idKey]))
           ),
           fetching : false,
           error    : payload.error === true,
-          fetched  : false,
+          fetched  : true,
         });
 
         if (typeof current === "undefined") {
@@ -120,7 +120,7 @@ export const items = (state : ItemsState = Immutable.Map(), action : Action) => 
   switch (type) {
     case RECEIVE_PAGE: {
       const newItems = payload.items.reduce((previous, item) => (
-        previous.set(item[meta.idKey], Immutable.Map(item))
+        previous.set(String(item[meta.idKey]), Immutable.Map(item))
       ), Immutable.Map());
 
       return state.merge(newItems);

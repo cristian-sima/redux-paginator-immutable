@@ -76,15 +76,42 @@ const paginator = {
 };
 
 const items = Immutable.Map({
-  "1" : "foo1",
-  "2" : "foo2",
-  "3" : "foo3",
-  "4" : "foo4",
-  "5" : "foo5",
-  "6" : "foo6",
-  "7" : "foo7",
-  "8" : "foo8",
-  "9" : "foo9",
+  "1": Immutable.Map({
+    data : "foo1",
+    id   : 1,
+  }),
+  "2": Immutable.Map({
+    data : "foo2",
+    id   : 2,
+  }),
+  "3": Immutable.Map({
+    data : "foo3",
+    id   : 3,
+  }),
+  "4": Immutable.Map({
+    data : "foo4",
+    id   : 4,
+  }),
+  "5": Immutable.Map({
+    data : "foo5",
+    id   : 5,
+  }),
+  "6": Immutable.Map({
+    data : "foo6",
+    id   : 6,
+  }),
+  "7": Immutable.Map({
+    data : "foo7",
+    id   : 7,
+  }),
+  "8": Immutable.Map({
+    data : "foo8",
+    id   : 8,
+  }),
+  "9": Immutable.Map({
+    data : "foo9",
+    id   : 9,
+  }),
 });
 
 describe("selectors", () => {
@@ -102,9 +129,18 @@ describe("selectors", () => {
   it("getCurrentPageResults should select the items from the given items param corresponding to the current page for the provided name", () => {
     expect(getCurrentPageResults(items, paginator, "name2")).
       to.equal(Immutable.List([
-        "foo1",
-        "foo4",
-        "foo6",
+        Immutable.Map({
+          data : "foo1",
+          id   : 1,
+        }),
+        Immutable.Map({
+          data : "foo4",
+          id   : 4,
+        }),
+        Immutable.Map({
+          data : "foo6",
+          id   : 6,
+        }),
       ]));
   });
 
@@ -116,21 +152,48 @@ describe("selectors", () => {
   it("getAllResults shoud select all the items ids for pages with same params than the current page", () => {
     expect(getAllResults(items, paginator, "name1")).
       to.equal(Immutable.List([
-        "foo1",
-        "foo2",
-        "foo3",
-        "foo7",
-        "foo8",
-        "foo9",
+        Immutable.Map({
+          data : "foo1",
+          id   : 1,
+        }),
+        Immutable.Map({
+          data : "foo2",
+          id   : 2,
+        }),
+        Immutable.Map({
+          data : "foo3",
+          id   : 3,
+        }),
+        Immutable.Map({
+          data : "foo7",
+          id   : 7,
+        }),
+        Immutable.Map({
+          data : "foo8",
+          id   : 8,
+        }),
+        Immutable.Map({
+          data : "foo9",
+          id   : 9,
+        }),
       ]));
   });
 
   it("getResultsUpToPage shoud select all the items ids for pages with same params than the current page", () => {
     expect(getResultsUpToPage(items, paginator, "name1", 2)).
       to.equal(Immutable.List([
-        "foo1",
-        "foo2",
-        "foo3",
+        Immutable.Map({
+          data : "foo1",
+          id   : 1,
+        }),
+        Immutable.Map({
+          data : "foo2",
+          id   : 2,
+        }),
+        Immutable.Map({
+          data : "foo3",
+          id   : 3,
+        }),
       ]));
   });
 

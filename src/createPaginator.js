@@ -28,34 +28,33 @@ type GetRequestPageActionCreatorsForArgsTyps = {
   countKey: string;
 }
 
-type OnlyForEndpoint = (endpoint : string, reducer : any) =>
-(state? : any, action : { meta: { endpoint : string }}) => any;
+// type OnlyForEndpoint = (endpoint : string, reducer : any) =>
+// (state? : any, action : { meta: { endpoint : string }}) => any;
 
 import { combineReducers } from "redux";
-import * as Immutable from "immutable";
 
 import {
   params as paramsReducer,
   pages as pagesReducer,
-  currentView,
+  currentView as currentViewReducer,
   currentPages as currentPagesReducer,
   items as itemsReducer,
 } from "./reducers";
 import { requestPage } from "./actions";
 
 
-export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) =>
-  (state, action) => {
-    if (typeof action.meta === "undefined") {
-      return Immutable.Map();
-    }
-
-    if (action.meta.endpoint === endpoint) {
-      return reducer(state, action);
-    }
-
-    return Immutable.Map();
-  };
+// export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) =>
+//   (state, action) => {
+//     if (typeof action.meta === "undefined") {
+//       return state;
+//     }
+//
+//     if (action.meta.endpoint === endpoint) {
+//       return reducer(state, action);
+//     }
+//
+//     return state;
+//   };
 
 export const requestPageActionCreatorForEndpoint = ({
   endpoint,
@@ -116,11 +115,6 @@ export const createPaginator : CreatePaginator = (endpoint, names, {
   idKey = "ID",
 }) => {
 
-  const
-    params = onlyForEndpoint(endpoint, paramsReducer),
-    pages = onlyForEndpoint(endpoint, pagesReducer),
-    currentPages = onlyForEndpoint(endpoint, currentPagesReducer);
-
   const requestPageActionCreators = getRequestPageActionCreatorsFor({
     endpoint,
     names,
@@ -133,10 +127,10 @@ export const createPaginator : CreatePaginator = (endpoint, names, {
 
   return ({
     reducers: combineReducers({
-      params,
-      pages,
-      currentPages,
-      currentView,
+      params       : paramsReducer,
+      pages        : pagesReducer,
+      currentPages : currentPagesReducer,
+      currentView  : currentViewReducer,
     }),
     itemsReducer,
     ...requestPageActionCreators,

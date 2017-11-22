@@ -6,55 +6,55 @@ import {
   requestPage,
 } from "../actions";
 import {
-  onlyForEndpoint,
+  // onlyForEndpoint,
   requestPageActionCreatorForEndpoint,
   getRequestPageActionCreatorsFor,
   createPaginator,
 } from "../createPaginator";
 
-import * as Immutable from "immutable";
+// import * as Immutable from "immutable";
 
-describe("onlyForEndpoint", () => {
-
-  it("should apply the provided reducer if actions meta endpoint is the same than the provided endpoint", () => {
-    const fooReducer = () => ({
-      foo: "bar",
-    });
-
-    const
-      endpoint = "some/endpoint/",
-      fooAction = {
-        type : "FOO",
-        meta : {
-          endpoint,
-        },
-      },
-      state = onlyForEndpoint(endpoint, fooReducer)(undefined, fooAction);
-
-    expect(state).
-      toEqual({
-        foo: "bar",
-      });
-  });
-
-  it("should NOT apply the provided reducer if actions meta endpoint differs from the provided one", () => {
-    const fooReducer = () => ({
-      foo: "bar",
-    });
-    const endpoint = "some/endpoint/";
-    const fooAction = {
-      type : "FOO",
-      meta : {
-        endpoint: "some/other/endpoint/",
-      },
-    };
-    const state = onlyForEndpoint(endpoint, fooReducer)(undefined, fooAction);
-
-    expect(state).
-      toEqual(Immutable.Map());
-  });
-
-});
+// describe("onlyForEndpoint", () => {
+//
+//   it("should apply the provided reducer if actions meta endpoint is the same than the provided endpoint", () => {
+//     const fooReducer = () => ({
+//       foo: "bar",
+//     });
+//
+//     const
+//       endpoint = "some/endpoint/",
+//       fooAction = {
+//         type : "FOO",
+//         meta : {
+//           endpoint,
+//         },
+//       },
+//       state = onlyForEndpoint(endpoint, fooReducer)(undefined, fooAction);
+//
+//     expect(state).
+//       toEqual({
+//         foo: "bar",
+//       });
+//   });
+//
+//   it("should NOT apply the provided reducer if actions meta endpoint differs from the provided one", () => {
+//     const fooReducer = () => ({
+//       foo: "bar",
+//     });
+//     const endpoint = "some/endpoint/";
+//     const fooAction = {
+//       type : "FOO",
+//       meta : {
+//         endpoint: "some/other/endpoint/",
+//       },
+//     };
+//     const state = onlyForEndpoint(endpoint, fooReducer)(undefined, fooAction);
+//
+//     expect(state).
+//       toEqual(Immutable.Map());
+//   });
+//
+// });
 
 describe("requestPageActionCreatorForEndpoint", () => {
 

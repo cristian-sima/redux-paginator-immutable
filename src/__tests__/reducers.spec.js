@@ -146,6 +146,7 @@ describe("pages reducer", () => {
         params   : "foo=bar",
         ids      : Immutable.List(),
         fetching : true,
+        fetched  : false,
       }),
     }), receivePageAction);
 
@@ -159,7 +160,7 @@ describe("pages reducer", () => {
             "bar",
           ]),
           fetching : false,
-          fetched  : false,
+          fetched  : true,
           error    : false,
         }),
       }));

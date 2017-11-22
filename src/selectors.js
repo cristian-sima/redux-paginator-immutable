@@ -97,13 +97,16 @@ export const isCurrentPageFetched = (state : State, name : string) => {
 };
 
 export const getPage = (state : State, name : string, target : number) => {
-  const value = state.pages.get(state.currentPages.get(name));
+  const currentPage = state.currentPages.get(name);
 
-  if (typeof value === "undefined") {
+  if (typeof currentPage === "undefined") {
     return undefined;
   }
 
-  const params = value.get("params");
+  const params = state.pages.getIn([
+    currentPage,
+    "params",
+  ]);
 
   return (
     state.pages.find((current) => (
@@ -118,7 +121,7 @@ export const isPageFetching = (state : State, name : string, target : number) =>
   const page = getPage(state, name, target);
 
   if (typeof page === "undefined") {
-    return true;
+    return false;
   }
 
   return page.get("fetching");
