@@ -96,7 +96,7 @@ export const isCurrentPageFetched = (state : State, name : string) => {
 };
 
 const getPage = (state : State, name : string, target : number) => (
-  state.pages.first((current) => (
+  state.pages.find((current) => (
     current.get("number") === target
   ))
 );
