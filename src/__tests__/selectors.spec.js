@@ -6,8 +6,6 @@ import chaiImmutable from "chai-immutable";
 chai.use(chaiImmutable);
 
 import {
-  getCurrentPageNumber,
-  getCurrentPageResults,
   getCurrentTotalResultsCount,
   getAllResults,
   isCurrentPageFetching,
@@ -116,41 +114,41 @@ const items = Immutable.Map({
 
 describe("selectors", () => {
 
-  it("getCurrentPageNumber should select the current page number from pagination slice of state", () => {
-    expect(getCurrentPageNumber(paginator, "name1")).
-      to.equal(2);
-  });
+  // it("getCurrentPageNumber should select the current page number from pagination slice of state", () => {
+  //   expect(getCurrentPageNumber(paginator, "name1")).
+  //     to.equal(2);
+  // });
+  //
+  // it("getCurrentPageNumber should return 1 if the current page is not defined", () => {
+  //   expect(getCurrentPageNumber(paginator, "name3")).
+  //     to.equal(1);
+  // });
 
-  it("getCurrentPageNumber should return 1 if the current page is not defined", () => {
-    expect(getCurrentPageNumber(paginator, "name3")).
-      to.equal(1);
-  });
-
-  it("getCurrentPageResults should select the items from the given items param corresponding to the current page for the provided name", () => {
-    expect(getCurrentPageResults(items, paginator, "name2")).
-      to.equal(Immutable.List([
-        Immutable.Map({
-          data : "foo1",
-          id   : 1,
-        }),
-        Immutable.Map({
-          data : "foo4",
-          id   : 4,
-        }),
-        Immutable.Map({
-          data : "foo6",
-          id   : 6,
-        }),
-      ]));
-  });
-
-  it("getCurrentPageResults should return an empty array if current page for the provided name is undefined", () => {
-    expect(getCurrentPageResults(items, paginator, "name3")).
-      to.equal(Immutable.List([]));
-  });
+  // it("getCurrentPageResults should select the items from the given items param corresponding to the current page for the provided name", () => {
+  //   expect(getCurrentPageResults(items, paginator, "name2")).
+  //     to.equal(Immutable.List([
+  //       Immutable.Map({
+  //         data : "foo1",
+  //         id   : 1,
+  //       }),
+  //       Immutable.Map({
+  //         data : "foo4",
+  //         id   : 4,
+  //       }),
+  //       Immutable.Map({
+  //         data : "foo6",
+  //         id   : 6,
+  //       }),
+  //     ]));
+  // });
+  //
+  // it("getCurrentPageResults should return an empty array if current page for the provided name is undefined", () => {
+  //   expect(getCurrentPageResults(items, paginator, "name3")).
+  //     to.equal(Immutable.List([]));
+  // });
 
   it("getAllResults shoud select all the items ids for pages with same params than the current page", () => {
-    expect(getAllResults(items, paginator, "name1")).
+    expect(getAllResults(paginator, "name1", items)).
       to.equal(Immutable.List([
         Immutable.Map({
           data : "foo1",
@@ -180,7 +178,7 @@ describe("selectors", () => {
   });
 
   it("getResultsUpToPage shoud select all the items ids for pages with same params than the current page", () => {
-    expect(getResultsUpToPage(items, paginator, "name1", 2)).
+    expect(getResultsUpToPage(paginator, "name1", items, 2)).
       to.equal(Immutable.List([
         Immutable.Map({
           data : "foo1",

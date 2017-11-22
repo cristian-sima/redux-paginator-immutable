@@ -26,38 +26,39 @@ GET /todos/
 ```
 
 ...with this response shape :
-```
+```js
 {
-  results: [
-    { id: todo1, text: 'some todo task 1' },
-    { id: todo2, text: 'some todo task 2' },
-    { id: todo3, text: 'some todo task 3' },
+  "results": [
+    { "id": todo1, "text": 'some todo task 1' },
+    { "id": todo2, "text": 'some todo task 2' },
+    { "id": todo3, "text": 'some todo task 3' },
   ]
 }
 ```
 
 We want our reducers to reduce that response into this state shape :
-```
+
+```js
 state = {
   todos: {
     'todo1': {
-      id: 'todo1',
-      text: 'some todo task 1'
+      "id": 'todo1',
+      "text": 'some todo task 1'
     },
-    todo2': {
-      id: 'todo2',
-      text: 'some todo task 2'
+    'todo2': {
+      "id": 'todo2',
+      "text": 'some todo task 2'
     },
     'todo3': {
-      id: 'todo3',
-      text: 'some todo task 3'
+      "id": 'todo3',
+      "text": 'some todo task 3'
     }
   }
 }
 ```
 
 We can handle that by this kind of reducer :
-```
+```js
 const todos = (todos = {}, action = {}) {
   switch (action.type) {
     case 'TODOS_RECEIVED':
@@ -84,13 +85,13 @@ GET /todos/paginated/(?page=n)
 ```
 
 With this response shape (for the call `/todos/paginated/?page=1`) :
-```
+```json
 {
-  count: 42,  // the total number of todos
-  results: [  // the todos for this page
-    { id: todo1, text: 'some todo task 1' },
-    { id: todo2, text: 'some todo task 2' },
-    { id: todo3, text: 'some todo task 3' },
+  "count": 42,  
+  "results": [  
+    { "id": 1, "text": "some todo task 1" },
+    { "id": 2, "text": "some todo task 2" },
+    { "id": 3, "text": "some todo task 3" },
   ]
 }
 ```
@@ -101,7 +102,7 @@ How to deal with this new endpoint ? We could edit our reducer and our actions t
 ### Creating a paginator
 
 We need a `paginator` to paginate our `todos`. Let's create it :
-```
+```js
 import { createPaginator } from 'redux-paginator-immutable'
 
 const todosPaginator = createPaginator('/todos/paginated/', [ 'todos' ], {
@@ -117,10 +118,10 @@ Ok, let's examinate the `createPaginator` function. It receives 3 arguments :
 * **`options`** *(object)* : an object defining 4 options :
   - `resultsKey` defines the key to look for results in the response received from the api. If you omit this option, the paginator will look for results directly in the response (i.e, the response *is* the result array)
   - `countKey` defines the key to look for total count of items if provided by the api
-  - `initialItem` defines the shape of your initial item in case you want additionnal fields to be present only on the client-side, we don't use it here but we could have passed a specific `todo` item shape defining some default value such as `{id: undefined, text: '', state: 'saved'}`. Used for reducing the response to your entities reducer. More on this bellow.
+  - `initialItem` defines the shape of your initial item in case you want additionnal fields to be present only on the client-side, we don't use it here but we could have passed a specific `todo` item shape defining some default value such as `{"id": undefined, "text": '', state: 'saved'}`. Used for reducing the response to your entities reducer. More on this bellow.
 
 The created `paginator` object exposes these properties :
-```
+```js
 // the pagination reducers bound to the configuration provided above
 todosPaginator.reducers
 
@@ -136,7 +137,7 @@ todosPaginator.itemsReducer
 
 We now need to compose or actual `todos` reducer with the `todosPaginator.itemsReducer` created for us by `redux-paginator-immutable`. We simply do this by returning the results of this reducer in the `default` case instead of directly returning the `todos`:
 
-```
+```js
 const todos = (todos = {}, action = {}) {
   switch (action.type) {
     case 'TODOS_RECEIVED':
@@ -159,7 +160,7 @@ const todos = (todos = {}, action = {}) {
 
 You'll also need to add the `todosPaginator.reducers` to your root reducer :
 
-```
+```js
 export default combineReducers({
   todos,
   pagination: todosPaginator.reducers
@@ -172,7 +173,7 @@ And we're **done** ! There is nothing else to do in the reducer part.
 ### Add the `paginatorMiddleware` or fork the `requestPageWatcher` saga to enable `redux-paginator-immutable`
 
 In order to `redux-paginator-immutable` to work properly, you need to add the `paginatorMiddleware` or if your prefer working with [`redux-saga`](https://github.com/yelouafi/redux-saga) you can use the `requestPageWatcher` instead. Both of them are available at the root :
-```
+```js
 import { paginatorMiddleware } from 'redux-paginator-immutable'
 // or
 import { requestPageWatcher } from 'redux-paginator-immutable'
@@ -184,7 +185,7 @@ import { requestPageWatcher } from 'redux-paginator-immutable'
 Remember the `requestPage` action creator provided by the paginator above ? Here is its signature :
 * **`requestPage(page, params)`** : the `page` argument is the page number you're requesting and the `params` is a string that will be smartly appended to the `endpoint`
 example:
-```
+```js
 todosPaginator.todos.requestPage(2)  // will request the page '/todos/paginated/?page=2'
 todosPaginator.todos.requestPage(2, 'order=id&search=foo')  // =>  '/todos/paginated/?order=id&search=foo&page=2'
 todosPaginator.todos.requestPage(2, 'popular/')  // => '/todos/paginated/popular/?page=2'
@@ -197,7 +198,7 @@ Internally, `redux-paginator-immutable` keeps an array of promises for each url,
 ### Using the selectors to display the data
 
 Now you're probably wondering how you can effectively use these data ? Let's introduce the selectors ! `redux-paginator-immutable` exposes few useful selectors for you. Each one expect to receive as their first argument (or their second in case of two selectors) the slice of the state where you mount the paginator reducers. In our case, it's the `pagination` slice :
-```
+```js
 export default combineReducers({
   todos,
   pagination: todosPaginator.reducers  // 'pagination' is where we mount redux-paginator-immutable for todos endpoint
@@ -210,7 +211,7 @@ For all the above example, `state` is the whole state application, accessible in
 Selects the current page number for the given `pagination` slice of state and `name`.
 
 example:
-```
+```js
 import { getCurrentPageNumber } from 'redux-paginator-immutable'
 const pageNumber = getCurrentPageNumber(state.paginations, 'todos')
 ```
@@ -218,7 +219,7 @@ const pageNumber = getCurrentPageNumber(state.paginations, 'todos')
 Selects the current page results given a list of items, a `pagination` slice of state and `name`.
 
 example:
-```
+```js
 import { getCurrentPageResults } from 'redux-paginator-immutable'
 
 const todosForCurrentPage = getCurrentPageResults(state.todos, state.pagination, 'todos')
@@ -227,7 +228,7 @@ const todosForCurrentPage = getCurrentPageResults(state.todos, state.pagination,
 Selects all the results up to the current page given a list of items, a `pagination` slice of state and `name`.
 
 example:
-```
+```js
 import { getAllResults } from 'redux-paginator-immutable'
 
 const allTodosUpToCurrentPage = getAllResults(state.todos, state.pagination, 'todos')
@@ -236,7 +237,7 @@ const allTodosUpToCurrentPage = getAllResults(state.todos, state.pagination, 'to
 Selects all the results up to the current page given a list of items, a `pagination` slice of state and `name`.
 
 example:
-```
+```js
 import { getResultsUpToPage } from 'redux-paginator-immutable'
 
 const allTodosUpToCurrentPage = getResultsUpToPage(state.todos, state.pagination, 'todos', 2)
@@ -245,7 +246,7 @@ const allTodosUpToCurrentPage = getResultsUpToPage(state.todos, state.pagination
 Selects the total results count for the the provided `pagination` and `name`. If the paginated API returns the total count of items available, you can use this value to generate the pagination UI.
 
 example:
-```
+```js
 import { getCurrentTotalResultsCount } from 'redux-paginator-immutable'
 
 const totalResultsCount = getCurrentTotalResultsCount(state.pagination, 'todos')
@@ -255,7 +256,7 @@ const totalResultsCount = getCurrentTotalResultsCount(state.pagination, 'todos')
 Selects whether the current page is fetching or not. Usefull to display some visual information to the user.
 
 example:
-```
+```js
 import { isCurrentPageFetching } from 'redux-paginator-immutable'
 
 const isFetching = isCurrentPageFetching(state.pagination, 'todos')
@@ -265,7 +266,7 @@ const isFetching = isCurrentPageFetching(state.pagination, 'todos')
 Selects whether the page is fetching or not. Usefull to display some visual information to the user.
 
 example:
-```
+```js
 import { isPageFetching } from 'redux-paginator-immutable'
 
 const isFetching = isPageFetching(state.pagination, 'todos')
@@ -275,7 +276,7 @@ const isFetching = isPageFetching(state.pagination, 'todos')
 Selects whether the page is fetched or not. Usefull to display some visual information to the user.
 
 example:
-```
+```js
 import { isPageFetched } from 'redux-paginator-immutable'
 
 const isFetching = isPageFetched(state.pagination, 'todos')
@@ -286,7 +287,7 @@ const isFetching = isPageFetched(state.pagination, 'todos')
 Selects whether the current page is fetched or not. Usefull to load data.
 
 example:
-```
+```js
 import { isCurrentPageFetched } from 'redux-paginator-immutable'
 
 const isFetched = isCurrentPageFetched(state.pagination, 'todos')
