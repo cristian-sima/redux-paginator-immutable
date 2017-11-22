@@ -93,7 +93,7 @@ export const currentPages = (state : CurrentPagesState = {}, action : Action) =>
 };
 
 export const currentView = (state : CurrentViewState = {}, action : Action) => {
-  const { type, meta } = action;
+  const { type, meta, payload } = action;
 
   switch (type) {
     case RESET_VIEW:
