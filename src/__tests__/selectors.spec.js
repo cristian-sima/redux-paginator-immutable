@@ -16,6 +16,7 @@ import {
   isPageFetched,
   isPageFetching,
   getCurrentView,
+  getPage,
 } from "../selectors";
 
 import * as Immutable from "immutable";
@@ -171,5 +172,30 @@ describe("selectors", () => {
   it("getCurrentView should return the value if it exists", () => {
     expect(getCurrentView(paginator, "name2")).
       to.equal(2);
+  });
+
+  it("getPage gets the page if it has", () => {
+    expect(getPage(paginator, "name1", 1)).
+      to.equal(Immutable.Map({
+        number : 1,
+        params : "foo=bar",
+        ids    : Immutable.List([
+          1,
+          2,
+          3,
+        ]),
+        fetching : false,
+        fetched  : true,
+      }));
+  });
+
+  it("getPage returns undefined if it does not have the name", () => {
+    expect(getPage(paginator, "name3", 1)).
+      to.equal(undefined);
+  });
+
+  it("getPage returns undefined if it does not have a current page", () => {
+    expect(getPage(paginator, "name2", 2)).
+      to.equal(undefined);
   });
 });

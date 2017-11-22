@@ -44,7 +44,7 @@ import { requestPage } from "./actions";
 
 
 export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) =>
-  (state = {}, action) => {
+  (state, action) => {
     if (typeof action.meta === "undefined") {
       return state;
     }

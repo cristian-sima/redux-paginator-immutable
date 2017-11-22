@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable no-undefined */
 
 import type { State } from "./types";
 
@@ -95,11 +96,22 @@ export const isCurrentPageFetched = (state : State, name : string) => {
   return value.get("fetched");
 };
 
-const getPage = (state : State, name : string, target : number) => (
-  state.pages.find((current) => (
-    current.get("number") === target
-  ))
-);
+export const getPage = (state : State, name : string, target : number) => {
+  const value = state.pages.get(state.currentPages.get(name));
+
+  if (typeof value === "undefined") {
+    return undefined;
+  }
+
+  const params = value.get("params");
+
+  return (
+    state.pages.find((current) => (
+      current.get("params") === params &&
+      current.get("number") === target
+    ))
+  );
+};
 
 export const isPageFetching = (state : State, name : string, target : number) => {
 
