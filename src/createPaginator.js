@@ -31,8 +31,6 @@ type GetRequestPageActionCreatorsForArgsTyps = {
 // type OnlyForEndpoint = (endpoint : string, reducer : any) =>
 // (state? : any, action : { meta: { endpoint : string }}) => any;
 
-import { combineReducers } from "redux";
-
 import {
   params as paramsReducer,
   pages as pagesReducer,
@@ -126,12 +124,12 @@ export const createPaginator : CreatePaginator = (endpoint, names, {
   });
 
   return ({
-    reducers: combineReducers({
+    reducers: {
       params       : paramsReducer,
       pages        : pagesReducer,
       currentPages : currentPagesReducer,
       currentView  : currentViewReducer,
-    }),
+    },
     itemsReducer,
     ...requestPageActionCreators,
   });
