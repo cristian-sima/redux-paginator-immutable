@@ -48,8 +48,9 @@ describe("onlyForEndpoint", () => {
       },
     };
     const state = onlyForEndpoint(endpoint, fooReducer)(undefined, fooAction);
+
     expect(state).
-      toEqual({});
+      toEqual(undefined);
   });
 
 });
@@ -70,6 +71,7 @@ describe("requestPageActionCreatorForEndpoint", () => {
       countKey   : "count",
     });
     const action = actionCreator(2, "foo=bar");
+
     expect(action).
       toEqual(requestPage({
         endpoint    : "some/endpoint/",
@@ -159,6 +161,7 @@ describe("createPaginator", () => {
       countKey    : "count",
     });
     const action = paginator.foo.requestPage(42, "foo=bar");
+
     expect(action).
       toEqual(requestPage({
         endpoint    : "some/api/endpoint",
