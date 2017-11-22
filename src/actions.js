@@ -5,6 +5,9 @@ import type { Action } from "./types";
 import {
   RECEIVE_PAGE,
   REQUEST_PAGE,
+
+  RESET_VIEW,
+  CHANGE_VIEW,
 } from "./actionTypes";
 
 type RequestPageArgsTypes = {
@@ -88,5 +91,23 @@ export const receivePage = ({
     error,
     count,
     raw,
+  },
+});
+
+export const resetView = (name : string) : Action => ({
+  type : RESET_VIEW,
+  meta : {
+    name,
+  },
+  payload: {},
+});
+
+export const changeView = (name : string, view : number) : Action => ({
+  type : CHANGE_VIEW,
+  meta : {
+    name,
+  },
+  payload: {
+    view,
   },
 });

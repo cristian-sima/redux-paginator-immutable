@@ -36,6 +36,7 @@ import { combineReducers } from "redux";
 import {
   params as paramsReducer,
   pages as pagesReducer,
+  currentView,
   currentPages as currentPagesReducer,
   items as itemsReducer,
 } from "./reducers";
@@ -134,6 +135,7 @@ export const createPaginator : CreatePaginator = (endpoint, names, {
       params,
       pages,
       currentPages,
+      currentView,
     }),
     itemsReducer,
     ...requestPageActionCreators,

@@ -144,3 +144,13 @@ export const hasPageProblems = (state : State, name : string, target : number) =
 
   return targetPage.error;
 };
+
+export const getCurrentView = (state : State, name : string) => {
+  const value = state.currentView[name];
+
+  if (typeof value === "undefined") {
+    return 1;
+  }
+
+  return value;
+};

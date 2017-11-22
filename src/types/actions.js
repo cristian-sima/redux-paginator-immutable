@@ -36,6 +36,26 @@ type ReceivePageAction = {
   };
 }
 
+type ChangeViewAction = {
+  type : "@@redux-paginator-immutable/CHANGE_VIEW";
+  meta : {
+    name: string;
+  };
+  payload: {
+    view: number;
+  };
+}
+
+type ResetViewAction = {
+  type : "@@redux-paginator-immutable/RESET_VIEW";
+  meta : {
+    name: string;
+  };
+  payload: {};
+}
+
 export type Action =
-RequestPageAction |
-ReceivePageAction;
+| RequestPageAction
+| ReceivePageAction
+| ResetViewAction
+| ChangeViewAction

@@ -7,10 +7,14 @@ import { isFSA } from "flux-standard-action";
 import {
   receivePage,
   requestPage,
+  resetView,
+  changeView,
 } from "../actions";
 import {
   RECEIVE_PAGE,
   REQUEST_PAGE,
+  RESET_VIEW,
+  CHANGE_VIEW,
 } from "../actionTypes";
 
 describe("actions", () => {
@@ -98,6 +102,39 @@ describe("actions", () => {
         payload: {
           params : "foo=bar",
           page   : 2,
+        },
+      });
+
+    expect(isFSA(action)).toEqual(true);
+  });
+
+  it("should create reset view action", () => {
+    const action = resetView("name");
+
+    expect(action).
+      toEqual({
+        type : RESET_VIEW,
+        meta : {
+          name: "name",
+        },
+        payload: {
+        },
+      });
+
+    expect(isFSA(action)).toEqual(true);
+  });
+
+  it("should create change view action", () => {
+    const action = changeView("name", 2);
+
+    expect(action).
+      toEqual({
+        type : CHANGE_VIEW,
+        meta : {
+          name: "name",
+        },
+        payload: {
+          view: 2,
         },
       });
 

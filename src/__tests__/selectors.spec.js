@@ -12,6 +12,7 @@ import {
   getResultsUpToPage,
   isPageFetched,
   isPageFetching,
+  getCurrentView,
 } from "../selectors";
 
 const paginator = {
@@ -62,6 +63,9 @@ const paginator = {
   currentPages: {
     name1 : "foo=bar?page=2",
     name2 : "foo=baz?page=1",
+  },
+  currentView: {
+    name2: 2,
   },
 };
 
@@ -152,5 +156,15 @@ describe("selectors", () => {
   it("isPageFetched should return whether the current page is fetched or not for the provided name", () => {
     expect(isPageFetched(paginator, "name1", 1)).
       toEqual(true);
+  });
+
+  it("getCurrentView should return 1 if there is no view point", () => {
+    expect(getCurrentView(paginator, "name1")).
+      toEqual(1);
+  });
+
+  it("getCurrentView should return the value if it exists", () => {
+    expect(getCurrentView(paginator, "name2")).
+      toEqual(2);
   });
 });

@@ -5,6 +5,7 @@ import type {
   ItemsState,
   CurrentPagesState,
   PagesState,
+  CurrentViewState,
 
   Action,
 } from "./types";
@@ -12,6 +13,8 @@ import type {
 import {
   REQUEST_PAGE,
   RECEIVE_PAGE,
+  RESET_VIEW,
+  CHANGE_VIEW,
 } from "./actionTypes";
 
 import { buildSuffix } from "./agent";
@@ -83,6 +86,25 @@ export const currentPages = (state : CurrentPagesState = {}, action : Action) =>
       return {
         ...state,
         [meta.name]: pageUrl,
+      };
+    default:
+      return state;
+  }
+};
+
+export const currentView = (state : CurrentViewState = {}, action : Action) => {
+  const { type, meta } = action;
+
+  switch (type) {
+    case RESET_VIEW:
+      return {
+        ...state,
+        [meta.name]: 1,
+      };
+    case CHANGE_VIEW:
+      return {
+        ...state,
+        [meta.name]: payload.view,
       };
     default:
       return state;
