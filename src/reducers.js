@@ -17,12 +17,13 @@ import {
   CHANGE_VIEW,
 } from "./actionTypes";
 
+import * as Immutable from "immutable";
 import { buildSuffix } from "./agent";
 
 const getPageUrlFromAction = ({ meta: { pageArgName }, payload: { params, page } }) =>
   buildSuffix(pageArgName, page, params);
 
-export const params = (state : ParamsState = {}, action : Action) => {
+export const params = (state : ParamsState = Immutable.Map(), action : Action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -31,104 +32,98 @@ export const params = (state : ParamsState = {}, action : Action) => {
         return state;
       }
 
-      return {
-        ...state,
-        [payload.params]: payload.count,
-      };
+      return (
+        state.set(payload.params, payload.count)
+      );
     default:
       return state;
   }
 };
 
-export const pages = (state : PagesState = {}, action : Action) => {
+export const pages = (state : PagesState = Immutable.Map(), action : Action) => {
   const { type, meta, payload } = action;
   let pageUrl = "";
 
   switch (type) {
     case REQUEST_PAGE:
       pageUrl = getPageUrlFromAction(action);
-      return {
-        ...state,
-        [pageUrl]: {
-          ...state[pageUrl],
-          ids      : [],
+
+      return state.update(pageUrl, (current) => {
+        const elements = Immutable.Map({
+          ids      : Immutable.List(),
           params   : payload.params,
           number   : payload.page,
           error    : false,
           fetching : true,
           fetched  : false,
-        },
-      };
+        });
+
+        if (typeof current === "undefined") {
+          return elements;
+        }
+
+        return current.merge(elements);
+      });
+
     case RECEIVE_PAGE:
       pageUrl = getPageUrlFromAction(action);
-      return {
-        ...state,
-        [pageUrl]: {
-          ...state[pageUrl],
-          ids      : payload.items.map((current) => current[meta.idKey]),
+
+      return state.update(pageUrl, (current) => {
+        const elements = Immutable.Map({
+          ids: Immutable.List(
+            payload.items.map((item) => item[meta.idKey])
+          ),
           fetching : false,
           error    : payload.error === true,
           fetched  : false,
-        },
-      };
+        });
+
+        if (typeof current === "undefined") {
+          return elements;
+        }
+
+        return current.merge(elements);
+      });
+
     default:
       return state;
   }
 };
 
-export const currentPages = (state : CurrentPagesState = {}, action : Action) => {
+export const currentPages = (state : CurrentPagesState = Immutable.Map(), action : Action) => {
   const { type, meta } = action;
-  let pageUrl = "";
 
   switch (type) {
     case REQUEST_PAGE:
-      pageUrl = getPageUrlFromAction(action);
-      return {
-        ...state,
-        [meta.name]: pageUrl,
-      };
+      return state.set(meta.name, getPageUrlFromAction(action));
     default:
       return state;
   }
 };
 
-export const currentView = (state : CurrentViewState = {}, action : Action) => {
+export const currentView = (state : CurrentViewState = Immutable.Map(), action : Action) => {
   const { type, meta, payload } = action;
 
   switch (type) {
     case RESET_VIEW:
-      return {
-        ...state,
-        [meta.name]: 1,
-      };
+      return state.set(meta.name, 1);
     case CHANGE_VIEW:
-      return {
-        ...state,
-        [meta.name]: payload.view,
-      };
+      return state.set(meta.name, payload.view);
     default:
       return state;
   }
 };
 
-export const items = (state : ItemsState, action : Action) => {
+export const items = (state : ItemsState = Immutable.Map(), action : Action) => {
   const { type, payload, meta } = action;
 
   switch (type) {
     case RECEIVE_PAGE: {
-      const _items = {};
+      const newItems = payload.items.reduce((previous, item) => (
+        previous.set(item[meta.idKey], Immutable.Map(item))
+      ), Immutable.Map());
 
-      for (const item of payload.items) {
-        _items[item[meta.idKey]] = {
-          ...meta.initialItem,
-          ...item,
-        };
-      }
-
-      return {
-        ...state,
-        ..._items,
-      };
+      return state.merge(newItems);
     }
     default:
       return state;

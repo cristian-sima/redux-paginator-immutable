@@ -1,6 +1,9 @@
 /* eslint-disable max-len, no-undefined, no-magic-numbers */
 
-import expect from "expect";
+import chai, { expect } from "chai";
+import chaiImmutable from "chai-immutable";
+
+chai.use(chaiImmutable);
 
 import {
   getCurrentPageNumber,
@@ -15,156 +18,158 @@ import {
   getCurrentView,
 } from "../selectors";
 
+import * as Immutable from "immutable";
+
 const paginator = {
-  params: {
+  params: Immutable.Map({
     "foo=bar" : 42,
     "foo=baz" : 17,
-  },
-  pages: {
-    "foo=bar?page=1": {
+  }),
+  pages: Immutable.Map({
+    "foo=bar?page=1": Immutable.Map({
       number : 1,
       params : "foo=bar",
-      ids    : [
+      ids    : Immutable.List([
         1,
         2,
         3,
-      ],
+      ]),
       fetching : false,
       fetched  : true,
-    },
-    "foo=bar?page=2": {
+    }),
+    "foo=bar?page=2": Immutable.Map({
       number   : 2,
       params   : "foo=bar",
-      ids      : [],
+      ids      : Immutable.List(),
       fetching : true,
       fetched  : false,
-    },
-    "foo=bar?page=3": {
+    }),
+    "foo=bar?page=3": Immutable.Map({
       number : 3,
       params : "foo=bar",
-      ids    : [
+      ids    : Immutable.List([
         7,
         8,
         9,
-      ],
-    },
-    "foo=baz?page=1": {
+      ]),
+    }),
+    "foo=baz?page=1": Immutable.Map({
       number : 1,
       params : "foo=baz",
-      ids    : [
+      ids    : Immutable.List([
         1,
         4,
         6,
-      ],
+      ]),
       fetching : false,
       fetched  : true,
-    },
-  },
-  currentPages: {
+    }),
+  }),
+  currentPages: Immutable.Map({
     name1 : "foo=bar?page=2",
     name2 : "foo=baz?page=1",
-  },
-  currentView: {
+  }),
+  currentView: Immutable.Map({
     name2: 2,
-  },
+  }),
 };
 
-const items = {
-  1 : "foo1",
-  2 : "foo2",
-  3 : "foo3",
-  4 : "foo4",
-  5 : "foo5",
-  6 : "foo6",
-  7 : "foo7",
-  8 : "foo8",
-  9 : "foo9",
-};
+const items = Immutable.Map({
+  "1" : "foo1",
+  "2" : "foo2",
+  "3" : "foo3",
+  "4" : "foo4",
+  "5" : "foo5",
+  "6" : "foo6",
+  "7" : "foo7",
+  "8" : "foo8",
+  "9" : "foo9",
+});
 
 describe("selectors", () => {
 
   it("getCurrentPageNumber should select the current page number from pagination slice of state", () => {
     expect(getCurrentPageNumber(paginator, "name1")).
-      toEqual(2);
+      to.equal(2);
   });
 
   it("getCurrentPageNumber should return 1 if the current page is not defined", () => {
     expect(getCurrentPageNumber(paginator, "name3")).
-      toEqual(1);
+      to.equal(1);
   });
 
   it("getCurrentPageResults should select the items from the given items param corresponding to the current page for the provided name", () => {
     expect(getCurrentPageResults(items, paginator, "name2")).
-      toEqual([
+      to.equal(Immutable.List([
         "foo1",
         "foo4",
         "foo6",
-      ]);
+      ]));
   });
 
   it("getCurrentPageResults should return an empty array if current page for the provided name is undefined", () => {
     expect(getCurrentPageResults(items, paginator, "name3")).
-      toEqual([]);
+      to.equal(Immutable.List([]));
   });
 
   it("getAllResults shoud select all the items ids for pages with same params than the current page", () => {
     expect(getAllResults(items, paginator, "name1")).
-      toEqual([
+      to.equal(Immutable.List([
         "foo1",
         "foo2",
         "foo3",
         "foo7",
         "foo8",
         "foo9",
-      ]);
+      ]));
   });
 
   it("getResultsUpToPage shoud select all the items ids for pages with same params than the current page", () => {
     expect(getResultsUpToPage(items, paginator, "name1", 2)).
-      toEqual([
+      to.equal(Immutable.List([
         "foo1",
         "foo2",
         "foo3",
-      ]);
+      ]));
   });
 
   it("getCurrentTotalResultsCount should return the total count for the current params of the provided name", () => {
     expect(getCurrentTotalResultsCount(paginator, "name2")).
-      toEqual(17);
+      to.equal(17);
   });
 
   it("getCurrentTotalResultsCount should return 0 if current page url is undefined for the provided name", () => {
     expect(getCurrentTotalResultsCount(paginator, "name3")).
-      toEqual(0);
+      to.equal(0);
   });
 
   it("isCurrentPageFetching should return whether the current page is fetching or not for the provided name", () => {
     expect(isCurrentPageFetching(paginator, "name1")).
-      toEqual(true);
+      to.equal(true);
   });
 
   it("isCurrentPageFetched should return whether the current page is fetched or not for the provided name", () => {
     expect(isCurrentPageFetched(paginator, "name1")).
-      toEqual(false);
+      to.equal(false);
   });
 
   it("isPageFetching should return whether the current page is fetching or not for the provided name", () => {
     expect(isPageFetching(paginator, "name1", 1)).
-      toEqual(false);
+      to.equal(false);
   });
 
   it("isPageFetched should return whether the current page is fetched or not for the provided name", () => {
     expect(isPageFetched(paginator, "name1", 1)).
-      toEqual(true);
+      to.equal(true);
   });
 
   it("getCurrentView should return 1 if there is no view point", () => {
     expect(getCurrentView(paginator, "name1")).
-      toEqual(1);
+      to.equal(1);
   });
 
   it("getCurrentView should return the value if it exists", () => {
     expect(getCurrentView(paginator, "name2")).
-      toEqual(2);
+      to.equal(2);
   });
 });
