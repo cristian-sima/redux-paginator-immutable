@@ -3,13 +3,16 @@
 
 [![NPM Version](https://img.shields.io/npm/v/redux-paginator-immutable.svg?style=flat)](https://www.npmjs.com/package/redux-paginator-immutable)
 [![NPM Downloads](https://img.shields.io/npm/dm/redux-paginator-immutable.svg?style=flat)](https://www.npmjs.com/package/redux-paginator-immutable)
-[![Build Status](https://img.shields.io/travis/cristian-sima/redux-paginator-immutable/master.svg?style=flat)](https://travis-ci.org/cristian-sima/redux-paginator-immutable)
-[![codecov.io](https://codecov.io/gh/cristian-sima/redux-paginator-immutable/coverage.svg?branch=master)](https://codecov.io/github/cristian-sima/redux-paginator-immutable?branch=master)
 
-`redux-paginator-immutable` helps you deal with paginated API with [Redux](https://github.com/reactjs/redux) without the need to create new actions and reducers cases
+`redux-paginator-immutable` is the core of any modern paginated  [Redux](https://github.com/reactjs/redux) app, without the need to create new actions and reducers cases. It uses [Immutable](https://facebook.github.io/immutable-js) to speed things
+
+It is based on [Redux Paginator](https://www.npmjs.com/package/redux-paginator), but improved:
+* Support for [Flow](https://flow.org/)
+* Supports Immutable structures
+* Does not use the cache of promises, but has a smart way of dealing with cache
 
 ## Installation
-```npm install --save redux-paginator-immutable```
+```npm install redux-paginator-immutable```
 
 ## Motivation
 
