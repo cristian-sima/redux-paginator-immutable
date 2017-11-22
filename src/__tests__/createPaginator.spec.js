@@ -12,6 +12,7 @@ import {
   createPaginator,
 } from "../createPaginator";
 
+import * as Immutable from "immutable";
 
 describe("onlyForEndpoint", () => {
 
@@ -50,7 +51,7 @@ describe("onlyForEndpoint", () => {
     const state = onlyForEndpoint(endpoint, fooReducer)(undefined, fooAction);
 
     expect(state).
-      toEqual(undefined);
+      toEqual(Immutable.Map());
   });
 
 });

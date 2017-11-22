@@ -32,6 +32,7 @@ type OnlyForEndpoint = (endpoint : string, reducer : any) =>
 (state? : any, action : { meta: { endpoint : string }}) => any;
 
 import { combineReducers } from "redux";
+import * as Immutable from "immutable";
 
 import {
   params as paramsReducer,
@@ -46,14 +47,14 @@ import { requestPage } from "./actions";
 export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) =>
   (state, action) => {
     if (typeof action.meta === "undefined") {
-      return state;
+      return Immutable.Map();
     }
 
     if (action.meta.endpoint === endpoint) {
       return reducer(state, action);
     }
 
-    return state;
+    return Immutable.Map();
   };
 
 export const requestPageActionCreatorForEndpoint = ({
