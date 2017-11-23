@@ -23,8 +23,6 @@ const requestPage = (state : PagesState, action : Action) => {
     const { payload : { token, page } } = action;
 
     const elements = Immutable.Map({
-      ids      : Immutable.List(),
-      token,
       page,
       error    : false,
       fetching : true,
@@ -37,7 +35,11 @@ const requestPage = (state : PagesState, action : Action) => {
       ));
     }
 
-    const init = elements.set("view", 1);
+    const init = elements.merge({
+      view : 1,
+      token,
+      ids  : Immutable.List(),
+    });
 
     return state.set(token, init);
   },
@@ -47,23 +49,27 @@ const requestPage = (state : PagesState, action : Action) => {
       payload : { token, items, total, error },
     } = action;
 
-    const elements = Immutable.Map({
-      ids: Immutable.List(
-        items.map((item) => String(item[idKey]))
-      ),
-      fetching : false,
-      error    : error === true,
-      fetched  : true,
-      total,
-    });
-
     if (state.has(token)) {
       return state.update(token, (current) => (
-        current.merge(elements)
+        current.update((page) => (
+          current.merge(
+            Immutable.Map({
+              ids: page.get("ids").concat(
+                Immutable.List(
+                  items.map((item) => String(item[idKey]))
+                )
+              ),
+              fetching : false,
+              error    : error === true,
+              fetched  : true,
+              total,
+            })
+          )
+        ))
       ));
     }
 
-    return state.set(token, elements);
+    return state;
   },
   changeView = (state : PagesState, action : Action, view : number) => {
     const { payload : { token } } = action;
