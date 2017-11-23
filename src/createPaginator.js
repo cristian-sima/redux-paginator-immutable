@@ -12,10 +12,7 @@ type OnlyForEndpoint = (endpoint : string, reducer : any) =>
 (state? : any, action : { meta: { endpoint : string }}) => any;
 
 import {
-  params as paramsReducer,
   pages as pagesReducer,
-  currentView as currentViewReducer,
-  currentPages as currentPagesReducer,
   items as itemsReducer,
 } from "./reducers";
 
@@ -63,13 +60,8 @@ export const createPaginator : CreatePaginator = (endpoint, {
   });
 
   return ({
-    reducers: {
-      params       : onlyForEndpoint(endpoint, paramsReducer),
-      pages        : onlyForEndpoint(endpoint, pagesReducer),
-      currentPages : onlyForEndpoint(endpoint, currentPagesReducer),
-      currentView  : onlyForEndpoint(endpoint, currentViewReducer),
-    },
-    itemsReducer: onlyForEndpoint(endpoint, itemsReducer),
+    pages        : onlyForEndpoint(endpoint, pagesReducer),
+    itemsReducer : onlyForEndpoint(endpoint, itemsReducer),
     ...actions,
   });
 };
