@@ -42,7 +42,7 @@ const receivePageAction = receivePage({
   },
   pageArgName : "p",
   idKey       : "id",
-  number      : 2,
+  page        : 2,
   token       : "foo=bar",
   items       : [
     {
@@ -77,7 +77,7 @@ describe("pages reducer", () => {
       to.equal(
         Immutable.Map({
           "foo=bar": Immutable.Map({
-            number   : 2,
+            page     : 2,
             token    : "foo=bar",
             ids      : Immutable.List(),
             fetching : true,
@@ -92,7 +92,7 @@ describe("pages reducer", () => {
   it("should populate the pages map at the page url key with the item ids", () => {
     const state = pages(Immutable.Map({
       "foo=bar": Immutable.Map({
-        number   : 2,
+        page     : 2,
         token    : "foo=bar",
         ids      : Immutable.List(),
         fetching : true,
@@ -103,9 +103,9 @@ describe("pages reducer", () => {
     expect(state).
       to.equal(Immutable.Map({
         "foo=bar": Immutable.Map({
-          number : 2,
-          token  : "foo=bar",
-          ids    : Immutable.List([
+          page  : 2,
+          token : "foo=bar",
+          ids   : Immutable.List([
             "baz",
             "bar",
           ]),

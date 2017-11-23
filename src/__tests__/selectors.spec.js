@@ -204,6 +204,11 @@ describe("selectors", () => {
       to.equal(true);
   });
 
+  it("isPageFetched should return whether the current page is fetched or not for the provided name", () => {
+    expect(isPageFetched(paginator, "foo=bar", 4)).
+      to.equal(false);
+  });
+
   it("getCurrentView should return 1 if there is no view point", () => {
     expect(getCurrentView(paginator, "foo=bat")).
       to.equal(1);

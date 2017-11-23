@@ -25,11 +25,10 @@ const requestPage = (state : PagesState, action : Action) => {
     const elements = Immutable.Map({
       ids      : Immutable.List(),
       token,
-      number   : page,
+      page,
       error    : false,
       fetching : true,
       fetched  : false,
-      view     : 1,
     });
 
     if (state.has(token)) {
@@ -38,7 +37,9 @@ const requestPage = (state : PagesState, action : Action) => {
       ));
     }
 
-    return state.set(token, elements);
+    const init = elements.set("view", 1);
+
+    return state.set(token, init);
   },
   receivePage = (state : PagesState, action : Action) => {
     const {

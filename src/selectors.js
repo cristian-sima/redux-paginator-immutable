@@ -57,23 +57,31 @@ export const getCurrentTotalResultsCount = createSelector(
 
 export const isPageFetching = createSelector(
   pageSelector,
-  (page) => {
+  (state, token, target) => target,
+  (page, target) => {
     if (typeof page === "undefined") {
       return false;
     }
 
-    return page.get("fetching");
+    return (
+      page.get("fetching") &&
+      target === page.get("page")
+    );
   }
 );
 
 export const isPageFetched = createSelector(
   pageSelector,
-  (page) => {
+  (state, token, target) => target,
+  (page, target) => {
     if (typeof page === "undefined") {
       return false;
     }
 
-    return page.get("fetched");
+    return (
+      page.get("fetched") &&
+      target <= page.get("page")
+    );
   }
 );
 

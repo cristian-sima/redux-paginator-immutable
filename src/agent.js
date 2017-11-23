@@ -1,10 +1,10 @@
 // @flow
-/* eslint-disable no-magic-numbers, no-bitwise*/
+/* eslint-disable no-magic-s, no-bitwise*/
 
 type FetchPageArgs = {
   endpoint: string;
   pageArgName: string;
-  page: number;
+  page: ;
   token: string;
 }
 
