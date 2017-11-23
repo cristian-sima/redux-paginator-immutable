@@ -6,8 +6,6 @@ import paginatorMiddleware from "./paginatorMiddleware";
 import {
   getAllResults,
   getCurrentTotalResultsCount,
-  isCurrentPageFetching,
-  isCurrentPageFetched,
   getResultsUpToPage,
   isPageFetching,
   isPageFetched,
@@ -23,8 +21,6 @@ export {
 
   getAllResults,
   getCurrentTotalResultsCount,
-  isCurrentPageFetching,
-  isCurrentPageFetched,
   getResultsUpToPage,
   isPageFetching,
   isPageFetched,

@@ -22,22 +22,22 @@ import * as Immutable from "immutable";
 const requestPage = (state : PagesState, action : Action) => {
     const { payload : { token, page } } = action;
 
-    return state.update(token, (current) => {
-      const elements = Immutable.Map({
-        ids      : Immutable.List(),
-        token,
-        number   : page,
-        error    : false,
-        fetching : true,
-        fetched  : false,
-      });
-
-      if (typeof current === "undefined") {
-        return elements;
-      }
-
-      return current.merge(elements);
+    const elements = Immutable.Map({
+      ids      : Immutable.List(),
+      token,
+      number   : page,
+      error    : false,
+      fetching : true,
+      fetched  : false,
     });
+
+    if (state.has(token)) {
+      return state.update(token, (current) => (
+        current.merge(elements)
+      ));
+    }
+
+    return state.set(token, elements);
   },
   receivePage = (state : PagesState, action : Action) => {
     const {
@@ -45,26 +45,26 @@ const requestPage = (state : PagesState, action : Action) => {
       payload : { token, items, total, error },
     } = action;
 
-    return state.update(token, (current) => {
-      const elements = Immutable.Map({
-        ids: Immutable.List(
-          items.map((item) => String(item[idKey]))
-        ),
-        fetching : false,
-        error    : error === true,
-        fetched  : true,
-        total,
-      });
-
-      if (typeof current === "undefined") {
-        return elements;
-      }
-
-      return current.merge(elements);
+    const elements = Immutable.Map({
+      ids: Immutable.List(
+        items.map((item) => String(item[idKey]))
+      ),
+      fetching : false,
+      error    : error === true,
+      fetched  : true,
+      total,
     });
+
+    if (state.has(token)) {
+      return state.update(token, (current) => (
+        current.merge(elements)
+      ));
+    }
+
+    return state.set(token, elements);
   },
   changeView = (state : PagesState, action : Action, view : number) => {
-    const { payload : { token } } = state;
+    const { payload : { token } } = action;
 
     const item = state.get(token);
 
