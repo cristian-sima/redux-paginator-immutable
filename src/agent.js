@@ -4,7 +4,7 @@
 type FetchPageArgs = {
   endpoint: string;
   pageArgName: string;
-  page: ;
+  page: number;
   token: string;
 }
 
