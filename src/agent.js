@@ -5,7 +5,7 @@ type FetchPageArgs = {
   endpoint: string;
   pageArgName: string;
   page: number;
-  params: string;
+  token: string;
 }
 
 import agent from "superagent";
@@ -39,9 +39,9 @@ export const buildSuffix = (pageArgName : string, page : number, params : string
   }, { encode: false }).replace(startString, "");
 };
 
-export const fetchPage = ({ endpoint, pageArgName, page, params } : FetchPageArgs) => {
+export const fetchPage = ({ endpoint, pageArgName, page, token } : FetchPageArgs) => {
   const
-    suffix = buildSuffix(pageArgName, page, params),
+    suffix = buildSuffix(pageArgName, page, token),
     url = endpoint + suffix;
 
   const promise : Promise<*> = new Promise((resolve : any, reject : any) =>

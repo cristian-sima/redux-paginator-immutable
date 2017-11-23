@@ -4,16 +4,15 @@ type RequestPageAction = {
   type : "@@redux-paginator-immutable/REQUEST_PAGE";
   meta : {
     endpoint: string;
-    name: string;
     initialItem: any;
     resultsKey: string;
-    countKey: string;
+    totalKey: string;
     pageArgName: string;
     idKey: string;
   };
   payload: {
     page: number;
-    params: string;
+    token: string;
   };
 };
 
@@ -21,14 +20,13 @@ type ReceivePageAction = {
   type : "@@redux-paginator-immutable/RECEIVE_PAGE";
   meta : {
     endpoint: string;
-    name: string;
     initialItem: any;
     pageArgName: string;
     idKey: string;
   };
   payload: {
     page: number;
-    params: string;
+    token: string;
     items: Array<any>;
     count: number;
     error: bool;
@@ -40,10 +38,10 @@ type ChangeViewAction = {
   type : "@@redux-paginator-immutable/CHANGE_VIEW";
   meta : {
     endpoint: string;
-    name: string;
   };
   payload: {
     view: number;
+    token: string;
   };
 }
 
@@ -51,9 +49,10 @@ type ResetViewAction = {
   type : "@@redux-paginator-immutable/RESET_VIEW";
   meta : {
     endpoint: string;
-    name: string;
   };
-  payload: {};
+  payload: {
+    token: string;
+  };
 }
 
 export type Action =

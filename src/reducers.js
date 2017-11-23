@@ -1,11 +1,8 @@
 // @flow
 
 import type {
-  ParamsState,
   ItemsState,
-  CurrentPagesState,
   PagesState,
-  CurrentViewState,
 
   Action,
 } from "./types";
@@ -18,97 +15,84 @@ import {
 } from "./actionTypes";
 
 import * as Immutable from "immutable";
-import { buildSuffix } from "./agent";
+//
+// const getPageUrlFromAction = ({ meta: { pageArgName }, payload: { params, page } }) =>
+//   buildSuffix(pageArgName, page, params);
 
-const getPageUrlFromAction = ({ meta: { pageArgName }, payload: { params, page } }) =>
-  buildSuffix(pageArgName, page, params);
+const requestPage = (state : PagesState, action : Action) => {
+    const { payload : { token, page } } = action;
 
-export const params = (state : ParamsState = Immutable.Map(), action : Action) => {
+    return state.update(token, (current) => {
+      const elements = Immutable.Map({
+        ids      : Immutable.List(),
+        token,
+        number   : page,
+        error    : false,
+        fetching : true,
+        fetched  : false,
+      });
+
+      if (typeof current === "undefined") {
+        return elements;
+      }
+
+      return current.merge(elements);
+    });
+  },
+  receivePage = (state : PagesState, action : Action) => {
+    const {
+      meta: { idKey },
+      payload : { token, items, total, error },
+    } = action;
+
+    return state.update(token, (current) => {
+      const elements = Immutable.Map({
+        ids: Immutable.List(
+          items.map((item) => String(item[idKey]))
+        ),
+        fetching : false,
+        error    : error === true,
+        fetched  : true,
+        total,
+      });
+
+      if (typeof current === "undefined") {
+        return elements;
+      }
+
+      return current.merge(elements);
+    });
+  },
+  changeView = (state : PagesState, action : Action, view : number) => {
+    const { payload : { token } } = state;
+
+    const item = state.get(token);
+
+    if (typeof item === "undefined") {
+      return state;
+    }
+
+    return state.update(token, (current) => (
+      current.set("view", view)
+    ));
+  };
+
+export const pages = (state : PagesState = Immutable.Map(), action : Action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case RECEIVE_PAGE:
-      if (payload.error === true) {
-        return state;
-      }
-
-      return (
-        state.set(payload.params, payload.count)
-      );
-    default:
-      return state;
-  }
-};
-
-export const pages = (state : PagesState = Immutable.Map(), action : Action) => {
-  const { type, meta, payload } = action;
-  let pageUrl = "";
-
-  switch (type) {
     case REQUEST_PAGE:
-      pageUrl = getPageUrlFromAction(action);
-
-      return state.update(pageUrl, (current) => {
-        const elements = Immutable.Map({
-          ids      : Immutable.List(),
-          params   : payload.params,
-          number   : payload.page,
-          error    : false,
-          fetching : true,
-          fetched  : false,
-        });
-
-        if (typeof current === "undefined") {
-          return elements;
-        }
-
-        return current.merge(elements);
-      });
+      return requestPage(state, action);
 
     case RECEIVE_PAGE:
-      pageUrl = getPageUrlFromAction(action);
+      return receivePage(state, action);
 
-      return state.update(pageUrl, (current) => {
-        const elements = Immutable.Map({
-          ids: Immutable.List(
-            payload.items.map((item) => String(item[meta.idKey]))
-          ),
-          fetching : false,
-          error    : payload.error === true,
-          fetched  : true,
-        });
-
-        if (typeof current === "undefined") {
-          return elements;
-        }
-
-        return current.merge(elements);
-      });
-
-    default:
-      return state;
-  }
-};
-
-export const currentPages = (state : CurrentPagesState = Immutable.Map(), action : Action) => {
-  const { type, meta } = action;
-
-  switch (type) {
-    case REQUEST_PAGE:
-      return state.set(meta.name, getPageUrlFromAction(action));
-    default:
-      return state;
-  }
-};
-
-export const currentView = (state : CurrentViewState = Immutable.Map(), action : Action) => {
-  const { type, meta, payload } = action;
-
-  switch (type) {
     case RESET_VIEW:
-      return state.set(meta.name, 1);
+      return changeView(state, action, 1);
+
     case CHANGE_VIEW:
-      return state.set(meta.name, payload.view);
+      return changeView(state, action, payload.view);
+
     default:
       return state;
   }

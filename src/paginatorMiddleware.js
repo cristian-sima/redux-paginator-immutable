@@ -13,16 +13,15 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) =>
       const {
         meta: {
           endpoint,
-          name,
           initialItem,
           resultsKey,
-          countKey,
+          totalKey,
           pageArgName,
           idKey,
         },
         payload: {
           page,
-          params,
+          token,
         },
       } = action;
 
@@ -30,15 +29,14 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) =>
         const markAsError = () => {
           dispatch2(receivePage({
             endpoint,
-            name,
             initialItem,
             pageArgName,
             idKey,
             page,
             error : true,
-            params,
+            token,
             items : [],
-            count : 0,
+            total : 0,
           }));
         };
 
@@ -47,31 +45,30 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) =>
             endpoint,
             pageArgName,
             page,
-            params,
+            token,
           }).
             then((res) => {
               const { response } = res;
               let
                 results = [],
-                count = 0;
+                total = 0;
 
               if (typeof resultsKey === "undefined") {
                 results = response;
               } else {
                 results = response[resultsKey];
-                count = response[countKey];
+                total = response[totalKey];
               }
               dispatch2(receivePage({
                 endpoint,
-                name,
                 initialItem,
                 pageArgName,
                 idKey,
                 page,
                 error : false,
-                params,
+                token,
                 items : results,
-                count,
+                total,
                 raw   : res,
               }));
             }).

@@ -2,17 +2,6 @@
 
 import type { Action } from "./types";
 
-type ChangeView = {
-  name : string;
-  view : number;
-  endpoint: string;
-}
-
-type ResetView = {
-  name : string;
-  endpoint: string;
-}
-
 import {
   RECEIVE_PAGE,
   REQUEST_PAGE,
@@ -23,104 +12,102 @@ import {
 
 type RequestPageArgsTypes = {
   endpoint: string;
-  name: string;
   initialItem: any;
   resultsKey: string;
-  countKey: string;
+  totalKey: string;
   pageArgName: string;
   idKey: string;
   page: number;
-  params: string;
+  token: string;
 };
 
 type ReceivePageArgsTypes = {
   endpoint: string;
-  name: string;
   initialItem: any;
   pageArgName: string;
   idKey: string;
   page: number;
-  params: string;
+  token: string;
   items: Array<any>;
-  count: number;
+  total: number;
   raw?: string;
   error: bool;
 }
 
 export const requestPage = ({
   endpoint,
-  name,
   initialItem,
   resultsKey,
-  countKey,
+  totalKey,
   pageArgName,
   idKey,
   page,
-  params,
+  token,
 } : RequestPageArgsTypes) : Action => ({
   type : REQUEST_PAGE,
   meta : {
     endpoint,
-    name,
     initialItem,
     resultsKey,
-    countKey,
+    totalKey,
     pageArgName,
     idKey,
   },
   payload: {
     page,
-    params,
+    token,
   },
 });
 
 export const receivePage = ({
   endpoint,
-  name,
   initialItem,
   pageArgName,
   idKey,
   page,
-  params,
+  token,
   items,
   error,
-  count,
+  total,
   raw,
 } : ReceivePageArgsTypes) : Action => ({
   type : RECEIVE_PAGE,
   meta : {
     endpoint,
-    name,
     initialItem,
     pageArgName,
     idKey,
   },
   payload: {
     page,
-    params,
+    token,
     items,
     error,
-    count,
+    total,
     raw,
   },
 });
 
-export const resetView = ({ endpoint, name } : ResetView) : Action => ({
+export const resetView = (endpoint : string, token : string) : Action => ({
   type : RESET_VIEW,
   meta : {
     endpoint,
-    name,
   },
-  payload: {},
+  payload: {
+    token,
+  },
 });
 
-export const changeView = ({ endpoint, name, view } : ChangeView) : Action => ({
+export const changeView = (endpoint : string, {
+  token,
+  view,
+} : { token : string, view : number }) : Action => ({
   type : CHANGE_VIEW,
   meta : {
     endpoint,
-    name,
   },
   payload: {
+    token,
     view,
   },
 });

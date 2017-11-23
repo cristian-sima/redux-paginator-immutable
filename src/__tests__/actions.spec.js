@@ -22,7 +22,6 @@ describe("actions", () => {
   it("should create receive page action", () => {
     const action = receivePage({
       endpoint    : "some/api/endpoint/",
-      name        : "name",
       initialItem : {
         id       : undefined,
         fooField : undefined,
@@ -30,13 +29,13 @@ describe("actions", () => {
       pageArgName : "p",
       idKey       : "id",
       page        : 2,
-      params      : "foo=bar",
+      token       : "foo=bar",
       items       : [
         "foo",
         "bar",
         "baz",
       ],
-      count: 42,
+      total: 42,
     });
 
     expect(action).
@@ -44,7 +43,6 @@ describe("actions", () => {
         type : RECEIVE_PAGE,
         meta : {
           endpoint    : "some/api/endpoint/",
-          name        : "name",
           initialItem : {
             id       : undefined,
             fooField : undefined,
@@ -53,14 +51,14 @@ describe("actions", () => {
           idKey       : "id",
         },
         payload: {
-          params : "foo=bar",
-          page   : 2,
-          items  : [
+          token : "foo=bar",
+          page  : 2,
+          items : [
             "foo",
             "bar",
             "baz",
           ],
-          count : 42,
+          total : 42,
           raw   : undefined,
         },
       });
@@ -71,17 +69,16 @@ describe("actions", () => {
   it("should create request page action", () => {
     const action = requestPage({
       endpoint    : "some/api/endpoint/",
-      name        : "name",
       initialItem : {
         id       : undefined,
         fooField : undefined,
       },
       resultsKey  : "results",
-      countKey    : "count",
+      totalKey    : "total",
       pageArgName : "p",
       idKey       : "id",
       page        : 2,
-      params      : "foo=bar",
+      token       : "foo=bar",
     });
 
     expect(action).
@@ -89,19 +86,18 @@ describe("actions", () => {
         type : REQUEST_PAGE,
         meta : {
           endpoint    : "some/api/endpoint/",
-          name        : "name",
           initialItem : {
             id       : undefined,
             fooField : undefined,
           },
           resultsKey  : "results",
-          countKey    : "count",
+          totalKey    : "total",
           pageArgName : "p",
           idKey       : "id",
         },
         payload: {
-          params : "foo=bar",
-          page   : 2,
+          token : "foo=bar",
+          page  : 2,
         },
       });
 
@@ -109,19 +105,16 @@ describe("actions", () => {
   });
 
   it("should create reset view action", () => {
-    const action = resetView({
-      name     : "name",
-      endpoint : "some/api/endpoint/",
-    });
+    const action = resetView("some/api/endpoint/", "name");
 
     expect(action).
       toEqual({
         type : RESET_VIEW,
         meta : {
-          endpoint : "some/api/endpoint/",
-          name     : "name",
+          endpoint: "some/api/endpoint/",
         },
         payload: {
+          token: "name",
         },
       });
 
@@ -129,21 +122,20 @@ describe("actions", () => {
   });
 
   it("should create change view action", () => {
-    const action = changeView({
-      name     : "name",
-      view     : 2,
-      endpoint : "some/api/endpoint/",
+    const action = changeView("some/api/endpoint/", {
+      token : "name",
+      view  : 2,
     });
 
     expect(action).
       toEqual({
         type : CHANGE_VIEW,
         meta : {
-          endpoint : "some/api/endpoint/",
-          name     : "name",
+          endpoint: "some/api/endpoint/",
         },
         payload: {
-          view: 2,
+          view  : 2,
+          token : "name",
         },
       });
 

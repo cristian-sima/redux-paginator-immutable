@@ -1,32 +1,12 @@
 // @flow
 
-type CreatePaginator = (endpoint: string, names: Array<string>, info: {
+type CreatePaginator = (endpoint: string, info: {
   initialItem: any;
   resultsKey: string;
-  countKey: string;
+  totalKey: string;
   pageArgName: string;
   idKey : string;
 }) => any;
-
-type RequestPageActionCreatorForEndpointArgsTypes = {
-  endpoint: string;
-  name: string;
-  pageArgName: string;
-  idKey: string;
-  initialItem: any;
-  resultsKey: string;
-  countKey: string;
-}
-
-type GetRequestPageActionCreatorsForArgsTyps = {
-  endpoint: string;
-  names: Array<string>;
-  pageArgName: string;
-  idKey: string;
-  initialItem: any;
-  resultsKey: string;
-  countKey: string;
-}
 
 type OnlyForEndpoint = (endpoint : string, reducer : any) =>
 (state? : any, action : { meta: { endpoint : string }}) => any;
@@ -38,7 +18,8 @@ import {
   currentPages as currentPagesReducer,
   items as itemsReducer,
 } from "./reducers";
-import { requestPage } from "./actions";
+
+import { requestPage, resetView, changeView } from "./actions";
 
 import * as Immutable from "immutable";
 
@@ -51,73 +32,34 @@ export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) =>
     return reducer(state, action);
   };
 
-export const requestPageActionCreatorForEndpoint = ({
-  endpoint,
-  name,
-  pageArgName,
-  idKey,
+export const createPaginator : CreatePaginator = (endpoint, {
   initialItem,
   resultsKey,
-  countKey,
-} : RequestPageActionCreatorForEndpointArgsTypes) =>
-  (page : number, params : string) => requestPage({
-    endpoint,
-    name,
-    initialItem,
-    resultsKey,
-    countKey,
-    pageArgName,
-    idKey,
-    page,
-    params,
-  });
-
-export const getRequestPageActionCreatorsFor = ({
-  endpoint,
-  names,
-  pageArgName,
-  idKey,
-  initialItem,
-  resultsKey,
-  countKey,
-} : GetRequestPageActionCreatorsForArgsTyps) => {
-  let actions = {};
-
-  for (const name of names) {
-    actions = {
-      ...actions,
-      [name]: {
-        requestPage: requestPageActionCreatorForEndpoint({
-          endpoint,
-          name,
-          pageArgName,
-          idKey,
-          initialItem,
-          resultsKey,
-          countKey,
-        }),
-      },
-    };
-  }
-  return actions;
-};
-
-export const createPaginator : CreatePaginator = (endpoint, names, {
-  initialItem,
-  resultsKey,
-  countKey = "Total",
+  totalKey = "Total",
   pageArgName = "page",
   idKey = "ID",
 }) => {
 
-  const requestPageActionCreators = getRequestPageActionCreatorsFor({
-    endpoint,
-    names,
-    pageArgName,
-    idKey,
-    initialItem,
-    resultsKey,
-    countKey,
+  const actions = ({
+    requestPage: (page : number, params : string) => requestPage({
+      endpoint,
+      initialItem,
+      resultsKey,
+      totalKey,
+      pageArgName,
+      idKey,
+      page,
+      params,
+    }),
+    resetView (token) {
+      return resetView(endpoint, token);
+    },
+    changeView ({ view, token } : { view : number; token : string; }) {
+      return changeView(endpoint, {
+        view,
+        token,
+      });
+    },
   });
 
   return ({
@@ -128,6 +70,6 @@ export const createPaginator : CreatePaginator = (endpoint, names, {
       currentView  : onlyForEndpoint(endpoint, currentViewReducer),
     },
     itemsReducer: onlyForEndpoint(endpoint, itemsReducer),
-    ...requestPageActionCreators,
+    ...actions,
   });
 };

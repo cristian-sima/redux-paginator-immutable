@@ -1,4 +1,4 @@
-/* eslint-disable max-len, no-undefined, no-magic-numbers */
+/* eslint-disable max-len, no-undefined, no-magic-pages */
 
 import * as Immutable from "immutable";
 
@@ -13,40 +13,37 @@ import {
   resetView,
   changeView,
 } from "../actions";
+
 import {
-  params,
   pages,
-  currentPages,
   items,
   currentView,
 } from "../reducers";
 
 const requestPageAction = requestPage({
   endpoint    : "some/api/endpoint",
-  name        : "name",
   initialItem : {
     id       : undefined,
     fooField : undefined,
   },
   resultsKey  : "results",
-  countKey    : "count",
+  totalKey    : "total",
   pageArgName : "p",
   idKey       : "id",
   page        : 2,
-  params      : "foo=bar",
+  token       : "foo=bar",
 });
 
 const receivePageAction = receivePage({
   endpoint    : "some/api/endpoint/",
-  name        : "name",
   initialItem : {
     id       : undefined,
     fooField : undefined,
   },
   pageArgName : "p",
   idKey       : "id",
-  page        : 2,
-  params      : "foo=bar",
+  number      : 2,
+  token       : "foo=bar",
   items       : [
     {
       id       : "baz",
@@ -57,55 +54,7 @@ const receivePageAction = receivePage({
       fooField : "barValue",
     },
   ],
-  count: 42,
-});
-
-describe("params reducer", () => {
-
-  it("should return the state by default", () => {
-    const state = params(Immutable.Map({ some: "state" }), { type: "some action" });
-
-    expect(state).
-      to.equal(
-        Immutable.Map({ some: "state" })
-      );
-  });
-
-  // it("should initialize new params key with undefined count when requesting page", () => {
-  //   const state = params(undefined, requestPageAction);
-  //
-  //   expect(state).
-  //     to.equal({
-  //       "foo=bar": unde,
-  //     });
-  // });
-
-  it("should update results count corresponding to the params when receiving page", () => {
-    const state = params(Immutable.Map({ "foo=bar": undefined }), receivePageAction);
-
-    expect(state).
-      to.equal(Immutable.Map({
-        "foo=bar": 42,
-      }));
-  });
-
-  it("should not update results count corresponding to the params when receiving page with errrors", () => {
-    const state = params(Immutable.Map({
-      "foo=bar": undefined,
-    }), {
-      ...receivePageAction,
-      payload: {
-        ...receivePageAction.payload,
-        error: true,
-      },
-    });
-
-    expect(state).
-      to.equal(Immutable.Map({
-        "foo=bar": undefined,
-      }));
-  });
-
+  total: 2,
 });
 
 describe("pages reducer", () => {
@@ -127,9 +76,9 @@ describe("pages reducer", () => {
     expect(state).
       to.equal(
         Immutable.Map({
-          "?foo=bar&p=2": Immutable.Map({
+          "foo=bar": Immutable.Map({
             number   : 2,
-            params   : "foo=bar",
+            token    : "foo=bar",
             ids      : Immutable.List(),
             fetching : true,
             error    : false,
@@ -141,9 +90,9 @@ describe("pages reducer", () => {
 
   it("should populate the pages map at the page url key with the item ids", () => {
     const state = pages(Immutable.Map({
-      "?foo=bar&p=2": Immutable.Map({
+      "foo=bar": Immutable.Map({
         number   : 2,
-        params   : "foo=bar",
+        token    : "foo=bar",
         ids      : Immutable.List(),
         fetching : true,
         fetched  : false,
@@ -152,9 +101,9 @@ describe("pages reducer", () => {
 
     expect(state).
       to.equal(Immutable.Map({
-        "?foo=bar&p=2": Immutable.Map({
+        "foo=bar": Immutable.Map({
           number : 2,
-          params : "foo=bar",
+          token  : "foo=bar",
           ids    : Immutable.List([
             "baz",
             "bar",
@@ -162,69 +111,8 @@ describe("pages reducer", () => {
           fetching : false,
           fetched  : true,
           error    : false,
+          total    : 2,
         }),
-      }));
-  });
-
-});
-
-describe("currentPages reducer", () => {
-
-  it("should return the state by default", () => {
-    const state = currentPages(Immutable.Map({ some: "state" }), { type: "some action" });
-
-    expect(state).
-      to.equal(Immutable.Map({ some: "state" }));
-  });
-
-  it("should update the current pages map with an entry with the paginator slice name as key and the current page url as value when requesting a page", () => {
-    const state = currentPages(undefined, requestPageAction);
-
-    expect(state).
-      to.equal(Immutable.Map({
-        name: "?foo=bar&p=2",
-      }));
-  });
-
-});
-
-describe("currentView reducer", () => {
-
-  it("should return the state by default", () => {
-    const state = currentView(undefined, { type: "some action" });
-
-    expect(state).
-      to.equal(Immutable.Map());
-  });
-
-  it("should reset the current view", () => {
-    const
-      initial = Immutable.Map({
-        name1: 2,
-      }),
-      state = currentView(initial, resetView({
-        name: "name1",
-      }));
-
-    expect(state).
-      to.equal(Immutable.Map({
-        name1: 1,
-      }));
-  });
-
-  it("should change the current view", () => {
-    const
-      initial = Immutable.Map({
-        name1: 2,
-      }),
-      state = currentView(initial, changeView({
-        name : "name1",
-        view : 3,
-      }));
-
-    expect(state).
-      to.equal(Immutable.Map({
-        name1: 3,
       }));
   });
 
