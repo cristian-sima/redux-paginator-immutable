@@ -6,7 +6,7 @@ import type { State } from "./types";
 import * as Immutable from "immutable";
 import { createSelector } from "reselect";
 
-const pagesSelector = (state : State) => state.pages;
+const pagesSelector = (state : State) => state;
 
 const rowsPerPage = 50;
 

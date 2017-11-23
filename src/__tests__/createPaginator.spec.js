@@ -84,7 +84,7 @@ import {
 //         pageArgName : "p",
 //         idKey       : "id",
 //         page        : 2,
-//         params      : "foo=bar",
+//         token      : "foo=bar",
 //       }));
 //   });
 //
@@ -125,7 +125,7 @@ import {
 //         pageArgName : "p",
 //         idKey       : "id",
 //         page        : 42,
-//         params      : "foo=bar",
+//         token      : "foo=bar",
 //       }));
 //     expect(actionForBar).
 //       toEqual(requestPage({
@@ -140,7 +140,7 @@ import {
 //         pageArgName : "p",
 //         idKey       : "id",
 //         page        : 17,
-//         params      : "bar=foo",
+//         token      : "bar=foo",
 //       }));
 //   });
 //
@@ -173,7 +173,7 @@ describe("createPaginator", () => {
         pageArgName : "p",
         idKey       : "id_field",
         page        : 42,
-        params      : "foo=bar",
+        token       : "foo=bar",
       }));
   });
 

@@ -16,41 +16,37 @@ import {
 
 import * as Immutable from "immutable";
 
-const paginator = {
-  params: Immutable.Map({
+const paginator = Immutable.Map({
+  "foo=bar": Immutable.Map({
+    page  : 3,
+    token : "foo=bar",
+    ids   : Immutable.List([
+      1,
+      2,
+      3,
+      7,
+      8,
+      9,
+    ]),
+    count    : 42,
+    view     : 2,
+    fetching : false,
+    fetched  : true,
   }),
-  pages: Immutable.Map({
-    "foo=bar": Immutable.Map({
-      page  : 3,
-      token : "foo=bar",
-      ids   : Immutable.List([
-        1,
-        2,
-        3,
-        7,
-        8,
-        9,
-      ]),
-      count    : 42,
-      view     : 2,
-      fetching : false,
-      fetched  : true,
-    }),
-    "foo=baz": Immutable.Map({
-      page  : 1,
-      token : "foo=baz",
-      ids   : Immutable.List([
-        1,
-        4,
-        6,
-      ]),
-      fetching : false,
-      fetched  : true,
-      count    : 17,
-      view     : 1,
-    }),
+  "foo=baz": Immutable.Map({
+    page  : 1,
+    token : "foo=baz",
+    ids   : Immutable.List([
+      1,
+      4,
+      6,
+    ]),
+    fetching : false,
+    fetched  : true,
+    count    : 17,
+    view     : 1,
   }),
-};
+});
 
 const items = Immutable.Map({
   "1": Immutable.Map({

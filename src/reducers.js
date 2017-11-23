@@ -16,8 +16,8 @@ import {
 
 import * as Immutable from "immutable";
 //
-// const getPageUrlFromAction = ({ meta: { pageArgName }, payload: { params, page } }) =>
-//   buildSuffix(pageArgName, page, params);
+// const getPageUrlFromAction = ({ meta: { pageArgName }, payload: { token, page } }) =>
+//   buildSuffix(pageArgName, page, token);
 
 const requestPage = (state : PagesState, action : Action) => {
     const { payload : { token, page } } = action;

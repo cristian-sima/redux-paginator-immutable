@@ -38,7 +38,7 @@ export const createPaginator : CreatePaginator = (endpoint, {
 }) => {
 
   const actions = ({
-    requestPage: (page : number, params : string) => requestPage({
+    requestPage: (page : number, token : string) => requestPage({
       endpoint,
       initialItem,
       resultsKey,
@@ -46,7 +46,7 @@ export const createPaginator : CreatePaginator = (endpoint, {
       pageArgName,
       idKey,
       page,
-      params,
+      token,
     }),
     resetView (token) {
       return resetView(endpoint, token);
