@@ -29,6 +29,7 @@ const requestPage = (state : PagesState, action : Action) => {
       error    : false,
       fetching : true,
       fetched  : false,
+      view     : 1,
     });
 
     if (state.has(token)) {

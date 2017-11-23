@@ -82,6 +82,7 @@ describe("pages reducer", () => {
             ids      : Immutable.List(),
             fetching : true,
             error    : false,
+            view     : 1,
             fetched  : false,
           }),
         })

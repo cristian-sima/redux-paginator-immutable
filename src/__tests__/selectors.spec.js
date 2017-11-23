@@ -28,7 +28,7 @@ const paginator = Immutable.Map({
       8,
       9,
     ]),
-    count    : 42,
+    total    : 42,
     view     : 2,
     fetching : false,
     fetched  : true,
@@ -43,7 +43,7 @@ const paginator = Immutable.Map({
     ]),
     fetching : false,
     fetched  : true,
-    count    : 17,
+    total    : 17,
     view     : 1,
   }),
 });

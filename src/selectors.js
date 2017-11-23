@@ -51,7 +51,7 @@ export const getCurrentTotalResultsCount = createSelector(
       return 0;
     }
 
-    return page.get("count");
+    return page.get("total");
   }
 );
 
