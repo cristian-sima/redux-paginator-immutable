@@ -1,7 +1,7 @@
 // @flow
 
 import { resetView, changeView } from "./actions";
-import { createPaginator } from "./createPaginator";
+import { createPaginator, onlyForEndpoint } from "./createPaginator";
 import paginatorMiddleware from "./paginatorMiddleware";
 
 import {
@@ -23,6 +23,7 @@ export {
   changeView,
 
   createPaginator,
+  onlyForEndpoint,
 
   paginatorMiddleware,
 

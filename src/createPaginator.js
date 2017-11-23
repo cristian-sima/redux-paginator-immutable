@@ -28,8 +28,8 @@ type GetRequestPageActionCreatorsForArgsTyps = {
   countKey: string;
 }
 
-// type OnlyForEndpoint = (endpoint : string, reducer : any) =>
-// (state? : any, action : { meta: { endpoint : string }}) => any;
+type OnlyForEndpoint = (endpoint : string, reducer : any) =>
+(state? : any, action : { meta: { endpoint : string }}) => any;
 
 import {
   params as paramsReducer,
@@ -40,19 +40,16 @@ import {
 } from "./reducers";
 import { requestPage } from "./actions";
 
+import * as Immutable from "immutable";
 
-// export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) =>
-//   (state, action) => {
-//     if (typeof action.meta === "undefined") {
-//       return state;
-//     }
-//
-//     if (action.meta.endpoint === endpoint) {
-//       return reducer(state, action);
-//     }
-//
-//     return state;
-//   };
+export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) =>
+  (state = Immutable.Map(), action) => {
+    if (typeof action.meta === "undefined" || action.meta.endpoint !== endpoint) {
+      return state;
+    }
+
+    return reducer(state, action);
+  };
 
 export const requestPageActionCreatorForEndpoint = ({
   endpoint,
@@ -125,12 +122,12 @@ export const createPaginator : CreatePaginator = (endpoint, names, {
 
   return ({
     reducers: {
-      params       : paramsReducer,
-      pages        : pagesReducer,
-      currentPages : currentPagesReducer,
-      currentView  : currentViewReducer,
+      params       : onlyForEndpoint(endpoint, paramsReducer),
+      pages        : onlyForEndpoint(endpoint, pagesReducer),
+      currentPages : onlyForEndpoint(endpoint, currentPagesReducer),
+      currentView  : onlyForEndpoint(endpoint, currentViewReducer),
     },
-    itemsReducer,
+    itemsReducer: onlyForEndpoint(endpoint, itemsReducer),
     ...requestPageActionCreators,
   });
 };

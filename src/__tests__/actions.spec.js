@@ -109,13 +109,17 @@ describe("actions", () => {
   });
 
   it("should create reset view action", () => {
-    const action = resetView("name");
+    const action = resetView({
+      name     : "name",
+      endpoint : "some/api/endpoint/",
+    });
 
     expect(action).
       toEqual({
         type : RESET_VIEW,
         meta : {
-          name: "name",
+          endpoint : "some/api/endpoint/",
+          name     : "name",
         },
         payload: {
         },
@@ -125,13 +129,18 @@ describe("actions", () => {
   });
 
   it("should create change view action", () => {
-    const action = changeView("name", 2);
+    const action = changeView({
+      name     : "name",
+      view     : 2,
+      endpoint : "some/api/endpoint/",
+    });
 
     expect(action).
       toEqual({
         type : CHANGE_VIEW,
         meta : {
-          name: "name",
+          endpoint : "some/api/endpoint/",
+          name     : "name",
         },
         payload: {
           view: 2,

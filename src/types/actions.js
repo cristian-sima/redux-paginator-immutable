@@ -39,6 +39,7 @@ type ReceivePageAction = {
 type ChangeViewAction = {
   type : "@@redux-paginator-immutable/CHANGE_VIEW";
   meta : {
+    endpoint: string;
     name: string;
   };
   payload: {
@@ -49,6 +50,7 @@ type ChangeViewAction = {
 type ResetViewAction = {
   type : "@@redux-paginator-immutable/RESET_VIEW";
   meta : {
+    endpoint: string;
     name: string;
   };
   payload: {};

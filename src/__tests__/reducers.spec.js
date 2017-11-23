@@ -202,7 +202,9 @@ describe("currentView reducer", () => {
       initial = Immutable.Map({
         name1: 2,
       }),
-      state = currentView(initial, resetView("name1"));
+      state = currentView(initial, resetView({
+        name: "name1",
+      }));
 
     expect(state).
       to.equal(Immutable.Map({
@@ -215,7 +217,10 @@ describe("currentView reducer", () => {
       initial = Immutable.Map({
         name1: 2,
       }),
-      state = currentView(initial, changeView("name1", 3));
+      state = currentView(initial, changeView({
+        name : "name1",
+        view : 3,
+      }));
 
     expect(state).
       to.equal(Immutable.Map({

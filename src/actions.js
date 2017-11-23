@@ -2,6 +2,17 @@
 
 import type { Action } from "./types";
 
+type ChangeView = {
+  name : string;
+  view : number;
+  endpoint: string;
+}
+
+type ResetView = {
+  name : string;
+  endpoint: string;
+}
+
 import {
   RECEIVE_PAGE,
   REQUEST_PAGE,
@@ -94,17 +105,19 @@ export const receivePage = ({
   },
 });
 
-export const resetView = (name : string) : Action => ({
+export const resetView = ({ endpoint, name } : ResetView) : Action => ({
   type : RESET_VIEW,
   meta : {
+    endpoint,
     name,
   },
   payload: {},
 });
 
-export const changeView = (name : string, view : number) : Action => ({
+export const changeView = ({ endpoint, name, view } : ChangeView) : Action => ({
   type : CHANGE_VIEW,
   meta : {
+    endpoint,
     name,
   },
   payload: {
