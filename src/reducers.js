@@ -50,6 +50,8 @@ const requestPage = (state : PagesState, action : Action) => {
     } = action;
 
     if (state.has(token)) {
+      const hasError = error === true;
+
       return state.update(token, (current) => (
         current.update((page) => (
           current.merge(
@@ -60,9 +62,9 @@ const requestPage = (state : PagesState, action : Action) => {
                 )
               ),
               fetching : false,
-              error    : error === true,
+              error    : hasError,
               fetched  : true,
-              total,
+              total    : hasError ? page.get("total") : total,
             })
           )
         ))
