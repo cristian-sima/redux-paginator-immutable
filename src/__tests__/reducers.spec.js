@@ -22,10 +22,9 @@ import {
 
 const requestPageAction = requestPage({
   endpoint    : "some/api/endpoint",
-  initialItem : {
-    id       : undefined,
-    fooField : undefined,
-  },
+  initialItem : Immutable.Map({
+    infoFetched: false,
+  }),
   resultsKey  : "results",
   totalKey    : "total",
   pageArgName : "p",
@@ -36,10 +35,9 @@ const requestPageAction = requestPage({
 
 const receivePageAction = receivePage({
   endpoint    : "some/api/endpoint/",
-  initialItem : {
-    id       : undefined,
-    fooField : undefined,
-  },
+  initialItem : Immutable.Map({
+    infoFetched: false,
+  }),
   pageArgName : "p",
   idKey       : "id",
   page        : 2,
@@ -127,12 +125,14 @@ describe("items reducer", () => {
     expect(state).
       to.equal(Immutable.Map({
         "baz": Immutable.Map({
-          id       : "baz",
-          fooField : "bazValue",
+          infoFetched : false,
+          id          : "baz",
+          fooField    : "bazValue",
         }),
         "bar": Immutable.Map({
-          id       : "bar",
-          fooField : "barValue",
+          infoFetched : false,
+          id          : "bar",
+          fooField    : "barValue",
         }),
       }));
   });

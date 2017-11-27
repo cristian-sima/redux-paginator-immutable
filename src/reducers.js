@@ -19,7 +19,8 @@ import * as Immutable from "immutable";
 // const getPageUrlFromAction = ({ meta: { pageArgName }, payload: { token, page } }) =>
 //   buildSuffix(pageArgName, page, token);
 
-const requestPage = (state : PagesState, action : Action) => {
+const
+  requestPage = (state : PagesState, action : Action) => {
     const { payload : { token, page } } = action;
 
     const elements = Immutable.Map({
@@ -110,11 +111,13 @@ export const pages = (state : PagesState = Immutable.Map(), action : Action) => 
 
 export const items = (state : ItemsState = Immutable.Map(), action : Action) => {
   const { type, payload, meta } = action;
+  const { items : payloadItems } = payload;
+  const { idKey, initialItem } = meta;
 
   switch (type) {
     case RECEIVE_PAGE: {
-      const newItems = payload.items.reduce((previous, item) => (
-        previous.set(String(item[meta.idKey]), Immutable.Map(item))
+      const newItems = payloadItems.reduce((previous, item) => (
+        previous.set(String(item[idKey]), Immutable.Map(item).merge(initialItem))
       ), Immutable.Map());
 
       return state.merge(newItems);
