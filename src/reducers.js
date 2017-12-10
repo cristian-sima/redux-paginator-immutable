@@ -5,22 +5,15 @@ import type {
   PagesState,
 
   Action,
+  ReceivePageAction,
+  ChangeViewAction,
+  RequestPageAction,
 } from "./types";
 
-import {
-  REQUEST_PAGE,
-  RECEIVE_PAGE,
-  RESET_VIEW,
-  CHANGE_VIEW,
-} from "./actionTypes";
-
 import * as Immutable from "immutable";
-//
-// const getPageUrlFromAction = ({ meta: { pageArgName }, payload: { token, page } }) =>
-//   buildSuffix(pageArgName, page, token);
 
 const
-  requestPage = (state : PagesState, action : Action) => {
+  requestPage = (state : PagesState, action : RequestPageAction) => {
     const { payload : { token, page } } = action;
 
     const elements = Immutable.Map({
@@ -44,7 +37,7 @@ const
 
     return state.set(token, init);
   },
-  receivePage = (state : PagesState, action : Action) => {
+  receivePage = (state : PagesState, action : ReceivePageAction) => {
     const {
       meta: { idKey },
       payload : { token, items, total, error },
@@ -74,7 +67,7 @@ const
 
     return state;
   },
-  changeView = (state : PagesState, action : Action, view : number) => {
+  performChangeView = (state : PagesState, action : Action, view : number) => {
     const { payload : { token } } = action;
 
     const item = state.get(token);
@@ -86,23 +79,38 @@ const
     return state.update(token, (current) => (
       current.set("view", view)
     ));
+  },
+  changeView = (state : PagesState, action : ChangeViewAction) => (
+    performChangeView(state, action, action.payload.view)
+  ),
+  resetView = (state : PagesState, action : Action) => (
+    performChangeView(state, action, 1)
+  ),
+  receivePageItems = (state : ItemsState, action : ReceivePageAction) => {
+    const { payload, meta } = action;
+    const { items : payloadItems } = payload;
+    const { idKey, initialItem } = meta;
+
+    const newItems = payloadItems.reduce((previous, item) => (
+      previous.set(String(item[idKey]), Immutable.Map(item).merge(initialItem))
+    ), Immutable.Map());
+
+    return state.merge(newItems);
   };
 
 export const pages = (state : PagesState = Immutable.Map(), action : Action) => {
-  const { type, payload } = action;
-
-  switch (type) {
-    case REQUEST_PAGE:
+  switch (action.type) {
+    case "@@redux-paginator-immutable/REQUEST_PAGE":
       return requestPage(state, action);
 
-    case RECEIVE_PAGE:
+    case "@@redux-paginator-immutable/RECEIVE_PAGE":
       return receivePage(state, action);
 
-    case RESET_VIEW:
-      return changeView(state, action, 1);
+    case "@@redux-paginator-immutable/RESET_VIEW":
+      return resetView(state, action);
 
-    case CHANGE_VIEW:
-      return changeView(state, action, payload.view);
+    case "@@redux-paginator-immutable/CHANGE_VIEW":
+      return changeView(state, action);
 
     default:
       return state;
@@ -110,18 +118,9 @@ export const pages = (state : PagesState = Immutable.Map(), action : Action) => 
 };
 
 export const items = (state : ItemsState = Immutable.Map(), action : Action) => {
-  const { type, payload, meta } = action;
-  const { items : payloadItems } = payload;
-  const { idKey, initialItem } = meta;
-
-  switch (type) {
-    case RECEIVE_PAGE: {
-      const newItems = payloadItems.reduce((previous, item) => (
-        previous.set(String(item[idKey]), Immutable.Map(item).merge(initialItem))
-      ), Immutable.Map());
-
-      return state.merge(newItems);
-    }
+  switch (action.type) {
+    case "@@redux-paginator-immutable/RECEIVE_PAGE":
+      return receivePageItems(state, action);
     default:
       return state;
   }

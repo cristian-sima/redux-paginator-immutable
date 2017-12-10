@@ -2,14 +2,6 @@
 
 import type { Action } from "./types";
 
-import {
-  RECEIVE_PAGE,
-  REQUEST_PAGE,
-
-  RESET_VIEW,
-  CHANGE_VIEW,
-} from "./actionTypes";
-
 type RequestPageArgsTypes = {
   endpoint: string;
   initialItem: any;
@@ -44,7 +36,7 @@ export const requestPage = ({
   page,
   token,
 } : RequestPageArgsTypes) : Action => ({
-  type : REQUEST_PAGE,
+  type : "@@redux-paginator-immutable/REQUEST_PAGE",
   meta : {
     endpoint,
     initialItem,
@@ -71,7 +63,7 @@ export const receivePage = ({
   total,
   raw,
 } : ReceivePageArgsTypes) : Action => ({
-  type : RECEIVE_PAGE,
+  type : "@@redux-paginator-immutable/RECEIVE_PAGE",
   meta : {
     endpoint,
     initialItem,
@@ -89,7 +81,7 @@ export const receivePage = ({
 });
 
 export const resetView = (endpoint : string, token : string) : Action => ({
-  type : RESET_VIEW,
+  type : "@@redux-paginator-immutable/RESET_VIEW",
   meta : {
     endpoint,
   },
@@ -102,7 +94,7 @@ export const changeView = (endpoint : string, {
   token,
   view,
 } : { token : string, view : number }) : Action => ({
-  type : CHANGE_VIEW,
+  type : "@@redux-paginator-immutable/CHANGE_VIEW",
   meta : {
     endpoint,
   },

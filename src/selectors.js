@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable no-undefined */
 
-import type { State } from "./types";
+import type { State, PagesState } from "./types";
 
 import * as Immutable from "immutable";
 import { createSelector } from "reselect";
@@ -12,8 +12,8 @@ const rowsPerPage = 50;
 
 const pageSelector = createSelector(
   pagesSelector,
-  (state, token) => token,
-  (pages, token) => pages.get(token)
+  (state : State, token : string) => token,
+  (pages : PagesState, token : string) => pages.get(token)
 );
 
 export const getAllResults = createSelector(

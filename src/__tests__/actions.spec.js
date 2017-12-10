@@ -10,6 +10,7 @@ import {
   resetView,
   changeView,
 } from "../actions";
+
 import {
   RECEIVE_PAGE,
   REQUEST_PAGE,

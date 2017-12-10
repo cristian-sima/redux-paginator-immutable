@@ -1,6 +1,6 @@
 // @flow
 
-type RequestPageAction = {
+export type RequestPageAction = {
   type : "@@redux-paginator-immutable/REQUEST_PAGE";
   meta : {
     endpoint: string;
@@ -16,7 +16,7 @@ type RequestPageAction = {
   };
 };
 
-type ReceivePageAction = {
+export type ReceivePageAction = {
   type : "@@redux-paginator-immutable/RECEIVE_PAGE";
   meta : {
     endpoint: string;
@@ -28,13 +28,13 @@ type ReceivePageAction = {
     page: number;
     token: string;
     items: Array<any>;
-    count: number;
+    total: number;
     error: bool;
     raw?: string;
   };
-}
+};
 
-type ChangeViewAction = {
+export type ChangeViewAction = {
   type : "@@redux-paginator-immutable/CHANGE_VIEW";
   meta : {
     endpoint: string;
@@ -43,9 +43,9 @@ type ChangeViewAction = {
     view: number;
     token: string;
   };
-}
+};
 
-type ResetViewAction = {
+export type ResetViewAction = {
   type : "@@redux-paginator-immutable/RESET_VIEW";
   meta : {
     endpoint: string;
@@ -53,10 +53,9 @@ type ResetViewAction = {
   payload: {
     token: string;
   };
-}
+};
 
-export type Action =
-| RequestPageAction
+export type Action = RequestPageAction
 | ReceivePageAction
 | ResetViewAction
-| ChangeViewAction
+| ChangeViewAction;

@@ -7,7 +7,7 @@ import { REQUEST_PAGE } from "./actionTypes";
 import { receivePage } from "./actions";
 import { fetchPage } from "./agent";
 
-const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) =>
+const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) => (
   (next : any) => (action : Action) => {
     if (action.type === REQUEST_PAGE) {
       const {
@@ -81,6 +81,7 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) =>
       });
     }
     return next(action);
-  };
+  }
+);
 
 export default paginatorMiddleware;

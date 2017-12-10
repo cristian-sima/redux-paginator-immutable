@@ -20,14 +20,15 @@ import { requestPage, resetView, changeView } from "./actions";
 
 import * as Immutable from "immutable";
 
-export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) =>
+export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) => (
   (state = Immutable.Map(), action) => {
     if (typeof action.meta === "undefined" || action.meta.endpoint !== endpoint) {
       return state;
     }
 
     return reducer(state, action);
-  };
+  }
+);
 
 export const createPaginator : CreatePaginator = (endpoint, {
   initialItem,
