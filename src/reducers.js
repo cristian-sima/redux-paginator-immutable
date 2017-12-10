@@ -10,6 +10,13 @@ import type {
   RequestPageAction,
 } from "./types";
 
+import {
+  REQUEST_PAGE,
+  RECEIVE_PAGE,
+  RESET_VIEW,
+  CHANGE_VIEW,
+} from "./actionTypes";
+
 import * as Immutable from "immutable";
 
 const
@@ -100,16 +107,16 @@ const
 
 export const pages = (state : PagesState = Immutable.Map(), action : Action) => {
   switch (action.type) {
-    case "@@redux-paginator-immutable/REQUEST_PAGE":
+    case REQUEST_PAGE:
       return requestPage(state, action);
 
-    case "@@redux-paginator-immutable/RECEIVE_PAGE":
+    case RECEIVE_PAGE:
       return receivePage(state, action);
 
-    case "@@redux-paginator-immutable/RESET_VIEW":
+    case RESET_VIEW:
       return resetView(state, action);
 
-    case "@@redux-paginator-immutable/CHANGE_VIEW":
+    case CHANGE_VIEW:
       return changeView(state, action);
 
     default:
@@ -119,7 +126,7 @@ export const pages = (state : PagesState = Immutable.Map(), action : Action) => 
 
 export const items = (state : ItemsState = Immutable.Map(), action : Action) => {
   switch (action.type) {
-    case "@@redux-paginator-immutable/RECEIVE_PAGE":
+    case RECEIVE_PAGE:
       return receivePageItems(state, action);
     default:
       return state;
