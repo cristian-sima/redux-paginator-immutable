@@ -89,39 +89,6 @@ const items = Immutable.Map({
 
 describe("selectors", () => {
 
-  // it("getCurrentPageNumber should select the current page number from pagination slice of state", () => {
-  //   expect(getCurrentPageNumber(paginator, "foo=bar")).
-  //     to.equal(2);
-  // });
-  //
-  // it("getCurrentPageNumber should return 1 if the current page is not defined", () => {
-  //   expect(getCurrentPageNumber(paginator, "name3")).
-  //     to.equal(1);
-  // });
-
-  // it("getCurrentPageResults should select the items from the given items param corresponding to the current page for the provided name", () => {
-  //   expect(getCurrentPageResults(items, paginator, "foo=bar")).
-  //     to.equal(Immutable.List([
-  //       Immutable.Map({
-  //         data : "foo1",
-  //         id   : 1,
-  //       }),
-  //       Immutable.Map({
-  //         data : "foo4",
-  //         id   : 4,
-  //       }),
-  //       Immutable.Map({
-  //         data : "foo6",
-  //         id   : 6,
-  //       }),
-  //     ]));
-  // });
-  //
-  // it("getCurrentPageResults should return an empty array if current page for the provided name is undefined", () => {
-  //   expect(getCurrentPageResults(items, paginator, "name3")).
-  //     to.equal(Immutable.List([]));
-  // });
-
   it("getAllResults shoud select all the items ids for pages with same params than the current page", () => {
     expect(getAllResults(paginator, "foo=bar", items)).
       to.equal(Immutable.List([
@@ -183,16 +150,6 @@ describe("selectors", () => {
     expect(getCurrentTotalResultsCount(paginator, "name3")).
       to.equal(0);
   });
-  //
-  // it("isCurrentPageFetching should return whether the current page is fetching or not for the provided name", () => {
-  //   expect(isCurrentPageFetching(paginator, "foo=bar")).
-  //     to.equal(true);
-  // });
-  //
-  // it("isCurrentPageFetched should return whether the current page is fetched or not for the provided name", () => {
-  //   expect(isCurrentPageFetched(paginator, "foo=bar")).
-  //     to.equal(false);
-  // });
 
   it("isPageFetching should return whether the current page is fetching or not for the provided name", () => {
     expect(isPageFetching(paginator, "foo=bar", 1)).
