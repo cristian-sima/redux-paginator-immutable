@@ -32,7 +32,7 @@
     "build": "npm run build:lib && npm run build:umd && npm run build:umd:min && node ./prepublish.js",
     "clean": "rimraf dist lib",
     "flow": "flow check --color=always",
-    "eslint": "eslint src --fix --ignore-pattern=src/__tests__/**",
+    "eslint": "eslint src --fix",
     "prepublish": "npm run test && npm run eslint && npm run flow && npm run clean && npm run build",
     "test": "mocha --compilers js:babel-register --recursive --recursive \"src/**/__tests__/*\" --require src/__tests__/setup.js",
     "test:watch": "npm test -- --watch",

@@ -59,8 +59,7 @@ describe("actions", () => {
             "bar",
             "baz",
           ],
-          total : 42,
-          raw   : undefined,
+          total: 42,
         },
       });
 

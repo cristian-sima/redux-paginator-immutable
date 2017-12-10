@@ -10,14 +10,11 @@ chai.use(chaiImmutable);
 import {
   requestPage,
   receivePage,
-  resetView,
-  changeView,
 } from "../actions";
 
 import {
   pages,
   items,
-  currentView,
 } from "../reducers";
 
 const requestPageAction = requestPage({

@@ -22,7 +22,6 @@ type ReceivePageArgsTypes = {
   token: string;
   items: Array<any>;
   total: number;
-  raw?: string;
   error: bool;
 }
 
@@ -61,7 +60,6 @@ export const receivePage = ({
   items,
   error,
   total,
-  raw,
 } : ReceivePageArgsTypes) : Action => ({
   type : "@@redux-paginator-immutable/RECEIVE_PAGE",
   meta : {
@@ -76,7 +74,6 @@ export const receivePage = ({
     items,
     error,
     total,
-    raw,
   },
 });
 

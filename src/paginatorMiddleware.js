@@ -69,7 +69,6 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) => (
                 token,
                 items : results,
                 total,
-                raw   : res,
               }));
             }).
             catch(() => {
