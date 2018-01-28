@@ -1,6 +1,13 @@
 // @flow
 
-type CreatePaginator = (endpoint: string, info: {
+type EndpointData = {
+  path : string;
+  cb : () => string;
+};
+
+type Endpoint = EndpointData | string;
+
+type CreatePaginator = (endpoint: Endpoint, info: {
   initialItem: any;
   resultsKey: string;
   totalKey: string;
@@ -30,7 +37,21 @@ export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) => (
   }
 );
 
-export const createPaginator : CreatePaginator = (endpoint, {
+const getEndpoint = (data : Endpoint) => {
+  if (typeof data === "object") {
+    return {
+      path : data.path,
+      cb   : data.cb,
+    };
+  }
+
+  return {
+    path : data,
+    cb   : null,
+  };
+};
+
+export const createPaginator : CreatePaginator = (endpointData : Endpoint, {
   initialItem,
   resultsKey,
   totalKey = "Total",
@@ -38,9 +59,15 @@ export const createPaginator : CreatePaginator = (endpoint, {
   idKey = "ID",
 }) => {
 
+  const {
+    path: endpoint,
+    cb: endpointCb,
+  } = getEndpoint(endpointData);
+
   const actions = ({
     requestPage: (page : number, token : string) => requestPage({
       endpoint,
+      endpointCb,
       initialItem,
       resultsKey,
       totalKey,

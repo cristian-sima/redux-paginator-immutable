@@ -1,9 +1,10 @@
 // @flow
 
-import type { Action } from "./types";
+import type { Action, EndPointCb } from "./types";
 
 type RequestPageArgsTypes = {
   endpoint: string;
+  endpointCb: EndPointCb;
   initialItem: any;
   resultsKey: string;
   totalKey: string;
@@ -15,6 +16,7 @@ type RequestPageArgsTypes = {
 
 type ReceivePageArgsTypes = {
   endpoint: string;
+  endpointCb: EndPointCb;
   initialItem: any;
   pageArgName: string;
   idKey: string;
@@ -27,6 +29,7 @@ type ReceivePageArgsTypes = {
 
 export const requestPage = ({
   endpoint,
+  endpointCb,
   initialItem,
   resultsKey,
   totalKey,
@@ -38,6 +41,7 @@ export const requestPage = ({
   type : "@@redux-paginator-immutable/REQUEST_PAGE",
   meta : {
     endpoint,
+    endpointCb,
     initialItem,
     resultsKey,
     totalKey,
@@ -52,6 +56,7 @@ export const requestPage = ({
 
 export const receivePage = ({
   endpoint,
+  endpointCb,
   initialItem,
   pageArgName,
   idKey,
@@ -64,6 +69,7 @@ export const receivePage = ({
   type : "@@redux-paginator-immutable/RECEIVE_PAGE",
   meta : {
     endpoint,
+    endpointCb,
     initialItem,
     pageArgName,
     idKey,

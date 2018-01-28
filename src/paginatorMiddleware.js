@@ -13,6 +13,7 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) => (
       const {
         meta: {
           endpoint,
+          endpointCb,
           initialItem,
           resultsKey,
           totalKey,
@@ -29,6 +30,7 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) => (
         const markAsError = () => {
           dispatch2(receivePage({
             endpoint,
+            endpointCb,
             initialItem,
             pageArgName,
             idKey,
@@ -40,9 +42,12 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) => (
           }));
         };
 
+        const rawPath = typeof endpointCb === "function" ? endpointCb() : endpoint;
+        const path = rawPath === null ? "" : rawPath;
+
         try {
           fetchPage({
-            endpoint,
+            endpoint: path,
             pageArgName,
             page,
             token,
@@ -61,6 +66,7 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) => (
               }
               dispatch2(receivePage({
                 endpoint,
+                endpointCb,
                 initialItem,
                 pageArgName,
                 idKey,

@@ -28,6 +28,7 @@ describe("createPaginator", () => {
     expect(action).
       toEqual(requestPage({
         endpoint    : "some/api/endpoint",
+        endpointCb  : null,
         initialItem : {
           id       : undefined,
           fooField : undefined,

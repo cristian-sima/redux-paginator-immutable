@@ -1,9 +1,12 @@
 // @flow
 
+import type { EndPointCb } from "./index";
+
 export type RequestPageAction = {
   type : "@@redux-paginator-immutable/REQUEST_PAGE";
   meta : {
     endpoint: string;
+    endpointCb: EndPointCb;
     initialItem: any;
     resultsKey: string;
     totalKey: string;
@@ -20,6 +23,7 @@ export type ReceivePageAction = {
   type : "@@redux-paginator-immutable/RECEIVE_PAGE";
   meta : {
     endpoint: string;
+    endpointCb: EndPointCb;
     initialItem: any;
     pageArgName: string;
     idKey: string;
