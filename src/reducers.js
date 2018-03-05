@@ -98,10 +98,12 @@ const
     const { items : payloadItems } = payload;
     const { idKey, manageEntity } = meta;
 
-    const manage = typeof manageEntity === "function" ? manageEntity : (item) => Immutable.Map(item);
+    const manage : any = (
+      typeof manageEntity === "function"
+    ) ? manageEntity : (item) => Immutable.Map(item);
 
     const newItems = payloadItems.reduce((previous, item) => (
-      previous.set(String(item[idKey]), manage(item))
+      previous.set(String(item[idKey]), manage(item, state, idKey))
     ), Immutable.Map());
 
     return state.merge(newItems);
