@@ -8,7 +8,7 @@ type EndpointData = {
 type Endpoint = EndpointData | string;
 
 type CreatePaginator = (endpoint: Endpoint, info: {
-  initialItem: any;
+  manageEntity: any;
   resultsKey: string;
   totalKey: string;
   pageArgName: string;
@@ -52,7 +52,7 @@ const getEndpoint = (data : Endpoint) => {
 };
 
 export const createPaginator : CreatePaginator = (endpointData : Endpoint, {
-  initialItem,
+  manageEntity,
   resultsKey,
   totalKey = "Total",
   pageArgName = "page",
@@ -68,7 +68,7 @@ export const createPaginator : CreatePaginator = (endpointData : Endpoint, {
     requestPage: (page : number, token : string) => requestPage({
       endpoint,
       endpointCb,
-      initialItem,
+      manageEntity,
       resultsKey,
       totalKey,
       pageArgName,

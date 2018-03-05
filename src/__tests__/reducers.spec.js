@@ -19,7 +19,7 @@ import {
 
 const requestPageAction = requestPage({
   endpoint    : "some/api/endpoint",
-  initialItem : Immutable.Map({
+  manageEntity : Immutable.Map({
     infoFetched: false,
   }),
   resultsKey  : "results",
@@ -32,7 +32,7 @@ const requestPageAction = requestPage({
 
 const receivePageAction = receivePage({
   endpoint    : "some/api/endpoint/",
-  initialItem : Immutable.Map({
+  manageEntity : Immutable.Map({
     infoFetched: false,
   }),
   pageArgName : "p",

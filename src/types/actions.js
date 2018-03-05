@@ -7,7 +7,7 @@ export type RequestPageAction = {
   meta : {
     endpoint: string;
     endpointCb: EndPointCb;
-    initialItem: any;
+    manageEntity: any;
     resultsKey: string;
     totalKey: string;
     pageArgName: string;
@@ -24,7 +24,7 @@ export type ReceivePageAction = {
   meta : {
     endpoint: string;
     endpointCb: EndPointCb;
-    initialItem: any;
+    manageEntity: any;
     pageArgName: string;
     idKey: string;
   };

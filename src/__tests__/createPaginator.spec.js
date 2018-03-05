@@ -14,7 +14,7 @@ describe("createPaginator", () => {
 
   it("should create correct request action creator", () => {
     const paginator = createPaginator("some/api/endpoint", {
-      initialItem: {
+      manageEntity: {
         id       : undefined,
         fooField : undefined,
       },
@@ -29,7 +29,7 @@ describe("createPaginator", () => {
       toEqual(requestPage({
         endpoint    : "some/api/endpoint",
         endpointCb  : null,
-        initialItem : {
+        manageEntity : {
           id       : undefined,
           fooField : undefined,
         },

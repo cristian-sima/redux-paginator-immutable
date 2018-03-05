@@ -96,10 +96,12 @@ const
   receivePageItems = (state : ItemsState, action : ReceivePageAction) => {
     const { payload, meta } = action;
     const { items : payloadItems } = payload;
-    const { idKey, initialItem } = meta;
+    const { idKey, manageEntity } = meta;
+
+    const manage = typeof manageEntity === "function" ? manageEntity : (item) => item;
 
     const newItems = payloadItems.reduce((previous, item) => (
-      previous.set(String(item[idKey]), Immutable.Map(item).merge(initialItem))
+      previous.set(String(item[idKey]), manage(item))
     ), Immutable.Map());
 
     return state.merge(newItems);

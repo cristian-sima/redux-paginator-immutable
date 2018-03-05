@@ -23,7 +23,7 @@ describe("actions", () => {
   it("should create receive page action", () => {
     const action = receivePage({
       endpoint    : "some/api/endpoint/",
-      initialItem : {
+      manageEntity : {
         id       : undefined,
         fooField : undefined,
       },
@@ -44,7 +44,7 @@ describe("actions", () => {
         type : RECEIVE_PAGE,
         meta : {
           endpoint    : "some/api/endpoint/",
-          initialItem : {
+          manageEntity : {
             id       : undefined,
             fooField : undefined,
           },
@@ -69,7 +69,7 @@ describe("actions", () => {
   it("should create request page action", () => {
     const action = requestPage({
       endpoint    : "some/api/endpoint/",
-      initialItem : {
+      manageEntity : {
         id       : undefined,
         fooField : undefined,
       },
@@ -86,7 +86,7 @@ describe("actions", () => {
         type : REQUEST_PAGE,
         meta : {
           endpoint    : "some/api/endpoint/",
-          initialItem : {
+          manageEntity : {
             id       : undefined,
             fooField : undefined,
           },

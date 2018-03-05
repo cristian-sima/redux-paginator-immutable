@@ -14,7 +14,7 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) => (
         meta: {
           endpoint,
           endpointCb,
-          initialItem,
+          manageEntity,
           resultsKey,
           totalKey,
           pageArgName,
@@ -31,7 +31,7 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) => (
           dispatch2(receivePage({
             endpoint,
             endpointCb,
-            initialItem,
+            manageEntity,
             pageArgName,
             idKey,
             page,
@@ -67,7 +67,7 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) => (
               dispatch2(receivePage({
                 endpoint,
                 endpointCb,
-                initialItem,
+                manageEntity,
                 pageArgName,
                 idKey,
                 page,

@@ -5,7 +5,7 @@ import type { Action, EndPointCb } from "./types";
 type RequestPageArgsTypes = {
   endpoint: string;
   endpointCb: EndPointCb;
-  initialItem: any;
+  manageEntity: any;
   resultsKey: string;
   totalKey: string;
   pageArgName: string;
@@ -17,7 +17,7 @@ type RequestPageArgsTypes = {
 type ReceivePageArgsTypes = {
   endpoint: string;
   endpointCb: EndPointCb;
-  initialItem: any;
+  manageEntity: any;
   pageArgName: string;
   idKey: string;
   page: number;
@@ -30,7 +30,7 @@ type ReceivePageArgsTypes = {
 export const requestPage = ({
   endpoint,
   endpointCb,
-  initialItem,
+  manageEntity,
   resultsKey,
   totalKey,
   pageArgName,
@@ -42,7 +42,7 @@ export const requestPage = ({
   meta : {
     endpoint,
     endpointCb,
-    initialItem,
+    manageEntity,
     resultsKey,
     totalKey,
     pageArgName,
@@ -57,7 +57,7 @@ export const requestPage = ({
 export const receivePage = ({
   endpoint,
   endpointCb,
-  initialItem,
+  manageEntity,
   pageArgName,
   idKey,
   page,
@@ -70,7 +70,7 @@ export const receivePage = ({
   meta : {
     endpoint,
     endpointCb,
-    initialItem,
+    manageEntity,
     pageArgName,
     idKey,
   },
