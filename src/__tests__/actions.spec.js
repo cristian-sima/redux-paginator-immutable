@@ -23,10 +23,6 @@ describe("actions", () => {
   it("should create receive page action", () => {
     const action = receivePage({
       endpoint    : "some/api/endpoint/",
-      manageEntity : {
-        id       : undefined,
-        fooField : undefined,
-      },
       pageArgName : "p",
       idKey       : "id",
       page        : 2,
@@ -44,10 +40,6 @@ describe("actions", () => {
         type : RECEIVE_PAGE,
         meta : {
           endpoint    : "some/api/endpoint/",
-          manageEntity : {
-            id       : undefined,
-            fooField : undefined,
-          },
           pageArgName : "p",
           idKey       : "id",
         },
@@ -69,10 +61,6 @@ describe("actions", () => {
   it("should create request page action", () => {
     const action = requestPage({
       endpoint    : "some/api/endpoint/",
-      manageEntity : {
-        id       : undefined,
-        fooField : undefined,
-      },
       resultsKey  : "results",
       totalKey    : "total",
       pageArgName : "p",
@@ -86,10 +74,6 @@ describe("actions", () => {
         type : REQUEST_PAGE,
         meta : {
           endpoint    : "some/api/endpoint/",
-          manageEntity : {
-            id       : undefined,
-            fooField : undefined,
-          },
           resultsKey  : "results",
           totalKey    : "total",
           pageArgName : "p",
