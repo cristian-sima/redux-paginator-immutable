@@ -11,6 +11,11 @@ import {
   isPageFetched,
   hasPageProblems,
   getCurrentView,
+
+  // for state
+  getPaginatorPaginations,
+  getPaginatorEntities,
+  getPaginators,
 } from "./selectors";
 
 import Info from "./Info";
@@ -32,4 +37,8 @@ export {
   isPageFetched,
   hasPageProblems,
   getCurrentView,
+
+  getPaginatorPaginations,
+  getPaginatorEntities,
+  getPaginators,
 };
