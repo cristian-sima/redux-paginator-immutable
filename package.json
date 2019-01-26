@@ -1,20 +1,24 @@
 {
   "name": "redux-paginator-immutable",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "redux-paginator-immutable helps you deal with paginated API by composing your existing reducers",
   "main": "./lib/index.js",
   "babel": {
     "presets": [
       "env",
-      "flow",
       "stage-0",
       "react"
     ],
     "env": {
       "production": {
         "plugins": [
+          "@babel/plugin-syntax-dynamic-import",
           "transform-decorators-legacy",
+          "react-html-attrs",
           "transform-class-properties",
+          "transform-react-constant-elements",
+          "transform-react-inline-elements",
+          "transform-react-remove-prop-types",
           "transform-flow-strip-types"
         ]
       },
@@ -30,7 +34,7 @@
     "build:lib": "babel src --out-dir lib",
     "build:umd": "cross-env NODE_ENV=development webpack src/index.js dist/redux-paginator-immutable.js",
     "build:umd:min": "cross-env NODE_ENV=production webpack src/index.js dist/redux-paginator-immutable.min.js",
-    "build": "npm run build:lib && npm run build:umd && npm run build:umd:min && node ./prepublish.js",
+    "build": "npm run build:lib",
     "clean": "rimraf dist lib",
     "check": "npm-check-updates -a && npm update",
     "flow": "flow check --color=always",

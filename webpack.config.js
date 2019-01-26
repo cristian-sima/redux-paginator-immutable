@@ -1,12 +1,19 @@
+/* global __dirname, module */
+
 'use strict'
 
-var webpack = require('webpack')
+var pathModule = require("path");
+var webpack = require('webpack');
 var env = process.env.NODE_ENV
 
 var config = {
   module: {
     loaders: [
-      { test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ }
+      {
+        test    : /\.jsx?$/u,
+        use     : ["babel-loader"],
+        include : pathModule.join(__dirname, "lib"),
+      },
     ]
   },
   output: {
