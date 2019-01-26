@@ -106,3 +106,21 @@ export const getCurrentView = createSelector(
     return page.get("view");
   }
 );
+
+export const
+  getPaginatorPaginations = (state : State, name : string) => state.getIn([
+    "paginations",
+    name,
+  ]),
+  getPaginatorEntities = (state : State, name : string) => state.getIn([
+    "entities",
+    name,
+  ]),
+  getPaginators = createSelector(
+    getPaginatorPaginations,
+    getPaginatorEntities,
+    (list, entities) => ({
+      list,
+      entities,
+    })
+  );

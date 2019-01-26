@@ -13,6 +13,9 @@ import {
   getCurrentView,
 } from "./selectors";
 
+export Info from "./Component/Info";
+export LoadingButton from "./Component/LoadingButton";
+
 export {
   createPaginator,
   onlyForEndpoint,
