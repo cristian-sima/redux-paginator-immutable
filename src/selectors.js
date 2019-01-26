@@ -16,7 +16,7 @@ const pageSelector = createSelector(
   (pages : PagesState, token : string) => pages.get(token)
 );
 
-export const getAllResults = createSelector(
+const getAllResults = createSelector(
   pageSelector,
   (state, token, items) => items,
   (page, items) => {
@@ -28,7 +28,7 @@ export const getAllResults = createSelector(
   }
 );
 
-export const getResultsUpToPage = createSelector(
+const getResultsUpToPage = createSelector(
   pageSelector,
   (state, token, items) => items,
   (state, token, items, target) => target,
@@ -44,7 +44,7 @@ export const getResultsUpToPage = createSelector(
   }
 );
 
-export const getCurrentTotalResultsCount = createSelector(
+const getCurrentTotalResultsCount = createSelector(
   pageSelector,
   (page) => {
     if (typeof page === "undefined") {
@@ -55,7 +55,7 @@ export const getCurrentTotalResultsCount = createSelector(
   }
 );
 
-export const isPageFetching = createSelector(
+const isPageFetching = createSelector(
   pageSelector,
   (state, token, target) => target,
   (page, target) => {
@@ -70,7 +70,7 @@ export const isPageFetching = createSelector(
   }
 );
 
-export const isPageFetched = createSelector(
+const isPageFetched = createSelector(
   pageSelector,
   (state, token, target) => target,
   (page, target) => {
@@ -85,7 +85,7 @@ export const isPageFetched = createSelector(
   }
 );
 
-export const hasPageProblems = createSelector(
+const hasPageProblems = createSelector(
   pageSelector,
   (page) => {
     if (typeof page === "undefined") {
@@ -96,7 +96,7 @@ export const hasPageProblems = createSelector(
   }
 );
 
-export const getCurrentView = createSelector(
+const getCurrentView = createSelector(
   pageSelector,
   (page) => {
     if (typeof page === "undefined") {
@@ -109,7 +109,7 @@ export const getCurrentView = createSelector(
 
 
 // these selectors are used for the entire app
-export const
+const
   getPaginatorPaginations = (state : any, name : string) => state.getIn([
     "paginations",
     name,
@@ -126,3 +126,18 @@ export const
       entities,
     })
   );
+
+export default {
+  getAllResults,
+  getCurrentTotalResultsCount,
+  getResultsUpToPage,
+  isPageFetching,
+  isPageFetched,
+  hasPageProblems,
+  getCurrentView,
+
+  // for state
+  getPaginatorPaginations,
+  getPaginatorEntities,
+  getPaginators,
+};
