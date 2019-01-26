@@ -1,5 +1,6 @@
 [ignore]
 ./node_modules/*
+./node_modules/npm/immutable
 [include]
 [libs]
 [options]

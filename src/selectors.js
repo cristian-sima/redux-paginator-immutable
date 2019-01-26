@@ -107,12 +107,14 @@ export const getCurrentView = createSelector(
   }
 );
 
+
+// these selectors are used for the entire app
 export const
-  getPaginatorPaginations = (state : State, name : string) => state.getIn([
+  getPaginatorPaginations = (state : any, name : string) => state.getIn([
     "paginations",
     name,
   ]),
-  getPaginatorEntities = (state : State, name : string) => state.getIn([
+  getPaginatorEntities = (state : any, name : string) => state.getIn([
     "entities",
     name,
   ]),

@@ -13,10 +13,13 @@ import {
   getCurrentView,
 } from "./selectors";
 
-export Info from "./Component/Info";
-export LoadingButton from "./Component/LoadingButton";
+import Info from "./Component/Info";
+import LoadingButton from "./Component/LoadingButton";
 
 export {
+  Info,
+  LoadingButton,
+
   createPaginator,
   onlyForEndpoint,
 
