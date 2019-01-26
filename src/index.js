@@ -13,8 +13,8 @@ import {
   getCurrentView,
 } from "./selectors";
 
-import Info from "./Component/Info";
-import LoadingButton from "./Component/LoadingButton";
+import Info from "./Info";
+import LoadingButton from "./LoadingButton";
 
 export {
   Info,

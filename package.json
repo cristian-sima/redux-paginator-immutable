@@ -7,7 +7,8 @@
     "presets": [
       "env",
       "flow",
-      "stage-0"
+      "stage-0",
+      "react"
     ],
     "env": {
       "production": {
@@ -68,7 +69,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.1",
-    "babel-loader": "^7.1.2",
+    "babel-loader": "^7.1.5",
     "babel-plugin-check-es2015-constants": "^6.22.0",
     "babel-plugin-flow-react-proptypes": "^14.0.4",
     "babel-plugin-syntax-flow": "^6.18.0",
@@ -104,8 +105,6 @@
     "es3ify": "^0.2.2",
     "eslint": "^4.16.0",
     "expect": "^22.1.0",
-    "flow": "^0.2.3",
-    "flow-bin": "^0.64.0",
     "flow-status-webpack-plugin": "^0.1.7",
     "flux-standard-action": "^2.0.1",
     "glob": "^7.1.2",
@@ -117,8 +116,9 @@
   "peerDependencies": {},
   "dependencies": {
     "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "immutable": "^4.0.0-rc.9",
+    "immutable": "^4.0.0-rc.12",
     "query-string": "^5.0.1",
     "redux": "^3.7.2",
     "reselect": "^3.0.1",
