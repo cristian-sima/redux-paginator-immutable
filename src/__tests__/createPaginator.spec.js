@@ -2,13 +2,15 @@
 
 import expect from "expect";
 
-import {
-  requestPage,
-} from "../actions";
+import actions from "../actions";
 import {
   // onlyForEndpoint,
   createPaginator,
 } from "../createPaginator";
+
+const {
+  requestPage,
+} = actions;
 
 describe("createPaginator", () => {
 

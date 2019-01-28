@@ -7,10 +7,12 @@ import chaiImmutable from "chai-immutable";
 
 chai.use(chaiImmutable);
 
-import {
+import actions from "../actions";
+
+const {
   requestPage,
   receivePage,
-} from "../actions";
+} = actions;
 
 import {
   pages,

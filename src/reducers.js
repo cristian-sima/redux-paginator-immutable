@@ -75,8 +75,7 @@ const
 
     return state;
   },
-  clearData = (state : PagesState) => state.clear(),
-  performChangeView = (state : PagesState, action : Action, view : number) => {
+  performChangeView = (state : PagesState, action : any, view : number) => {
     const { payload : { token } } = action;
 
     const item = state.get(token);
@@ -126,7 +125,7 @@ export const pages = (state : PagesState = Immutable.Map(), action : Action) => 
       return changeView(state, action);
 
     case CLEAR_DATA:
-      return clearData(state);
+      return state.clear();
 
     default:
       return state;

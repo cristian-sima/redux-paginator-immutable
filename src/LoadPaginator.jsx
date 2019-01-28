@@ -5,8 +5,8 @@ type Settings = {
   key: string;
   rowsPerLoad: number;
   manipulateItems: (items: any) => void;
-  resetViewAction: (data : any) => void;
-  changeViewAction: (data: any) => void;
+  resetView: (data : any) => void;
+  changeView: (data: any) => void;
   requestPage: (page: string, token : string) => any;
 }
 
@@ -81,8 +81,8 @@ const mapStateToProps = (state, { token, settings } : OwnProps) => {
   },
   mapDispatchToProps = (dispatch, { token, settings } : OwnProps) => ({
     ...bindActionCreators({
-      resetView  : settings.resetViewAction,
-      changeView : settings.changeViewAction,
+      resetView  : settings.resetView,
+      changeView : settings.changeView,
     }, dispatch),
     loadData (page) {
       dispatch(settings.requestPage(page, token));

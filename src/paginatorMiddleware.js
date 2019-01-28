@@ -4,8 +4,10 @@
 import type { Dispatch, Action } from "./types";
 
 import { REQUEST_PAGE } from "./actionTypes";
-import { receivePage } from "./actions";
+import actions from "./actions";
 import { fetchPage } from "./agent";
+
+const { receivePage } = actions;
 
 const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) => (
   (next : any) => (action : Action) => {

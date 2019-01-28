@@ -4,12 +4,14 @@
 import expect from "expect";
 import { isFSA } from "flux-standard-action";
 
-import {
+import actions from "../actions";
+
+const {
   receivePage,
   requestPage,
   resetView,
   changeView,
-} from "../actions";
+} = actions;
 
 import {
   RECEIVE_PAGE,

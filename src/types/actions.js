@@ -59,7 +59,15 @@ export type ResetViewAction = {
   };
 };
 
+export type ClearDataAction = {
+  type : "@@redux-paginator-immutable/CLEAR_DATA";
+  meta : {
+    endpoint: string;
+  };
+};
+
 export type Action = RequestPageAction
 | ReceivePageAction
 | ResetViewAction
-| ChangeViewAction;
+| ChangeViewAction
+| ClearDataAction;

@@ -50,7 +50,7 @@ import {
   items as itemsReducer,
 } from "./reducers";
 
-import { requestPage, resetView, changeView } from "./actions";
+import actions from "./actions";
 
 import * as Immutable from "immutable";
 
@@ -97,8 +97,8 @@ export const createPaginator : CreatePaginator = (endpointData : Endpoint, setti
     manipulateItems = (items) => items,
   } = settings;
 
-  const actions = ({
-    requestPage: (page : number, token : string) => requestPage({
+  const endpointedActions = ({
+    requestPage: (page : number, token : string) => actions.requestPage({
       endpoint,
       endpointCb,
       manageEntity,
@@ -110,13 +110,16 @@ export const createPaginator : CreatePaginator = (endpointData : Endpoint, setti
       token,
     }),
     resetView (token) {
-      return resetView(endpoint, token);
+      return actions.resetView(endpoint, token);
     },
     changeView ({ view, token } : { view : number; token : string; }) {
-      return changeView(endpoint, {
+      return actions.changeView(endpoint, {
         view,
         token,
       });
+    },
+    clearData () {
+      return actions.clearData(endpoint);
     },
   });
 
@@ -126,6 +129,6 @@ export const createPaginator : CreatePaginator = (endpointData : Endpoint, setti
     rowsPerLoad,
     pages        : onlyForEndpoint(endpoint, pagesReducer),
     itemsReducer : onlyForEndpoint(endpoint, itemsReducer),
-    ...actions,
+    ...endpointedActions,
   });
 };

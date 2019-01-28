@@ -27,7 +27,7 @@ type ReceivePageArgsTypes = {
   error: bool;
 }
 
-export const requestPage = ({
+const requestPage = ({
   endpoint,
   endpointCb,
   manageEntity,
@@ -54,7 +54,7 @@ export const requestPage = ({
   },
 });
 
-export const receivePage = ({
+const receivePage = ({
   endpoint,
   endpointCb,
   manageEntity,
@@ -83,7 +83,7 @@ export const receivePage = ({
   },
 });
 
-export const resetView = (endpoint : string, token : string) : Action => ({
+const resetView = (endpoint : string, token : string) : Action => ({
   type : "@@redux-paginator-immutable/RESET_VIEW",
   meta : {
     endpoint,
@@ -93,7 +93,7 @@ export const resetView = (endpoint : string, token : string) : Action => ({
   },
 });
 
-export const changeView = (endpoint : string, {
+const changeView = (endpoint : string, {
   token,
   view,
 } : { token : string, view : number }) : Action => ({
@@ -107,14 +107,17 @@ export const changeView = (endpoint : string, {
   },
 });
 
-export const clearData = (endpoint : string, {
-  view,
-} : { token : string, view : number }) : Action => ({
+const clearData = (endpoint : string) : Action => ({
   type : "@@redux-paginator-immutable/CLEAR_DATA",
   meta : {
     endpoint,
   },
-  payload: {
-    view,
-  },
 });
+
+export default {
+  clearData,
+  requestPage,
+  receivePage,
+  resetView,
+  changeView,
+};
