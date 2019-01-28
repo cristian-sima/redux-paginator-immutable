@@ -85,7 +85,7 @@ const mapStateToProps = (state, { token, settings } : OwnProps) => {
       changeView : settings.changeViewAction,
     }, dispatch),
     loadData (page) {
-      dispatch(settings.requestData(page, token));
+      dispatch(settings.requestPage(page, token));
     },
   });
 
