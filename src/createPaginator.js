@@ -10,7 +10,7 @@ type Settings = {
   manageEntity: any;
   resultsKey: string;
 
-  // by default "{rowsPerLoad} from x25/utility"
+  // by default "{rowsPerLoad} from x25/utility/others"
   rowsPerLoad?: number;
 
   // by default "(items) => items"
@@ -54,7 +54,7 @@ import { requestPage, resetView, changeView } from "./actions";
 
 import * as Immutable from "immutable";
 
-import { rowsPerLoad as defaultRowsPerLoad } from "x25/utility";
+import { rowsPerLoad as defaultRowsPerLoad } from "x25/utility/others";
 
 export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) => (
   (state = Immutable.Map(), action) => {
