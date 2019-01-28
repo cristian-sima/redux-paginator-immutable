@@ -1,6 +1,7 @@
 [ignore]
 ./node_modules/*
 ./node_modules/npm/immutable
+./node_modules/immutable/dist
 [include]
 [libs]
 [options]

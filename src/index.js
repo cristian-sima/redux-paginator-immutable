@@ -5,6 +5,8 @@ import paginatorMiddleware from "./paginatorMiddleware";
 
 import paginatorSelectors from "./selectors";
 
+import { manageDataEntity, manipulateDataItems } from "./util";
+
 import Info from "./Info";
 import LoadingButton from "./LoadingButton";
 import LoadPaginator from "./LoadPaginator";
@@ -19,4 +21,8 @@ export {
   paginatorMiddleware,
 
   paginatorSelectors,
+
+  // util
+  manageDataEntity,
+  manipulateDataItems,
 };
