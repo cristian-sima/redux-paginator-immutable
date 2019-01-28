@@ -13,3 +13,24 @@ export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
 export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;
 
 export type EndPointCb = (() => string) | null;
+
+export type PaginatorSettings = {
+  key: string;
+  manageEntity: any;
+  resultsKey: string;
+
+  // by default "{rowsPerLoad} from x25/utility/others"
+  rowsPerLoad?: number;
+
+  // by default "(items) => items"
+  manipulateItems?: (items: any) => any;
+
+  // by default "Total"
+  totalKey?: string;
+
+   // by default "page"
+  pageArgName?: string;
+
+  // default "ID"
+  idKey?: string;
+}

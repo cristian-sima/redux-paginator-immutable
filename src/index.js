@@ -11,6 +11,9 @@ import Info from "./Info";
 import LoadingButton from "./LoadingButton";
 import LoadPaginator from "./LoadPaginator";
 
+import createDataReducer from "./createDataReducer";
+import createItemReducer from "./createItemReducer";
+
 export {
   Info,
   LoadingButton,
@@ -23,6 +26,9 @@ export {
   paginatorSelectors,
 
   // util
+  createItemReducer,
+  createDataReducer,
+
   manageDataEntity,
   manipulateDataItems,
 };

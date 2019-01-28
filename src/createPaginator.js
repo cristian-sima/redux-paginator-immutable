@@ -1,30 +1,12 @@
 // @flow
 
+import type { PaginatorSettings } from "./types";
+
 type EndpointData = {
   path : string;
   cb : () => string;
 };
 
-type Settings = {
-  key: string;
-  manageEntity: any;
-  resultsKey: string;
-
-  // by default "{rowsPerLoad} from x25/utility/others"
-  rowsPerLoad?: number;
-
-  // by default "(items) => items"
-  manipulateItems?: (items: any) => any;
-
-  // by default "Total"
-  totalKey?: string;
-
-   // by default "page"
-  pageArgName?: string;
-
-  // default "ID"
-  idKey?: string;
-}
 
 /*
 if (typeof Endpoint === "object") {
@@ -40,7 +22,7 @@ return {
 */
 type Endpoint = EndpointData | string;
 
-type CreatePaginator = (endpoint: Endpoint, info: Settings) => any;
+type CreatePaginator = (endpoint: Endpoint, info: PaginatorSettings) => any;
 
 type OnlyForEndpoint = (endpoint : string, reducer : any) =>
 (state? : any, action : { meta: { endpoint : string }}) => any;
@@ -80,55 +62,57 @@ const getEndpoint = (data : Endpoint) => {
   };
 };
 
-export const createPaginator : CreatePaginator = (endpointData : Endpoint, settings : Settings) => {
-  const {
-    path: endpoint,
-    cb: endpointCb,
-  } = getEndpoint(endpointData);
+export const createPaginator : CreatePaginator = (
+  (endpointData : Endpoint, settings : PaginatorSettings) => {
+    const {
+      path: endpoint,
+      cb: endpointCb,
+    } = getEndpoint(endpointData);
 
-  const {
-    key,
-    manageEntity,
-    resultsKey,
-    totalKey = "Total",
-    pageArgName = "page",
-    idKey = "ID",
-    rowsPerLoad = defaultRowsPerLoad,
-    manipulateItems = (items) => items,
-  } = settings;
-
-  const endpointedActions = ({
-    requestPage: (page : number, token : string) => actions.requestPage({
-      endpoint,
-      endpointCb,
+    const {
+      key,
       manageEntity,
       resultsKey,
-      totalKey,
-      pageArgName,
-      idKey,
-      page,
-      token,
-    }),
-    resetView (token) {
-      return actions.resetView(endpoint, token);
-    },
-    changeView ({ view, token } : { view : number; token : string; }) {
-      return actions.changeView(endpoint, {
-        view,
-        token,
-      });
-    },
-    clearData () {
-      return actions.clearData(endpoint);
-    },
-  });
+      totalKey = "Total",
+      pageArgName = "page",
+      idKey = "ID",
+      rowsPerLoad = defaultRowsPerLoad,
+      manipulateItems = (items) => items,
+    } = settings;
 
-  return ({
-    key,
-    manipulateItems,
-    rowsPerLoad,
-    pages        : onlyForEndpoint(endpoint, pagesReducer),
-    itemsReducer : onlyForEndpoint(endpoint, itemsReducer),
-    ...endpointedActions,
-  });
-};
+    const endpointedActions = ({
+      requestPage: (page : number, token : string) => actions.requestPage({
+        endpoint,
+        endpointCb,
+        manageEntity,
+        resultsKey,
+        totalKey,
+        pageArgName,
+        idKey,
+        page,
+        token,
+      }),
+      resetView (token) {
+        return actions.resetView(endpoint, token);
+      },
+      changeView ({ view, token } : { view : number; token : string; }) {
+        return actions.changeView(endpoint, {
+          view,
+          token,
+        });
+      },
+      clearData () {
+        return actions.clearData(endpoint);
+      },
+    });
+
+    return ({
+      key,
+      manipulateItems,
+      rowsPerLoad,
+      pages        : onlyForEndpoint(endpoint, pagesReducer),
+      itemsReducer : onlyForEndpoint(endpoint, itemsReducer),
+      ...endpointedActions,
+    });
+  }
+);
