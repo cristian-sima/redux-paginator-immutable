@@ -5,7 +5,7 @@ import paginatorMiddleware from "./paginatorMiddleware";
 
 import paginatorSelectors from "./selectors";
 
-import { manageDataEntity, manipulateDataItems } from "./util";
+import { manageDataEntity, manipulateDataItems, manipulateItems, manageEntity } from "./util";
 
 import Info from "./Info";
 import LoadingButton from "./LoadingButton";
@@ -26,9 +26,12 @@ export {
   paginatorSelectors,
 
   // util
-  createItemReducer,
   createDataReducer,
 
   manageDataEntity,
   manipulateDataItems,
+
+  createItemReducer,
+  manipulateItems,
+  manageEntity,
 };

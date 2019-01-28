@@ -11,6 +11,31 @@ import { createSelector } from "reselect";
 
 type ManageDataEntity = ImmutableMap<string, *>;
 
+// simple item
+
+const
+  manageEntity = (
+    (normalizrEntity : NormalizrEntity) => (item : any, state : any, keyID : string)
+    : ManageDataEntity => {
+      // prevent rewrite
+      const old = state.get(String(item[keyID]));
+
+      if (typeof old === "undefined") {
+        return Immutable.Map(normalizrEntity(item));
+      }
+
+      return old;
+    }
+  ),
+  manipulateItems = createSelector(
+    (data) => data,
+    (data) => (
+      data.sortBy((current) => current.getIn(["DateSort"]))
+    )
+  );
+
+// data item
+
 const
   manageDataEntity = (
     (normalizrEntity : NormalizrEntity) => (item : any, state : any, keyID : string)
@@ -40,4 +65,7 @@ const
 export {
   manageDataEntity,
   manipulateDataItems,
+
+  manipulateItems,
+  manageEntity,
 };
