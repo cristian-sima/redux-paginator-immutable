@@ -5,15 +5,42 @@ type EndpointData = {
   cb : () => string;
 };
 
-type Endpoint = EndpointData | string;
-
-type CreatePaginator = (endpoint: Endpoint, info: {
+type Settings = {
+  key: string;
   manageEntity: any;
   resultsKey: string;
-  totalKey: string;
-  pageArgName: string;
-  idKey : string;
-}) => any;
+
+  // by default "{rowsPerLoad} from x25/utility"
+  rowsPerLoad?: number;
+
+  // by default "(items) => items"
+  manipulateItems?: (items: any) => any;
+
+  // by default "Total"
+  totalKey?: string;
+
+   // by default "page"
+  pageArgName?: string;
+
+  // default "ID"
+  idKey?: string;
+}
+
+/*
+if (typeof Endpoint === "object") {
+  return {
+    path : Endpoint.path,
+    cb   : Endpoint.cb,
+  };
+}
+
+return {
+  path : Endpoint,
+};
+*/
+type Endpoint = EndpointData | string;
+
+type CreatePaginator = (endpoint: Endpoint, info: Settings) => any;
 
 type OnlyForEndpoint = (endpoint : string, reducer : any) =>
 (state? : any, action : { meta: { endpoint : string }}) => any;
@@ -26,6 +53,8 @@ import {
 import { requestPage, resetView, changeView } from "./actions";
 
 import * as Immutable from "immutable";
+
+import { rowsPerLoad as defaultRowsPerLoad } from "x25/utility";
 
 export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) => (
   (state = Immutable.Map(), action) => {
@@ -51,18 +80,22 @@ const getEndpoint = (data : Endpoint) => {
   };
 };
 
-export const createPaginator : CreatePaginator = (endpointData : Endpoint, {
-  manageEntity,
-  resultsKey,
-  totalKey = "Total",
-  pageArgName = "page",
-  idKey = "ID",
-}) => {
-
+export const createPaginator : CreatePaginator = (endpointData : Endpoint, settings : Settings) => {
   const {
     path: endpoint,
     cb: endpointCb,
   } = getEndpoint(endpointData);
+
+  const {
+    key,
+    manageEntity,
+    resultsKey,
+    totalKey = "Total",
+    pageArgName = "page",
+    idKey = "ID",
+    rowsPerLoad = defaultRowsPerLoad,
+    manipulateItems = (items) => items,
+  } = settings;
 
   const actions = ({
     requestPage: (page : number, token : string) => requestPage({
@@ -88,8 +121,11 @@ export const createPaginator : CreatePaginator = (endpointData : Endpoint, {
   });
 
   return ({
+    key,
+    manipulateItems,
+    rowsPerLoad,
+    ...actions,
     pages        : onlyForEndpoint(endpoint, pagesReducer),
     itemsReducer : onlyForEndpoint(endpoint, itemsReducer),
-    ...actions,
   });
 };

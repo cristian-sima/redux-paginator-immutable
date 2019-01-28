@@ -5,14 +5,16 @@ import chaiImmutable from "chai-immutable";
 
 chai.use(chaiImmutable);
 
-import {
+import selectors from "../selectors";
+
+const {
   getCurrentTotalResultsCount,
   getAllResults,
   getResultsUpToPage,
   isPageFetched,
   isPageFetching,
   getCurrentView,
-} from "../selectors";
+} = selectors;
 
 import * as Immutable from "immutable";
 
