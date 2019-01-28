@@ -124,8 +124,8 @@ export const createPaginator : CreatePaginator = (endpointData : Endpoint, setti
     key,
     manipulateItems,
     rowsPerLoad,
-    ...actions,
     pages        : onlyForEndpoint(endpoint, pagesReducer),
     itemsReducer : onlyForEndpoint(endpoint, itemsReducer),
+    ...actions,
   });
 };

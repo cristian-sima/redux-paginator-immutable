@@ -7,7 +7,7 @@ type Settings = {
   manipulateItems: (items: any) => void;
   resetViewAction: (data : any) => void;
   changeViewAction: (data: any) => void;
-  requestData: (page: string, token : string) => any;
+  requestPage: (page: string, token : string) => any;
 }
 
 type OwnProps = {
