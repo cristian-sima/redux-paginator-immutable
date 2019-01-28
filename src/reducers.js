@@ -15,6 +15,7 @@ import {
   RECEIVE_PAGE,
   RESET_VIEW,
   CHANGE_VIEW,
+  CLEAR_DATA,
 } from "./actionTypes";
 
 import * as Immutable from "immutable";
@@ -74,6 +75,7 @@ const
 
     return state;
   },
+  clearData = (state : PagesState) => state.clear(),
   performChangeView = (state : PagesState, action : Action, view : number) => {
     const { payload : { token } } = action;
 
@@ -123,6 +125,9 @@ export const pages = (state : PagesState = Immutable.Map(), action : Action) => 
     case CHANGE_VIEW:
       return changeView(state, action);
 
+    case CLEAR_DATA:
+      return clearData(state);
+
     default:
       return state;
   }
@@ -132,6 +137,8 @@ export const items = (state : ItemsState = Immutable.Map(), action : Action) => 
   switch (action.type) {
     case RECEIVE_PAGE:
       return receivePageItems(state, action);
+    case CLEAR_DATA:
+      return state.clear();
     default:
       return state;
   }

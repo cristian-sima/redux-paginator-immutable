@@ -106,3 +106,15 @@ export const changeView = (endpoint : string, {
     view,
   },
 });
+
+export const clearData = (endpoint : string, {
+  view,
+} : { token : string, view : number }) : Action => ({
+  type : "@@redux-paginator-immutable/CLEAR_DATA",
+  meta : {
+    endpoint,
+  },
+  payload: {
+    view,
+  },
+});
