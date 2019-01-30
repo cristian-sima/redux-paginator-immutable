@@ -27,10 +27,10 @@ const
       return old;
     }
   ),
-  manipulateItems = createSelector(
+  manipulateItems = (sortKey? : string = "ID") => createSelector(
     (data) => data,
     (data) => (
-      data.sortBy((current) => current.getIn(["DateSort"]))
+      data.sortBy((current) => current.getIn([sortKey]))
     )
   );
 
@@ -52,12 +52,12 @@ const
       return old;
     }
   ),
-  manipulateDataItems = createSelector(
+  manipulateDataItems = (sortKey? : string = "ID") => createSelector(
     (data) => data,
     (data) => (
       data.sortBy((current) => current.getIn([
         "Data",
-        "DateSort",
+        sortKey,
       ]))
     )
   );
