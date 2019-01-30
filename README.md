@@ -1,3 +1,3 @@
 # redux-paginator-immutable
 ---
-See the wiki
+For documentation see https://github.com/cristian-sima/redux-paginator-immutable/wiki
