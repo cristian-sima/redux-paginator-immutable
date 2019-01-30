@@ -66,8 +66,14 @@ export type ClearDataAction = {
   };
 };
 
+export type FetchCurrentCompanyInfoPending = {
+  type : "FETCH_CURRENT_COMPANY_INFO_PENDING";
+};
+
 export type Action = RequestPageAction
 | ReceivePageAction
 | ResetViewAction
 | ChangeViewAction
-| ClearDataAction;
+| ClearDataAction
+
+| FetchCurrentCompanyInfoPending;

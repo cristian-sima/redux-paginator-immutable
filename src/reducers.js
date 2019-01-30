@@ -16,6 +16,7 @@ import {
   RESET_VIEW,
   CHANGE_VIEW,
   CLEAR_DATA,
+  FETCH_CURRENT_COMPANY_INFO_PENDING,
 } from "./actionTypes";
 
 import * as Immutable from "immutable";
@@ -124,6 +125,7 @@ export const pages = (state : PagesState = Immutable.Map(), action : Action) => 
     case CHANGE_VIEW:
       return changeView(state, action);
 
+    case FETCH_CURRENT_COMPANY_INFO_PENDING:
     case CLEAR_DATA:
       return state.clear();
 
@@ -136,6 +138,7 @@ export const items = (state : ItemsState = Immutable.Map(), action : Action) => 
   switch (action.type) {
     case RECEIVE_PAGE:
       return receivePageItems(state, action);
+    case FETCH_CURRENT_COMPANY_INFO_PENDING:
     case CLEAR_DATA:
       return state.clear();
     default:

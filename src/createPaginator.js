@@ -110,7 +110,7 @@ export const createPaginator : CreatePaginator = (
       key,
       manipulateItems,
       rowsPerLoad,
-      pages        : onlyForEndpoint(endpoint, pagesReducer),
+      pagesReducer : onlyForEndpoint(endpoint, pagesReducer),
       itemsReducer : onlyForEndpoint(endpoint, itemsReducer),
       ...endpointedActions,
     });

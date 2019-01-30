@@ -30,7 +30,7 @@ const
   manipulateItems = (sortKey? : string = "ID") => createSelector(
     (data) => data,
     (data) => (
-      data.sortBy((current) => current.getIn([sortKey]))
+      data.sortBy((current) => -current.get(sortKey))
     )
   );
 
@@ -55,7 +55,7 @@ const
   manipulateDataItems = (sortKey? : string = "ID") => createSelector(
     (data) => data,
     (data) => (
-      data.sortBy((current) => current.getIn([
+      data.sortBy((current) => -current.getIn([
         "Data",
         sortKey,
       ]))
