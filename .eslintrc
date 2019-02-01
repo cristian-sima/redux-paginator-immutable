@@ -6,7 +6,8 @@
   },
   "parser": "babel-eslint",
   "extends": [
-    "eslint:all"
+    "eslint:all",
+    'plugin:react/recommended'
   ],
   "parserOptions": {
     "ecmaVersion": 6,
@@ -28,6 +29,7 @@
     "prefer-promise-reject-errors": 0,
 
     "no-underscore-dangle": 0,
+    "react/no-deprecated": 0,
     "function-paren-newline": 0,
     "no-nested-ternary": 0,
 

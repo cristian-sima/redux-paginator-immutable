@@ -37,7 +37,7 @@ type LoadPaginatorPropTypes = {
   changeFilter: (filter : string) => (event : { target : { value : string } }) => void;
 };
 
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import * as Immutable from "immutable";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -189,7 +189,7 @@ class LoadPaginator extends Component<LoadPaginatorPropTypes> {
     }
 
     return (
-      <Fragment>
+      <React.Fragment>
         {React.cloneElement(this.props.children, this.props)}
         {
           showLoading ? (
@@ -200,7 +200,7 @@ class LoadPaginator extends Component<LoadPaginatorPropTypes> {
             />
           ) : null
         }
-      </Fragment>
+      </React.Fragment>
     );
   }
 }
