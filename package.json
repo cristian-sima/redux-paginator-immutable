@@ -36,7 +36,7 @@
     "build:umd:min": "cross-env NODE_ENV=production webpack src/index.js dist/redux-paginator-immutable.min.js",
     "build": "npm run build:lib",
     "clean": "rimraf dist lib",
-    "check": "npm-check-updates -a && npm update",
+    "check": "npm-check -u -i babel-jest -i jest --specials=bin,eslint,babel,webpack",
     "flow": "flow check --color=always",
     "eslint": "eslint src --fix",
     "prepublish": "npm run test && npm run eslint && npm run flow && npm run clean && npm run build",
@@ -123,11 +123,12 @@
   "peerDependencies": {},
   "dependencies": {
     "immutable": "^4.0.0-rc.12",
+    "npm-check": "^5.9.0",
     "query-string": "^6.2.0",
     "react": "^16.8.3",
     "redux": "^4.0.1",
     "reselect": "^4.0.0",
-    "superagent": "^3.8.3",
-    "x25": "^2.5.25"
+    "superagent": "^4.1.0",
+    "x25": "^2.5.28"
   }
 }
