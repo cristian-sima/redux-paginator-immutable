@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable max-lines-per-function,  */
 
 import type { PaginatorSettings } from "./types";
 

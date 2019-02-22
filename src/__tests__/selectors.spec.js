@@ -1,4 +1,4 @@
-/* eslint-disable max-len, no-undefined, no-magic-numbers */
+/* eslint-disable max-len, no-undefined, max-lines-per-function, no-magic-numbers */
 
 import chai, { expect } from "chai";
 import chaiImmutable from "chai-immutable";

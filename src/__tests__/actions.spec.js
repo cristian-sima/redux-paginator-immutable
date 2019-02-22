@@ -1,4 +1,4 @@
-/* eslint-disable no-undefined, no-magic-numbers */
+/* eslint-disable no-undefined, max-lines-per-function, no-magic-numbers */
 /* global describe */
 
 import expect from "expect";

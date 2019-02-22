@@ -1,5 +1,5 @@
 // @flow
-/* eslint-disable no-console */
+/* eslint-disable no-console, max-lines-per-function */
 
 import type { Dispatch, Action } from "./types";
 
