@@ -1,6 +1,6 @@
 {
   "name": "redux-paginator-immutable",
-  "version": "2.1.15",
+  "version": "2.1.16",
   "description": "redux-paginator-immutable helps you deal with paginated API by composing your existing reducers",
   "main": "./lib/index.js",
   "babel": {
@@ -111,17 +111,17 @@
     "cross-env": "^5.2.0",
     "es3ify": "^0.2.2",
     "eslint": "^5.14.1",
+    "eslint-plugin-react": "^7.12.4",
     "expect": "^24.1.0",
     "flow-bin": "^0.93.0",
     "flow-status-webpack-plugin": "^0.1.7",
     "flux-standard-action": "^2.0.3",
     "glob": "^7.1.3",
-    "eslint-plugin-react": "^7.12.4",
     "isparta": "^4.1.1",
+    "mocha": "^6.0.2",
     "npm-check": "^5.9.0",
-    "mocha": "^6.0.1",
     "rimraf": "^2.6.3",
-    "webpack": "^4.29.5"
+    "webpack": "^4.29.6"
   },
   "peerDependencies": {},
   "dependencies": {
@@ -131,6 +131,6 @@
     "redux": "^4.0.1",
     "reselect": "^4.0.0",
     "superagent": "^4.1.0",
-    "x25": "^2.5.31"
+    "x25": "^2.5.32"
   }
 }
