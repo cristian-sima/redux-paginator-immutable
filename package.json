@@ -1,6 +1,6 @@
 {
   "name": "redux-paginator-immutable",
-  "version": "2.1.23",
+  "version": "2.1.24",
   "description": "redux-paginator-immutable helps you deal with paginated API by composing your existing reducers",
   "main": "./lib/index.js",
   "babel": {
@@ -131,6 +131,6 @@
     "redux": "^4.0.1",
     "reselect": "^4.0.0",
     "superagent": "^5.0.2",
-    "x25": "^2.5.40"
+    "x25": "^2.5.41"
   }
 }
