@@ -2,8 +2,6 @@
 
 import * as React from "react";
 
-import type { Dispatch, State } from "./types";
-
 type LoadDataItemPropTypes = {
   isFetching: bool;
   hasError: bool;
@@ -31,14 +29,14 @@ import { fetchItem as fetchItemAction } from "./actions";
 import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
 
 const
-  mapStateToProps = (state : State, { paginator : { selectors }, id } : OwnProps) => ({
+  mapStateToProps = (state : any, { paginator : { selectors }, id } : OwnProps) => ({
     data        : selectors.getItem(state, id),
     hasError    : selectors.getItemHasError(state, id),
     fetched     : selectors.getItemIsFetched(state, id),
     isFetching  : selectors.getIsFetchingItemInfo(state, id),
     shouldFetch : selectors.getShouldFetchItemInfo(state, id),
   }),
-  mapDispatchToProps = (dispatch : Dispatch, { id, paginator } : OwnProps) => ({
+  mapDispatchToProps = (dispatch : any, { id, paginator } : OwnProps) => ({
     fetchItem () {
       dispatch(fetchItemAction({
         ...paginator,

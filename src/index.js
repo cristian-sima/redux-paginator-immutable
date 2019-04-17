@@ -10,6 +10,7 @@ import { manageDataEntity, manipulateDataItems, manipulateItems, manageEntity } 
 import Info from "./Info";
 import LoadingButton from "./LoadingButton";
 import LoadPaginator from "./LoadPaginator";
+import LoadDataItem from "./LoadDataItem";
 
 import createDataReducer from "./createDataReducer";
 import createItemReducer from "./createItemReducer";
@@ -18,6 +19,7 @@ export {
   Info,
   LoadingButton,
   LoadPaginator,
+  LoadDataItem,
 
   createPaginator,
 
