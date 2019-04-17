@@ -121,16 +121,17 @@ const clearData = (endpoint : string) : Action => ({
 
 type FetchDataItem = {
   dataItemURL: string;
-  manageEntity: any;
+  endpoint: string;
+  normalizeDataItem: any;
   id: string;
 }
 
-const fetchDataItemRequest = ({ dataItemURL, manageEntity, id } : FetchDataItem) : Promise<*> => (
+const fetchDataItemRequest = ({ dataItemURL, normalizeDataItem, id } : FetchDataItem) : Promise<*> => (
   new Promise((resolve, reject) => (
     agent.
       get(`${dataItemURL}/${id}`).
       set("Accept", "application/json").
-      end(manageEntity(resolve, reject))
+      end(normalizeDataItem(resolve, reject))
   )) : Promise<any>
 );
 
@@ -138,7 +139,8 @@ export const fetchItem = (things : FetchDataItem) : any => ({
   type    : "@@redux-paginator-immutable/FETCH_ITEM_DATA",
   payload : fetchDataItemRequest(things),
   meta    : {
-    id: things.id,
+    id       : things.id,
+    endpoint : things.endpoint,
   },
 });
 

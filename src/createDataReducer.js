@@ -4,6 +4,7 @@
 import type { PaginatorSettings } from "./types";
 
 import { createSelector } from "reselect";
+import * as Immutable from "immutable";
 
 /*
   Use to create a complex list where you need more information about
@@ -19,7 +20,7 @@ const createDataReducer = ({ key } : PaginatorSettings) => {
     getItem = createSelector(
       getItems,
       (state, id) => id,
-      (data, id) => data.get(id)
+      (data, id) => data.get(id) || Immutable.Map()
     ),
     getItemsList = createSelector(
       getItems,
@@ -28,12 +29,16 @@ const createDataReducer = ({ key } : PaginatorSettings) => {
     getItemData = createSelector(
       getItems,
       (state, id) => id,
-      (data, id) => (
-        data.getIn([
+      (data, id) => {
+        if (typeof data === "undefined") {
+          return Immutable.Map();
+        }
+
+        return data.getIn([
           id,
           "Data",
-        ])
-      )
+        ]);
+      }
     ),
     getItemHasError = createSelector(
       getItem,

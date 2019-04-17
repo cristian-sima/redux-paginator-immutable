@@ -73,6 +73,8 @@ export const createPaginator : CreatePaginator = (
 
     const {
       key,
+      normalizeDataItem,
+      dataItemURL,
       manageEntity,
       resultsKey,
       totalKey = "Total",
@@ -110,8 +112,13 @@ export const createPaginator : CreatePaginator = (
 
     return ({
       key,
+      normalizeDataItem,
+      dataItemURL,
       manipulateItems,
       rowsPerLoad,
+      manageEntity,
+      resultsKey,
+      endpoint,
 
       pagesReducer : onlyForEndpoint(endpoint, pagesReducer),
       itemsReducer : onlyForEndpoint(endpoint, itemsReducer),

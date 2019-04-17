@@ -4,6 +4,8 @@ import * as React from "react";
 
 type LoadDataItemPropTypes = {
   isFetching: bool;
+  fetched: bool;
+  id: string;
   hasError: bool;
   data: any;
   children: React.Node;
@@ -17,7 +19,9 @@ type OwnProps = {
   paginator: {
     selectors: any;
     dataItemURL: string;
+    endpoint: string;
     manageEntity: any;
+    normalizeDataItem: any;
   }
 };
 
@@ -54,6 +58,17 @@ class LoadDataItem extends React.Component<LoadDataItemPropTypes> {
     if (shouldFetch) {
       fetchItem();
     }
+  }
+
+  shouldComponentUpdate (nextProps : LoadDataItemPropTypes) {
+    return (
+      this.props.data !== nextProps.data ||
+      this.props.hasError !== nextProps.hasError ||
+      this.props.fetched !== nextProps.fetched ||
+      this.props.isFetching !== nextProps.isFetching ||
+      this.props.shouldFetch !== nextProps.shouldFetch ||
+      this.props.id !== nextProps.id
+    );
   }
 
   componentWillReceiveProps (nextProps) {

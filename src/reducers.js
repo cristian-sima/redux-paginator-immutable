@@ -154,26 +154,26 @@ export const items = (state : ItemsState = Immutable.Map(), action : Action) => 
 // ---------- data items reducer
 
 const
-  fetchItemDataPending = (state : any, { meta : { id } } : { meta : { id : string }}) => {
-    const elements = Immutable.Map({
-      fetching : true,
-      fetched  : false,
-      error    : false,
-    });
+  fetchItemDataPending = (state : any, { meta : { id } } : { meta : { id : string }}) => (
+    state.update(id, (current) => {
+      if (typeof current === "undefined") {
+        return current;
+      }
 
-    if (state.has(id)) {
-      return state.update(id, (current) => current.merge(elements));
-    }
-
-    return state.set(id, elements);
-  },
+      return current.mergeDeep(Immutable.Map({
+        fetching : true,
+        fetched  : false,
+        error    : false,
+      }));
+    })
+  ),
   fetchItemDataRejected = (state : any, { meta : { id } }) => (
     state.update((id), (current) => {
       if (typeof current === "undefined") {
         return current;
       }
 
-      return current.merge(Immutable.Map({
+      return current.mergeDeep(Immutable.Map({
         fetching : false,
         fetched  : false,
         error    : true,
@@ -186,7 +186,7 @@ const
         return current;
       }
 
-      return current.merge(Immutable.Map({
+      return current.mergeDeep(Immutable.Map({
         Data,
         fetching : false,
         fetched  : true,

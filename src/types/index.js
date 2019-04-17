@@ -18,6 +18,8 @@ export type PaginatorSettings = {
   key: string;
   manageEntity: any;
   resultsKey: string;
+  dataItemURL: string;
+  normalizeDataItem: any;
 
   // by default "{rowsPerLoad} from x25/utility/others"
   rowsPerLoad?: number;
