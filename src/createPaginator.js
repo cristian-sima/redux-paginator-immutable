@@ -31,6 +31,7 @@ type OnlyForEndpoint = (endpoint : string, reducer : any) =>
 import {
   pages as pagesReducer,
   items as itemsReducer,
+  dataItems as dataItemsReducer,
 } from "./reducers";
 
 import actions from "./actions";
@@ -111,8 +112,12 @@ export const createPaginator : CreatePaginator = (
       key,
       manipulateItems,
       rowsPerLoad,
+
       pagesReducer : onlyForEndpoint(endpoint, pagesReducer),
       itemsReducer : onlyForEndpoint(endpoint, itemsReducer),
+
+      dataItemsReducer: onlyForEndpoint(endpoint, dataItemsReducer),
+
       ...endpointedActions,
     });
   }

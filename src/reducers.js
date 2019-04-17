@@ -17,6 +17,10 @@ import {
   CHANGE_VIEW,
   CLEAR_DATA,
   FETCH_CURRENT_COMPANY_INFO_PENDING,
+
+  FETCH_ITEM_DATA_PENDING,
+  FETCH_ITEM_DATA_REJECTED,
+  FETCH_ITEM_DATA_FULFILLED,
 } from "./actionTypes";
 
 import * as Immutable from "immutable";
@@ -138,6 +142,71 @@ export const items = (state : ItemsState = Immutable.Map(), action : Action) => 
   switch (action.type) {
     case RECEIVE_PAGE:
       return receivePageItems(state, action);
+
+    case FETCH_CURRENT_COMPANY_INFO_PENDING:
+    case CLEAR_DATA:
+      return state.clear();
+    default:
+      return state;
+  }
+};
+
+// ---------- data items reducer
+
+const
+  fetchItemDataPending = (state : any, { meta : { id } } : { meta : { id : string }}) => {
+    const elements = Immutable.Map({
+      fetching : true,
+      fetched  : false,
+      error    : false,
+    });
+
+    if (state.has(id)) {
+      return state.update(id, (current) => current.merge(elements));
+    }
+
+    return state.set(id, elements);
+  },
+  fetchItemDataRejected = (state : any, { meta : { id } }) => (
+    state.update((id), (current) => {
+      if (typeof current === "undefined") {
+        return current;
+      }
+
+      return current.merge(Immutable.Map({
+        fetching : false,
+        fetched  : false,
+        error    : true,
+      }));
+    })
+  ),
+  fetchItemDataFulFilled = (state : any, { payload : { Data }, meta : { id } }) => (
+    state.update((id), (current) => {
+      if (typeof current === "undefined") {
+        return current;
+      }
+
+      return current.merge(Immutable.Map({
+        Data,
+        fetching : false,
+        fetched  : true,
+        error    : false,
+      }));
+    })
+  );
+
+export const dataItems = (state : ItemsState = Immutable.Map(), action : Action) => {
+  switch (action.type) {
+    case RECEIVE_PAGE:
+      return receivePageItems(state, action);
+
+    case FETCH_ITEM_DATA_PENDING:
+      return fetchItemDataPending(state, action);
+    case FETCH_ITEM_DATA_REJECTED:
+      return fetchItemDataRejected(state, action);
+    case FETCH_ITEM_DATA_FULFILLED:
+      return fetchItemDataFulFilled(state, action);
+
     case FETCH_CURRENT_COMPANY_INFO_PENDING:
     case CLEAR_DATA:
       return state.clear();

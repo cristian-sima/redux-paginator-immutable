@@ -27,6 +27,8 @@ type ReceivePageArgsTypes = {
   error: bool;
 }
 
+import agent from "superagent";
+
 const requestPage = ({
   endpoint,
   endpointCb,
@@ -111,6 +113,32 @@ const clearData = (endpoint : string) : Action => ({
   type : "@@redux-paginator-immutable/CLEAR_DATA",
   meta : {
     endpoint,
+  },
+});
+
+
+// data info
+
+type FetchDataItem = {
+  dataItemURL: string;
+  manageEntity: any;
+  id: string;
+}
+
+const fetchDataItemRequest = ({ dataItemURL, manageEntity, id } : FetchDataItem) : Promise<*> => (
+  new Promise((resolve, reject) => (
+    agent.
+      get(`${dataItemURL}/${id}`).
+      set("Accept", "application/json").
+      end(manageEntity(resolve, reject))
+  )) : Promise<any>
+);
+
+export const fetchItem = (things : FetchDataItem) : any => ({
+  type    : "@@redux-paginator-immutable/FETCH_ITEM_DATA",
+  payload : fetchDataItemRequest(things),
+  meta    : {
+    id: things.id,
   },
 });
 

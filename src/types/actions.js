@@ -70,10 +70,38 @@ export type FetchCurrentCompanyInfoPending = {
   type : "FETCH_CURRENT_COMPANY_INFO_PENDING";
 };
 
+export type FetchItemDataPending = {
+  type : "@@redux-paginator-immutable/FETCH_ITEM_DATA_PENDING";
+  meta: {
+    id: string;
+  }
+};
+
+export type FetchItemDataRejected = {
+  type : "@@redux-paginator-immutable/FETCH_ITEM_DATA_REJECTED";
+  meta: {
+    id: string;
+  }
+};
+
+export type FetchItemDataFulFilled = {
+  type : "@@redux-paginator-immutable/FETCH_ITEM_DATA_FULFILLED";
+  payload: {
+    Data: any;
+  };
+  meta: {
+    id: string;
+  };
+};
+
 export type Action = RequestPageAction
 | ReceivePageAction
 | ResetViewAction
 | ChangeViewAction
 | ClearDataAction
 
-| FetchCurrentCompanyInfoPending;
+| FetchCurrentCompanyInfoPending
+
+|FetchItemDataPending
+|FetchItemDataRejected
+|FetchItemDataFulFilled;

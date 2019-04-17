@@ -42,7 +42,7 @@ const createDataReducer = ({ key } : PaginatorSettings) => {
           return false;
         }
 
-        return data.get("errorFetchingInfo") === true;
+        return data.get("error") === true;
       }
     ),
     getIsFetchingItemInfo = createSelector(
@@ -52,7 +52,7 @@ const createDataReducer = ({ key } : PaginatorSettings) => {
           return false;
         }
 
-        return data.get("fetchingInfo");
+        return data.get("fetching");
       }
     ),
     getItemIsFetched = createSelector(
@@ -62,7 +62,7 @@ const createDataReducer = ({ key } : PaginatorSettings) => {
           return false;
         }
 
-        return data.get("fetchedInfo");
+        return data.get("fetched");
       }
     ),
     getShouldFetchItemInfo = createSelector(
