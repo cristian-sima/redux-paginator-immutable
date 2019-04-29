@@ -16,7 +16,7 @@ type LoadDataItemPropTypes = {
 
 type OwnProps = {
   id: string;
-  paginator: {
+  settings: {
     selectors: any;
     dataItemURL: string;
     endpoint: string;
@@ -33,17 +33,17 @@ import { fetchItem as fetchItemAction } from "./actions";
 import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
 
 const
-  mapStateToProps = (state : any, { paginator : { selectors }, id } : OwnProps) => ({
+  mapStateToProps = (state : any, { settings : { selectors }, id } : OwnProps) => ({
     data        : selectors.getItem(state, id),
     hasError    : selectors.getItemHasError(state, id),
     fetched     : selectors.getItemIsFetched(state, id),
     isFetching  : selectors.getIsFetchingItemInfo(state, id),
     shouldFetch : selectors.getShouldFetchItemInfo(state, id),
   }),
-  mapDispatchToProps = (dispatch : any, { id, paginator } : OwnProps) => ({
+  mapDispatchToProps = (dispatch : any, { id, settings } : OwnProps) => ({
     fetchItem () {
       dispatch(fetchItemAction({
-        ...paginator,
+        ...settings,
         id,
       }));
     },
