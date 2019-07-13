@@ -44,7 +44,7 @@ const paginatorMiddleware = ({ dispatch } : { dispatch : Dispatch}) => (
           }));
         };
 
-        const rawPath = typeof endpointCb === "function" ? endpointCb() : endpoint;
+        const rawPath = typeof endpointCb === "function" ? endpointCb(token) : endpoint;
         const path = rawPath === null ? "" : rawPath;
 
         try {
