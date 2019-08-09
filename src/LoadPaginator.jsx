@@ -119,7 +119,7 @@ class LoadPaginator extends Component<LoadPaginatorPropTypes> {
     };
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const { paginator, loadData } = this.props;
 
     const
@@ -134,7 +134,7 @@ class LoadPaginator extends Component<LoadPaginatorPropTypes> {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { loadData, paginator } = nextProps;
 
     const

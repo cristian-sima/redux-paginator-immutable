@@ -1,4 +1,4 @@
-/* eslint-disable max-len, no-undefined, max-lines-per-function, no-magic-pages */
+/* eslint-disable max-len, no-undefined, max-lines-per-function */
 
 import * as Immutable from "immutable";
 

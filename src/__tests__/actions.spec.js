@@ -1,5 +1,4 @@
 /* eslint-disable no-undefined, max-lines-per-function, no-magic-numbers */
-/* global describe */
 
 import expect from "expect";
 import { isFSA } from "flux-standard-action";

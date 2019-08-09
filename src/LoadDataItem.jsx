@@ -52,7 +52,7 @@ const
 class LoadDataItem extends React.Component<LoadDataItemPropTypes> {
   props: LoadDataItemPropTypes;
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const { shouldFetch, fetchItem } = this.props;
 
     if (shouldFetch) {
@@ -71,7 +71,7 @@ class LoadDataItem extends React.Component<LoadDataItemPropTypes> {
     );
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { shouldFetch, fetchItem } = nextProps;
 
     if (shouldFetch) {

@@ -1,5 +1,5 @@
 // @flow
-/* eslint-disable no-magic-s, no-bitwise*/
+/* eslint-disable no-bitwise*/
 
 type FetchPageArgs = {
   endpoint: string;
