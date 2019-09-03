@@ -5,9 +5,6 @@ import type {
   PagesState,
 
   Action,
-  ReceivePageAction,
-  ChangeViewAction,
-  RequestPageAction,
 } from "./types";
 
 import {
@@ -25,109 +22,22 @@ import {
 
 import * as Immutable from "immutable";
 
-const
-  requestPage = (state : PagesState, action : RequestPageAction) => {
-    const { payload : { token, page } } = action;
-
-    const elements = Immutable.Map({
-      page,
-      error    : false,
-      fetching : true,
-      fetched  : false,
-    });
-
-    if (state.has(token)) {
-      return state.update(token, (current) => (
-        current.merge(elements)
-      ));
-    }
-
-    const init = elements.merge({
-      view : 1,
-      token,
-      ids  : Immutable.List(),
-    });
-
-    return state.set(token, init);
-  },
-  receivePage = (state : PagesState, action : ReceivePageAction) => {
-    const {
-      meta: { idKey },
-      payload : { token, items, total, error },
-    } = action;
-
-    if (state.has(token)) {
-      const hasError = error === true;
-
-      return state.update(token, (current) => (
-        current.update((page) => (
-          current.merge(
-            Immutable.Map({
-              ids: page.get("ids").concat(
-                Immutable.List(
-                  items.map((item) => String(item[idKey]))
-                )
-              ),
-              fetching : false,
-              error    : hasError,
-              fetched  : true,
-              total    : hasError ? page.get("total") : total,
-            })
-          )
-        ))
-      ));
-    }
-
-    return state;
-  },
-  performChangeView = (state : PagesState, action : any, view : number) => {
-    const { payload : { token } } = action;
-
-    const item = state.get(token);
-
-    if (typeof item === "undefined") {
-      return state;
-    }
-
-    return state.update(token, (current) => (
-      current.set("view", view)
-    ));
-  },
-  changeView = (state : PagesState, action : ChangeViewAction) => (
-    performChangeView(state, action, action.payload.view)
-  ),
-  resetView = (state : PagesState, action : Action) => (
-    performChangeView(state, action, 1)
-  ),
-  receivePageItems = (state : ItemsState, action : ReceivePageAction) => {
-    const { payload, meta } = action;
-    const { items : payloadItems } = payload;
-    const { idKey, manageEntity } = meta;
-
-    const manage : any = (
-      typeof manageEntity === "function"
-    ) ? manageEntity : (item) => Immutable.Map(item);
-
-    const newItems = payloadItems.reduce((previous, item) => (
-      previous.set(String(item[idKey]), manage(item, state, idKey))
-    ), Immutable.Map());
-
-    return state.merge(newItems);
-  };
+import * as reducerItemData from "./reducerItemData";
+import * as reducerOperations from "./reducerOperations";
 
 export const pages = (state : PagesState = Immutable.Map(), action : Action) => {
   switch (action.type) {
     case REQUEST_PAGE:
-      return requestPage(state, action);
+      return reducerOperations.requestPage(state, action);
 
     case RECEIVE_PAGE:
-      return receivePage(state, action);
+      return reducerOperations.receivePage(state, action);
 
     case RESET_VIEW:
-      return resetView(state, action);
+      return reducerOperations.resetView(state, action);
 
     case CHANGE_VIEW:
-      return changeView(state, action);
+      return reducerOperations.changeView(state, action);
 
     case FETCH_CURRENT_COMPANY_INFO_PENDING:
     case CLEAR_DATA:
@@ -141,7 +51,7 @@ export const pages = (state : PagesState = Immutable.Map(), action : Action) => 
 export const items = (state : ItemsState = Immutable.Map(), action : Action) => {
   switch (action.type) {
     case RECEIVE_PAGE:
-      return receivePageItems(state, action);
+      return reducerOperations.receivePageItems(state, action);
 
     case FETCH_CURRENT_COMPANY_INFO_PENDING:
     case CLEAR_DATA:
@@ -151,61 +61,17 @@ export const items = (state : ItemsState = Immutable.Map(), action : Action) => 
   }
 };
 
-// ---------- data items reducer
-
-const
-  fetchItemDataPending = (state : any, { meta : { id } } : { meta : { id : string }}) => (
-    state.update(id, (current) => {
-      if (typeof current === "undefined") {
-        return current;
-      }
-
-      return current.mergeDeep(Immutable.Map({
-        fetching : true,
-        fetched  : false,
-        error    : false,
-      }));
-    })
-  ),
-  fetchItemDataRejected = (state : any, { meta : { id } }) => (
-    state.update((id), (current) => {
-      if (typeof current === "undefined") {
-        return current;
-      }
-
-      return current.mergeDeep(Immutable.Map({
-        fetching : false,
-        fetched  : false,
-        error    : true,
-      }));
-    })
-  ),
-  fetchItemDataFulFilled = (state : any, { payload : { Data }, meta : { id } }) => (
-    state.update((id), (current) => {
-      if (typeof current === "undefined") {
-        return current;
-      }
-
-      return current.mergeDeep(Immutable.Map({
-        Data,
-        fetching : false,
-        fetched  : true,
-        error    : false,
-      }));
-    })
-  );
-
 export const dataItems = (state : ItemsState = Immutable.Map(), action : Action) => {
   switch (action.type) {
     case RECEIVE_PAGE:
-      return receivePageItems(state, action);
+      return reducerOperations.receivePageItems(state, action);
 
     case FETCH_ITEM_DATA_PENDING:
-      return fetchItemDataPending(state, action);
+      return reducerItemData.fetchItemDataPending(state, action);
     case FETCH_ITEM_DATA_REJECTED:
-      return fetchItemDataRejected(state, action);
+      return reducerItemData.fetchItemDataRejected(state, action);
     case FETCH_ITEM_DATA_FULFILLED:
-      return fetchItemDataFulFilled(state, action);
+      return reducerItemData.fetchItemDataFulFilled(state, action);
 
     case FETCH_CURRENT_COMPANY_INFO_PENDING:
     case CLEAR_DATA:
