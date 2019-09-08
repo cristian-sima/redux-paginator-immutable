@@ -73,8 +73,9 @@ const createDataReducer = ({ key } : PaginatorSettings) => {
     getShouldFetchItemInfo = createSelector(
       getIsFetchingItemInfo,
       getItemIsFetched,
-      (isFetching, isFetched) => (
-        !isFetched && !isFetching
+      getItemHasError,
+      (isFetching, isFetched, hasError) => (
+        !isFetched && !isFetching && !hasError
       )
     );
 
