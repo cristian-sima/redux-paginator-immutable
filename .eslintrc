@@ -9,6 +9,13 @@
     "eslint:all",
     'plugin:react/recommended'
   ],
+  "settings": {
+   "react": {
+     "pragma": "React",
+     "version": "16.12.0",
+     "flowVersion": "0.112.0"
+   }
+ },
   "parserOptions": {
     "ecmaVersion": 6,
     "ecmaFeatures": {
@@ -20,6 +27,10 @@
   },
   "rules": {
 
+   "react/require-optimization": 0,
+   "default-param-last": 0,
+   "react/jsx-props-no-spreading": 0,
+   "function-call-argument-newline": ["error", "consistent"],
 
     "no-confusing-arrow": 0,
     "max-statements": 0,

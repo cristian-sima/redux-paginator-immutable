@@ -49,65 +49,41 @@ const
     },
   });
 
-class LoadDataItem extends React.Component<LoadDataItemPropTypes> {
-  props: LoadDataItemPropTypes;
+const LoadDataItem = (props : LoadDataItemPropTypes) => {
+  const { children, data, isFetching, shouldFetch, hasError, fetchItem } = props;
 
-  UNSAFE_componentWillMount () {
-    const { shouldFetch, fetchItem } = this.props;
-
+  React.useEffect(() => {
     if (shouldFetch) {
       fetchItem();
     }
-  }
+  }, [
+    shouldFetch,
+    isFetching,
+    hasError,
+  ]);
 
-  shouldComponentUpdate (nextProps : LoadDataItemPropTypes) {
+  if (isFetching) {
     return (
-      this.props.data !== nextProps.data ||
-      this.props.hasError !== nextProps.hasError ||
-      this.props.fetched !== nextProps.fetched ||
-      this.props.isFetching !== nextProps.isFetching ||
-      this.props.shouldFetch !== nextProps.shouldFetch ||
-      this.props.id !== nextProps.id
+      <LoadingMessage message="Preiau datele..." />
     );
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
-    const { shouldFetch, fetchItem } = nextProps;
-
-    if (shouldFetch) {
-      fetchItem();
-    }
-  }
-
-  render () {
-    const { children, data, isFetching, hasError, fetchItem } = this.props;
-
-    if (isFetching) {
-      return (
-        <LoadingMessage message="Preiau datele..." />
-      );
-    }
-
-    if (hasError) {
-      return (
-        <LargeErrorMessage
-          message="Ceva nu a mers bine"
-          onRetry={fetchItem}
-        />
-      );
-    }
-
-    if (data.size === 0) {
-      return null;
-    }
-
+  if (hasError) {
     return (
-      <React.Fragment>
-        {children}
-      </React.Fragment>
+      <LargeErrorMessage
+        message="Nu am putut stabili conexiunea cu server-ul"
+        onRetry={fetchItem}
+      />
     );
   }
-}
 
+  if (data.size === 0) {
+    return null;
+  }
+
+  return (
+    children
+  );
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoadDataItem));

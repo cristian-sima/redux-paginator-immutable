@@ -1,5 +1,5 @@
 // @flow
-// /* eslint-disable no-unused-vars */
+// /* eslint-disable  */
 
 type Settings = {
   key: string;
