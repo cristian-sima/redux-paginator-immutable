@@ -1,6 +1,6 @@
 {
   "name": "redux-paginator-immutable",
-  "version": "2.7.11",
+  "version": "2.7.12",
   "description": "redux-paginator-immutable helps you deal with paginated API by composing your existing reducers",
   "main": "./lib/index.js",
   "babel": {
@@ -72,39 +72,38 @@
   "homepage": "https://github.com/cristian-sima/redux-paginator-immutable#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-eslint": "^10.0.3",
+    "babel-eslint": "^10.1.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "chai": "^4.2.0",
+    "chai": "^4.3.4",
     "chai-immutable": "^2.1.0",
-    "codecov": "^3.6.1",
+    "codecov": "^3.8.1",
     "cross-env": "^6.0.3",
     "es3ify": "^0.2.2",
     "eslint": "^6.7.0",
-    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react": "^7.23.1",
     "expect": "^24.9.0",
-    "flow-bin": "^0.112.0",
+    "flow-bin": "^0.148.0",
     "flux-standard-action": "^2.1.1",
     "glob": "^7.1.6",
     "isparta": "^4.1.1",
     "mocha": "^6.2.2",
-    "npm-check": "^5.9.0",
-    "rimraf": "^3.0.0",
+    "npm-check": "^5.9.2",
+    "rimraf": "^3.0.2",
     "webpack": "^4.41.2"
   },
-  "peerDependencies": {},
   "dependencies": {
     "depcheck": "^0.9.1",
-    "immutable": "^4.0.0-rc.12",
+    "immutable": "*",
     "query-string": "^6.9.0",
     "react": "^16.12.0",
-    "redux": "^4.0.4",
+    "redux": "^4.0.5",
     "reselect": "^4.0.0",
     "superagent": "^5.1.1",
-    "x25": "^2.9.1"
+    "x25": "^2.9.2"
   }
 }
