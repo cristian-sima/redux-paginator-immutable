@@ -1,6 +1,6 @@
 {
   "name": "redux-paginator-immutable",
-  "version": "2.7.12",
+  "version": "17.0.0",
   "description": "redux-paginator-immutable helps you deal with paginated API by composing your existing reducers",
   "main": "./lib/index.js",
   "babel": {
@@ -37,9 +37,8 @@
     "build": "npm run build:lib",
     "clean": "rimraf dist lib",
     "check": "npm-check -u -i babel-jest -i jest --specials=bin,eslint,babel,webpack",
-    "flow": "flow check --color=always",
     "eslint": "eslint --ext .jsx,.js src --fix",
-    "prepublish": "npm run test && npm run eslint && npm run flow && npm run clean && npm run build",
+    "load": "npm run test && npm run eslint && npm run clean && npm run build && npm publish",
     "test": "mocha --require babel-core/register --recursive --recursive \"src/**/__tests__/*\" --require src/__tests__/setup.js",
     "test:watch": "npm test -- --watch",
     "test:cov": "babel-node ./node_modules/isparta/bin/isparta cover ./node_modules/mocha/bin/_mocha -- --recursive \"src/**/__tests__/*\" --require src/__tests__/setup.js",
@@ -97,13 +96,13 @@
     "webpack": "^4.41.2"
   },
   "dependencies": {
-    "depcheck": "^0.9.1",
+    "depcheck": "^1.4.3",
     "immutable": "*",
-    "query-string": "^6.9.0",
-    "react": "^16.12.0",
-    "redux": "^4.0.5",
-    "reselect": "^4.0.0",
-    "superagent": "^5.1.1",
-    "x25": "^2.9.2"
+    "query-string": "^7.1.0",
+    "react": "^17.0.2",
+    "redux": "^4.1.2",
+    "reselect": "^4.1.5",
+    "superagent": "^7.1.1",
+    "x25": "^17.0.0"
   }
 }
