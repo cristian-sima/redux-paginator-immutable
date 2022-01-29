@@ -10,14 +10,14 @@ type InfoPropTypes = {
 };
 
 import React from "react";
-import { numberToLocaleForm } from "x25/utility";
+import { words } from "x25/utility";
 
 const getNumberForm = (value : number, one : string, all : string) : string => {
   if (value === 1) {
     return `1 ${one}`;
   }
 
-  return `${numberToLocaleForm(value)} ${all}`;
+  return `${words.getNumberTense(value)} ${all}`;
 };
 
 const Info = ({ shown, total, one, all } : InfoPropTypes) => (
