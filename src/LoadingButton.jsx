@@ -1,6 +1,7 @@
 // @flow
 
 import React from "react";
+import { ErrorMessage, LoadingMessage } from "x25/Messages";
 
 type LoadingButtonPropTypes = {
   isFetching: bool;
@@ -9,7 +10,7 @@ type LoadingButtonPropTypes = {
   onLoadMoreClick: () => void;
 };
 
-import { ErrorMessage, LoadingMessage } from "x25/Messages";
+import words from "./words";
 
 class LoadingButton extends React.Component<LoadingButtonPropTypes> {
   props: LoadingButtonPropTypes;
@@ -30,19 +31,19 @@ class LoadingButton extends React.Component<LoadingButtonPropTypes> {
       <div className="text-center my-2">
         {
           hasProblems ? (
-            <ErrorMessage message="Nu am putut prelua. Încearcă încă o dată..." />
+            <ErrorMessage message={words.ThereWasAProblem} />
           ) : null
         }
         {
           isFetching ? (
-            <LoadingMessage message="Preiau date..." sm />
+            <LoadingMessage message={words.LoadingData} sm />
           ) : (
             <button
               className="btn btn-outline-info d-print-none"
               disabled={isFetching}
               onClick={onLoadMoreClick}
               type="button">
-              {isFetching ? "Încarc..." : "Încarcă mai mule"}
+              {isFetching ? words.Loading : words.LoadMore}
             </button>
           )
         }

@@ -1,5 +1,7 @@
 // @flow
 
+import words from "./words";
+
 type InfoPropTypes = {
   shown: number;
   total: number;
@@ -20,9 +22,9 @@ const getNumberForm = (value : number, one : string, all : string) : string => {
 
 const Info = ({ shown, total, one, all } : InfoPropTypes) => (
   <div className="text-muted">
-    {"Afișez "}
+    {`${words.Showing} `}
     {
-      (shown === total) ? "tot - " : `${shown} din`
+      (shown === total) ? `${words.All} - ` : `${shown} ${words.Of}`
     }
     {` ${getNumberForm(total, one, all)}`}
   </div>

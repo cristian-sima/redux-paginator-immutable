@@ -47,6 +47,7 @@ import selectors from "./selectors";
 import LoadingButton from "./LoadingButton";
 
 import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
+import words from "./words";
 
 const mapStateToProps = (state, { token, settings } : OwnProps) => {
 
@@ -175,14 +176,14 @@ class LoadPaginator extends Component<LoadPaginatorPropTypes> {
 
     if (isEmpty && isFetching) {
       return (
-        <LoadingMessage message="Preiau datele..." />
+        <LoadingMessage message={words.LoadingData} />
       );
     }
 
     if (hasProblems && currentPage === 1) {
       return (
         <LargeErrorMessage
-          message="Nu pot prelua datele"
+          message={words.ThereWasAProblem}
           onRetry={this.handleLoadMoreClick}
         />
       );

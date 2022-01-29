@@ -25,12 +25,39 @@ type OwnProps = {
   }
 };
 
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+
+// import {
+//   useLocation,
+//   useNavigate,
+//   useParams,
+// } from "react-router-dom";
+
+// const withRouter = (Component) => {
+//   const ComponentWithRouterProp = (props) => {
+//     const location = useLocation();
+//     const navigate = useNavigate();
+//     const params = useParams();
+
+//     return (
+//       <Component
+//         {...props}
+//         router={{
+//           location,
+//           navigate,
+//           params,
+//         }}
+//       />
+//     );
+//   };
+
+//   return ComponentWithRouterProp;
+// };
 
 import { fetchItem as fetchItemAction } from "./actions";
 
 import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
+import words from "./words";
 
 const
   mapStateToProps = (state : any, { settings : { selectors }, id } : OwnProps) => ({
@@ -64,14 +91,14 @@ const LoadDataItem = (props : LoadDataItemPropTypes) => {
 
   if (isFetching) {
     return (
-      <LoadingMessage message="Preiau datele..." />
+      <LoadingMessage message={words.LoadingData} />
     );
   }
 
   if (hasError) {
     return (
       <LargeErrorMessage
-        message="Nu am putut stabili conexiunea cu server-ul"
+        message={words.ThereWasAProblem}
         onRetry={fetchItem}
       />
     );
@@ -86,4 +113,4 @@ const LoadDataItem = (props : LoadDataItemPropTypes) => {
   );
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoadDataItem));
+export default connect(mapStateToProps, mapDispatchToProps)(LoadDataItem);
