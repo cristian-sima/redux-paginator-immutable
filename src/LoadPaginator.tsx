@@ -38,7 +38,8 @@ type LoadPaginatorPropTypes = {
   }) => void;
 };
 
-const mapStateToProps = (state : any, { token, settings }: OwnProps) => {
+const
+  mapStateToProps = (state : any, { token, settings }: OwnProps) => {
     const
       { list, entities } = selectors.getPaginators(state, settings.key),
       currentPage = selectors.getCurrentView(list, token),
@@ -68,15 +69,14 @@ const mapStateToProps = (state : any, { token, settings }: OwnProps) => {
   mapDispatchToProps = (dispatch, {
     token,
     settings,
-  }: OwnProps) => ({ ...bindActionCreators({
-    resetView  : settings.resetView,
-    changeView : settings.changeView,
-  }, dispatch),
-
-  loadData (page) {
-    dispatch(settings.requestPage(page, token));
-  },
-
+  }: OwnProps) => ({
+    ...bindActionCreators({
+      resetView  : settings.resetView,
+      changeView : settings.changeView,
+    }, dispatch),
+    loadData (page) {
+      dispatch(settings.requestPage(page, token));
+    },
   });
 
 class LoadPaginator extends Component<LoadPaginatorPropTypes> {
