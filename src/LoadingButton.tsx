@@ -27,7 +27,7 @@ class LoadingButton extends React.Component<LoadingButtonPropTypes> {
     return <div className="text-center my-2">
         {hasProblems ? <ErrorMessage message={words.ThereWasAProblem} /> : null}
         {isFetching ? <LoadingMessage message={words.LoadingData} sm /> : <button className="btn btn-outline-info d-print-none" disabled={isFetching} onClick={onLoadMoreClick} type="button">
-              {isFetching ? words.Loading : words.LoadMore}
+              {isFetching ? words.LoadingData : words.LoadMore}
             </button>}
       </div>;
   }
