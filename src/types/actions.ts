@@ -1,10 +1,7 @@
-// @flow
-
 import type { EndPointCb } from "./index";
-
 export type RequestPageAction = {
-  type : "@@redux-paginator-immutable/REQUEST_PAGE";
-  meta : {
+  type: "@@redux-paginator-immutable/REQUEST_PAGE";
+  meta: {
     endpoint: string;
     endpointCb: EndPointCb;
     manageEntity: any;
@@ -18,10 +15,9 @@ export type RequestPageAction = {
     token: string;
   };
 };
-
 export type ReceivePageAction = {
-  type : "@@redux-paginator-immutable/RECEIVE_PAGE";
-  meta : {
+  type: "@@redux-paginator-immutable/RECEIVE_PAGE";
+  meta: {
     endpoint: string;
     endpointCb: EndPointCb;
     manageEntity: any;
@@ -33,14 +29,13 @@ export type ReceivePageAction = {
     token: string;
     items: Array<any>;
     total: number;
-    error: bool;
+    error: boolean;
     raw?: string;
   };
 };
-
 export type ChangeViewAction = {
-  type : "@@redux-paginator-immutable/CHANGE_VIEW";
-  meta : {
+  type: "@@redux-paginator-immutable/CHANGE_VIEW";
+  meta: {
     endpoint: string;
   };
   payload: {
@@ -48,44 +43,38 @@ export type ChangeViewAction = {
     token: string;
   };
 };
-
 export type ResetViewAction = {
-  type : "@@redux-paginator-immutable/RESET_VIEW";
-  meta : {
+  type: "@@redux-paginator-immutable/RESET_VIEW";
+  meta: {
     endpoint: string;
   };
   payload: {
     token: string;
   };
 };
-
 export type ClearDataAction = {
-  type : "@@redux-paginator-immutable/CLEAR_DATA";
-  meta : {
+  type: "@@redux-paginator-immutable/CLEAR_DATA";
+  meta: {
     endpoint: string;
   };
 };
-
 export type FetchCurrentCompanyInfoPending = {
-  type : "FETCH_CURRENT_COMPANY_INFO_PENDING";
+  type: "FETCH_CURRENT_COMPANY_INFO_PENDING";
 };
-
 export type FetchItemDataPending = {
-  type : "@@redux-paginator-immutable/FETCH_ITEM_DATA_PENDING";
+  type: "@@redux-paginator-immutable/FETCH_ITEM_DATA_PENDING";
   meta: {
     id: string;
-  }
+  };
 };
-
 export type FetchItemDataRejected = {
-  type : "@@redux-paginator-immutable/FETCH_ITEM_DATA_REJECTED";
+  type: "@@redux-paginator-immutable/FETCH_ITEM_DATA_REJECTED";
   meta: {
     id: string;
-  }
+  };
 };
-
 export type FetchItemDataFulFilled = {
-  type : "@@redux-paginator-immutable/FETCH_ITEM_DATA_FULFILLED";
+  type: "@@redux-paginator-immutable/FETCH_ITEM_DATA_FULFILLED";
   payload: {
     Data: any;
   };
@@ -93,15 +82,4 @@ export type FetchItemDataFulFilled = {
     id: string;
   };
 };
-
-export type Action = RequestPageAction
-| ReceivePageAction
-| ResetViewAction
-| ChangeViewAction
-| ClearDataAction
-
-| FetchCurrentCompanyInfoPending
-
-|FetchItemDataPending
-|FetchItemDataRejected
-|FetchItemDataFulFilled;
+export type Action = RequestPageAction | ReceivePageAction | ResetViewAction | ChangeViewAction | ClearDataAction | FetchCurrentCompanyInfoPending | FetchItemDataPending | FetchItemDataRejected | FetchItemDataFulFilled;
