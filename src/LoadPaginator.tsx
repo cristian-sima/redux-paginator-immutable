@@ -51,7 +51,8 @@ const
       resultsUpTo = selectors.getResultsUpToPage(list, token, entities, currentPage, settings.rowsPerLoad),
       items = settings.manipulateItems(resultsUpTo),
       total = selectors.getCurrentTotalResultsCount(list, token),
-      hasProblems = selectors.hasPageProblems(list, token, currentPage),
+      // currentPage was previously given to the following function
+      hasProblems = selectors.hasPageProblems(list, token),
       shouldLoadNext = !isNextFetched && !isNextFetching;
 
     return {
