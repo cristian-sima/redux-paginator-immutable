@@ -8,5 +8,6 @@ import LoadPaginator from "./LoadPaginator";
 import LoadDataItem from "./LoadDataItem";
 import createDataReducer from "./createDataReducer";
 import createItemReducer from "./createItemReducer";
+
 export { Info, LoadingButton, LoadPaginator, LoadDataItem, createPaginator, paginatorMiddleware, paginatorSelectors // util
-, createDataReducer, manageDataEntity, manipulateDataItems, createItemReducer, manipulateItems, manageEntity };
+  , createDataReducer, manageDataEntity, manipulateDataItems, createItemReducer, manipulateItems, manageEntity };

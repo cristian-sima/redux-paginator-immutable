@@ -7,64 +7,65 @@ type FetchItemDataFulFilledProps = {
   };
 };
 import * as Immutable from "immutable";
+
 const defaultOptions = Immutable.Map({
-  fetching: true,
-  fetched: false,
-  error: false
-});
+    fetching : true,
+    fetched  : false,
+    error    : false,
+  }),
 
-const fetchItemDataPending = (state: any, {
-  meta: {
-    id
-  }
-}: {
+  fetchItemDataPending = (state: any, {
+    meta: {
+      id,
+    },
+  }: {
   meta: {
     id: string;
   };
-}) => state.update(id, current => {
-  if (typeof current === "undefined") {
-    return defaultOptions;
-  }
+}) => state.update(id, (current) => {
+    if (typeof current === "undefined") {
+      return defaultOptions;
+    }
 
-  return current.mergeDeep(defaultOptions);
-}),
-      fetchItemDataRejected = (state: any, {
-  meta: {
-    id
-  }
-}: {
+    return current.mergeDeep(defaultOptions);
+  }),
+  fetchItemDataRejected = (state: any, {
+    meta: {
+      id,
+    },
+  }: {
   meta: {
     id: string;
   };
-}) => state.update(id, current => {
-  if (typeof current === "undefined") {
-    return current;
-  }
+}) => state.update(id, (current) => {
+    if (typeof current === "undefined") {
+      return current;
+    }
 
-  return current.mergeDeep(Immutable.Map({
-    fetching: false,
-    fetched: false,
-    error: true
-  }));
-}),
-      fetchItemDataFulFilled = (state: any, {
-  payload: {
-    Data
-  },
-  meta: {
-    id
-  }
-}: FetchItemDataFulFilledProps) => state.update(id, current => {
-  if (typeof current === "undefined") {
-    return current;
-  }
+    return current.mergeDeep(Immutable.Map({
+      fetching : false,
+      fetched  : false,
+      error    : true,
+    }));
+  }),
+  fetchItemDataFulFilled = (state: any, {
+    payload: {
+      Data,
+    },
+    meta: {
+      id,
+    },
+  }: FetchItemDataFulFilledProps) => state.update(id, (current) => {
+    if (typeof current === "undefined") {
+      return current;
+    }
 
-  return current.mergeDeep(Immutable.Map({
-    Data,
-    fetching: false,
-    fetched: true,
-    error: false
-  }));
-});
+    return current.mergeDeep(Immutable.Map({
+      Data,
+      fetching : false,
+      fetched  : true,
+      error    : false,
+    }));
+  });
 
 export { fetchItemDataPending, fetchItemDataRejected, fetchItemDataFulFilled };

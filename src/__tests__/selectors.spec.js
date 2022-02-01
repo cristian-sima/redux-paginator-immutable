@@ -19,75 +19,75 @@ const {
 import * as Immutable from "immutable";
 
 const paginator = Immutable.Map({
-  "foo=bar": Immutable.Map({
-    page  : 3,
-    token : "foo=bar",
-    ids   : Immutable.List([
-      1,
-      2,
-      3,
-      7,
-      8,
-      9,
-    ]),
-    total    : 42,
-    view     : 2,
-    fetching : false,
-    fetched  : true,
+    "foo=bar": Immutable.Map({
+      page  : 3,
+      token : "foo=bar",
+      ids   : Immutable.List([
+        1,
+        2,
+        3,
+        7,
+        8,
+        9,
+      ]),
+      total    : 42,
+      view     : 2,
+      fetching : false,
+      fetched  : true,
+    }),
+    "foo=baz": Immutable.Map({
+      page  : 1,
+      token : "foo=baz",
+      ids   : Immutable.List([
+        1,
+        4,
+        6,
+      ]),
+      fetching : false,
+      fetched  : true,
+      total    : 17,
+      view     : 1,
+    }),
   }),
-  "foo=baz": Immutable.Map({
-    page  : 1,
-    token : "foo=baz",
-    ids   : Immutable.List([
-      1,
-      4,
-      6,
-    ]),
-    fetching : false,
-    fetched  : true,
-    total    : 17,
-    view     : 1,
-  }),
-});
 
-const items = Immutable.Map({
-  "1": Immutable.Map({
-    data : "foo1",
-    id   : 1,
-  }),
-  "2": Immutable.Map({
-    data : "foo2",
-    id   : 2,
-  }),
-  "3": Immutable.Map({
-    data : "foo3",
-    id   : 3,
-  }),
-  "4": Immutable.Map({
-    data : "foo4",
-    id   : 4,
-  }),
-  "5": Immutable.Map({
-    data : "foo5",
-    id   : 5,
-  }),
-  "6": Immutable.Map({
-    data : "foo6",
-    id   : 6,
-  }),
-  "7": Immutable.Map({
-    data : "foo7",
-    id   : 7,
-  }),
-  "8": Immutable.Map({
-    data : "foo8",
-    id   : 8,
-  }),
-  "9": Immutable.Map({
-    data : "foo9",
-    id   : 9,
-  }),
-});
+  items = Immutable.Map({
+    "1": Immutable.Map({
+      data : "foo1",
+      id   : 1,
+    }),
+    "2": Immutable.Map({
+      data : "foo2",
+      id   : 2,
+    }),
+    "3": Immutable.Map({
+      data : "foo3",
+      id   : 3,
+    }),
+    "4": Immutable.Map({
+      data : "foo4",
+      id   : 4,
+    }),
+    "5": Immutable.Map({
+      data : "foo5",
+      id   : 5,
+    }),
+    "6": Immutable.Map({
+      data : "foo6",
+      id   : 6,
+    }),
+    "7": Immutable.Map({
+      data : "foo7",
+      id   : 7,
+    }),
+    "8": Immutable.Map({
+      data : "foo8",
+      id   : 8,
+    }),
+    "9": Immutable.Map({
+      data : "foo9",
+      id   : 9,
+    }),
+  });
 
 describe("selectors", () => {
 

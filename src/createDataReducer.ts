@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function,  */
-import type { PaginatorSettings } from "./types";
 import { createSelector } from "reselect";
 import * as Immutable from "immutable";
+import type { PaginatorSettings } from "./types";
 
 /*
   Use to create a complex list where you need more information about
@@ -9,40 +9,45 @@ import * as Immutable from "immutable";
   manipulate it
 */
 const createDataReducer = ({
-  key
+  key,
 }: PaginatorSettings) => {
   const getItems = (state: any) => state.getIn(["entities", key]),
-        getItem = createSelector(getItems, (state, id) => id, (data, id) => data.get(id) || Immutable.Map()),
-        getItemsList = createSelector(getItems, data => data.map(current => current.get("Data")).toList()),
-        getItemData = createSelector(getItems, (state, id) => id, (data, id) => {
-    if (typeof data === "undefined") {
-      return Immutable.Map();
-    }
+    getItem = createSelector(getItems, (state, id) => id, (data, id) => data.get(id) || Immutable.Map()),
+    getItemsList = createSelector(getItems, (data) => data.map((current) => current.get("Data")).toList()),
+    getItemData = createSelector(getItems, (state, id) => id, (data, id) => {
+      if (typeof data === "undefined") {
+        return Immutable.Map();
+      }
 
-    return data.getIn([id, "Data"]);
-  }),
-        getItemHasError = createSelector(getItem, data => {
-    if (typeof data === "undefined") {
-      return false;
-    }
+      return data.getIn([id, "Data"]);
+    }),
+    getItemHasError = createSelector(getItem, (data) => {
+      if (typeof data === "undefined") {
+        return false;
+      }
 
-    return data.get("error") === true;
-  }),
-        getIsFetchingItemInfo = createSelector(getItem, data => {
-    if (typeof data === "undefined") {
-      return false;
-    }
+      return data.get("error") === true;
+    }),
+    getIsFetchingItemInfo = createSelector(getItem, (data) => {
+      if (typeof data === "undefined") {
+        return false;
+      }
 
-    return data.get("fetching");
-  }),
-        getItemIsFetched = createSelector(getItem, data => {
-    if (typeof data === "undefined") {
-      return false;
-    }
+      return data.get("fetching");
+    }),
+    getItemIsFetched = createSelector(getItem, (data) => {
+      if (typeof data === "undefined") {
+        return false;
+      }
 
-    return data.get("fetched");
-  }),
-        getShouldFetchItemInfo = createSelector(getIsFetchingItemInfo, getItemIsFetched, getItemHasError, (isFetching, isFetched, hasError) => !isFetched && !isFetching && !hasError);
+      return data.get("fetched");
+    }),
+    getShouldFetchItemInfo = createSelector(
+      getIsFetchingItemInfo,
+      getItemIsFetched,
+      getItemHasError,
+      (isFetching, isFetched, hasError) => !isFetched && !isFetching && !hasError,
+    );
 
   return {
     getItems,
@@ -52,7 +57,7 @@ const createDataReducer = ({
     getItemHasError,
     getIsFetchingItemInfo,
     getItemIsFetched,
-    getShouldFetchItemInfo
+    getShouldFetchItemInfo,
   };
 };
 

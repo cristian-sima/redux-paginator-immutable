@@ -20,33 +20,33 @@ import {
 } from "../reducers";
 
 const requestPageAction = requestPage({
-  endpoint    : "some/api/endpoint",
-  resultsKey  : "results",
-  totalKey    : "total",
-  pageArgName : "p",
-  idKey       : "id",
-  page        : 2,
-  token       : "foo=bar",
-});
+    endpoint    : "some/api/endpoint",
+    resultsKey  : "results",
+    totalKey    : "total",
+    pageArgName : "p",
+    idKey       : "id",
+    page        : 2,
+    token       : "foo=bar",
+  }),
 
-const receivePageAction = receivePage({
-  endpoint    : "some/api/endpoint/",
-  pageArgName : "p",
-  idKey       : "id",
-  page        : 2,
-  token       : "foo=bar",
-  items       : [
-    {
-      id       : "baz",
-      fooField : "bazValue",
-    },
-    {
-      id       : "bar",
-      fooField : "barValue",
-    },
-  ],
-  total: 2,
-});
+  receivePageAction = receivePage({
+    endpoint    : "some/api/endpoint/",
+    pageArgName : "p",
+    idKey       : "id",
+    page        : 2,
+    token       : "foo=bar",
+    items       : [
+      {
+        id       : "baz",
+        fooField : "bazValue",
+      },
+      {
+        id       : "bar",
+        fooField : "barValue",
+      },
+    ],
+    total: 2,
+  });
 
 describe("pages reducer", () => {
 
@@ -76,7 +76,7 @@ describe("pages reducer", () => {
             view     : 1,
             fetched  : false,
           }),
-        })
+        }),
       );
   });
 

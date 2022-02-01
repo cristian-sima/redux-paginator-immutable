@@ -1,5 +1,5 @@
-import type { PaginatorSettings } from "./types";
 import { createSelector } from "reselect";
+import type { PaginatorSettings } from "./types";
 
 /*
   Use to create a simple list where you do not need more information about
@@ -7,16 +7,16 @@ import { createSelector } from "reselect";
   manipulate it
 */
 const createReducer = ({
-  key
+  key,
 }: PaginatorSettings) => {
   const getItems = (state: any) => state.getIn(["entities", key]),
-        getItem = createSelector(getItems, (state, id) => id, (data, id) => data.get(id)),
-        getItemsList = createSelector(getItems, data => data.toList());
+    getItem = createSelector(getItems, (state, id) => id, (data, id) => data.get(id)),
+    getItemsList = createSelector(getItems, (data) => data.toList());
 
   return {
     getItems,
     getItem,
-    getItemsList
+    getItemsList,
   };
 };
 

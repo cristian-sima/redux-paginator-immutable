@@ -16,12 +16,12 @@ describe("createPaginator", () => {
 
   it("should create correct request action creator", () => {
     const paginator = createPaginator("some/api/endpoint", {
-      pageArgName : "p",
-      idKey       : "id_field",
-      resultsKey  : "results",
-      totalKey    : "count",
-    });
-    const action = paginator.requestPage(42, "foo=bar");
+        pageArgName : "p",
+        idKey       : "id_field",
+        resultsKey  : "results",
+        totalKey    : "count",
+      }),
+      action = paginator.requestPage(42, "foo=bar");
 
     expect(action).
       toEqual(requestPage({

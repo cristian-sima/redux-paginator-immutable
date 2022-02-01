@@ -1,5 +1,6 @@
 /* eslint-disable max-lines-per-function,  */
 import type { PaginatorSettings } from "./types";
+
 type EndpointData = {
   path: string;
   cb: () => string;
@@ -28,6 +29,7 @@ import { pages as pagesReducer, items as itemsReducer, dataItems as dataItemsRed
 import actions from "./actions";
 import * as Immutable from "immutable";
 import { rowsPerLoad as defaultRowsPerLoad } from "x25/utility/others";
+
 export const onlyForEndpoint: OnlyForEndpoint = (endpoint, reducer) => (state = Immutable.Map(), action) => {
   if (typeof action.meta === "undefined" || action.meta.endpoint !== endpoint) {
     return state;
@@ -39,69 +41,70 @@ export const onlyForEndpoint: OnlyForEndpoint = (endpoint, reducer) => (state = 
 const getEndpoint = (data: Endpoint) => {
   if (typeof data === "object") {
     return {
-      path: data.path,
-      cb: data.cb
+      path : data.path,
+      cb   : data.cb,
     };
   }
 
   return {
-    path: data,
-    cb: null
+    path : data,
+    cb   : null,
   };
 };
 
 export const createPaginator: CreatePaginator = (endpointData: Endpoint, settings: PaginatorSettings) => {
   const {
-    path: endpoint,
-    cb: endpointCb
-  } = getEndpoint(endpointData);
-  const {
-    key,
-    normalizeDataItem,
-    dataItemURL,
-    manageEntity,
-    resultsKey,
-    totalKey = "Total",
-    pageArgName = "page",
-    idKey = "ID",
-    rowsPerLoad = defaultRowsPerLoad,
-    manipulateItems = items => items
-  } = settings;
-  const endpointedActions = {
-    requestPage: (page: number, token: string) => actions.requestPage({
-      endpoint,
-      endpointCb,
+      path: endpoint,
+      cb: endpointCb,
+    } = getEndpoint(endpointData),
+    {
+      key,
+      normalizeDataItem,
+      dataItemURL,
       manageEntity,
       resultsKey,
-      totalKey,
-      pageArgName,
-      idKey,
-      page,
-      token
-    }),
+      totalKey = "Total",
+      pageArgName = "page",
+      idKey = "ID",
+      rowsPerLoad = defaultRowsPerLoad,
+      manipulateItems = (items) => items,
+    } = settings,
+    endpointedActions = {
+      requestPage: (page: number, token: string) => actions.requestPage({
+        endpoint,
+        endpointCb,
+        manageEntity,
+        resultsKey,
+        totalKey,
+        pageArgName,
+        idKey,
+        page,
+        token,
+      }),
 
-    resetView(token) {
-      return actions.resetView(endpoint, token);
-    },
+      resetView (token) {
+        return actions.resetView(endpoint, token);
+      },
 
-    changeView({
-      view,
-      token
-    }: {
+      changeView ({
+        view,
+        token,
+      }: {
       view: number;
       token: string;
     }) {
-      return actions.changeView(endpoint, {
-        view,
-        token
-      });
-    },
+        return actions.changeView(endpoint, {
+          view,
+          token,
+        });
+      },
 
-    clearData() {
-      return actions.clearData(endpoint);
-    }
+      clearData () {
+        return actions.clearData(endpoint);
+      },
 
-  };
+    };
+
   return {
     key,
     normalizeDataItem,
@@ -111,9 +114,9 @@ export const createPaginator: CreatePaginator = (endpointData: Endpoint, setting
     manageEntity,
     resultsKey,
     endpoint,
-    pagesReducer: onlyForEndpoint(endpoint, pagesReducer),
-    itemsReducer: onlyForEndpoint(endpoint, itemsReducer),
-    dataItemsReducer: onlyForEndpoint(endpoint, dataItemsReducer),
-    ...endpointedActions
+    pagesReducer     : onlyForEndpoint(endpoint, pagesReducer),
+    itemsReducer     : onlyForEndpoint(endpoint, itemsReducer),
+    dataItemsReducer : onlyForEndpoint(endpoint, dataItemsReducer),
+    ...endpointedActions,
   };
 };
