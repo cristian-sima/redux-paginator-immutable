@@ -51,11 +51,11 @@ const
             pageArgName,
             page,
             token,
-          }).then((res) => {
-            const {
-              response,
-            } = res;
-            let results = [],
+          }).then((res: { response: any; }) => {
+            const { response } = res;
+
+            let
+              results = [],
               total = 0;
 
             if (typeof resultsKey === "undefined") {

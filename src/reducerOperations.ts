@@ -23,7 +23,7 @@ const requestPage = (state: PagesState, action: RequestPageAction) => {
       });
 
     if (state.has(token)) {
-      return state.update(token, (current) => current.merge(elements));
+      return state.update(token, (current : any) => current.merge(elements));
     }
 
     const init = elements.merge({
@@ -75,7 +75,7 @@ const requestPage = (state: PagesState, action: RequestPageAction) => {
       return state;
     }
 
-    return state.update(token, (current) => current.set("view", view));
+    return state.update(token, (current : any) => current.set("view", view));
   },
   changeView = (state: PagesState, action: ChangeViewAction) => (
     performChangeView(state, action, action.payload.view)

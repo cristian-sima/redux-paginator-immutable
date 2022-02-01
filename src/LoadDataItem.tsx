@@ -49,7 +49,7 @@ const
     },
   }),
 
-  LoadDataItem = (props: LoadDataItemPropTypes) => {
+  LoadDataItem = (props: LoadDataItemPropTypes) : any => {
     const {
       children,
       data,

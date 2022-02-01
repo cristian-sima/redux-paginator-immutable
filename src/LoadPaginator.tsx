@@ -4,6 +4,7 @@ import * as Immutable from "immutable";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
+import { createSubscription } from "create-subscription";
 import selectors from "./selectors";
 import LoadingButton from "./LoadingButton";
 import words from "./words";
@@ -67,7 +68,7 @@ const
       }),
     };
   },
-  mapDispatchToProps = (dispatch, {
+  mapDispatchToProps = (dispatch : any, {
     token,
     settings,
   }: OwnProps) => ({
@@ -75,15 +76,20 @@ const
       resetView  : settings.resetView,
       changeView : settings.changeView,
     }, dispatch),
-    loadData (page) {
+    loadData (page : any) {
       dispatch(settings.requestPage(page, token));
     },
-  });
+  }), ;
 
+
+// new
+
+
+/* eslint-disable  */
 class LoadPaginator extends Component<LoadPaginatorPropTypes> {
   handleLoadMoreClick: () => void;
 
-  UNSAFE_componentWillMount () {
+  componentDidMount () {
     const
       { paginator, loadData } = this.props,
       isFetched = paginator.get("isFetched"),
@@ -96,7 +102,7 @@ class LoadPaginator extends Component<LoadPaginatorPropTypes> {
     }
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps : LoadPaginatorPropTypes) {
     const
       { loadData, paginator } = nextProps,
       isFetched = paginator.get("isFetched"),

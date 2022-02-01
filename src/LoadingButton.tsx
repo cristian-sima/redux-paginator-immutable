@@ -9,7 +9,6 @@ type LoadingButtonPropTypes = {
 import words from "./words";
 
 class LoadingButton extends React.Component<LoadingButtonPropTypes> {
-  props: LoadingButtonPropTypes;
 
   shouldComponentUpdate (nextProps: LoadingButtonPropTypes) {
     const { hasProblems, isFetching } = this.props;
