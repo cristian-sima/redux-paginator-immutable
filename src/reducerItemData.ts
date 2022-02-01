@@ -8,7 +8,8 @@ type FetchItemDataFulFilledProps = {
 };
 import * as Immutable from "immutable";
 
-const defaultOptions = Immutable.Map({
+const
+  defaultOptions = Immutable.Map({
     fetching : true,
     fetched  : false,
     error    : false,
@@ -22,13 +23,15 @@ const defaultOptions = Immutable.Map({
   meta: {
     id: string;
   };
-}) => state.update(id, (current) => {
-    if (typeof current === "undefined") {
-      return defaultOptions;
-    }
+}) => (
+    state.update(id, (current : any) => {
+      if (typeof current === "undefined") {
+        return defaultOptions;
+      }
 
-    return current.mergeDeep(defaultOptions);
-  }),
+      return current.mergeDeep(defaultOptions);
+    })
+  ),
   fetchItemDataRejected = (state: any, {
     meta: {
       id,
@@ -37,7 +40,7 @@ const defaultOptions = Immutable.Map({
   meta: {
     id: string;
   };
-}) => state.update(id, (current) => {
+}) => state.update(id, (current : any) => {
     if (typeof current === "undefined") {
       return current;
     }
@@ -55,7 +58,7 @@ const defaultOptions = Immutable.Map({
     meta: {
       id,
     },
-  }: FetchItemDataFulFilledProps) => state.update(id, (current) => {
+  }: FetchItemDataFulFilledProps) => state.update(id, (current : any) => {
     if (typeof current === "undefined") {
       return current;
     }

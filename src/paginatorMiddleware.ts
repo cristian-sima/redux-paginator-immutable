@@ -4,15 +4,10 @@ import { REQUEST_PAGE } from "./actionTypes";
 import actions from "./actions";
 import { fetchPage } from "./agent";
 
-const {
-    receivePage,
-  } = actions,
+const
+  { receivePage } = actions,
 
-  paginatorMiddleware = ({
-    dispatch,
-  }: {
-  dispatch: Dispatch;
-}) => (next: any) => (action: Action) => {
+  paginatorMiddleware = ({ dispatch }: { dispatch: Dispatch;}) => (next: any) => (action: Action) => {
     if (action.type === REQUEST_PAGE) {
       const {
         meta: {
@@ -31,7 +26,8 @@ const {
       } = action;
 
       dispatch((dispatch2) => {
-        const markAsError = () => {
+        const
+          markAsError = () => {
             dispatch2(receivePage({
               endpoint,
               endpointCb,

@@ -25,7 +25,8 @@ import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
 import { fetchItem as fetchItemAction } from "./actions";
 import words from "./words";
 
-const mapStateToProps = (state: any, {
+const
+  mapStateToProps = (state: any, {
     settings: {
       selectors,
     },
@@ -46,7 +47,6 @@ const mapStateToProps = (state: any, {
         id,
       }));
     },
-
   }),
 
   LoadDataItem = (props: LoadDataItemPropTypes) => {

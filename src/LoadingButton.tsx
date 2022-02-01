@@ -12,27 +12,28 @@ class LoadingButton extends React.Component<LoadingButtonPropTypes> {
   props: LoadingButtonPropTypes;
 
   shouldComponentUpdate (nextProps: LoadingButtonPropTypes) {
-    const {
-      hasProblems,
-      isFetching,
-    } = this.props;
+    const { hasProblems, isFetching } = this.props;
 
     return hasProblems !== nextProps.hasProblems || isFetching !== nextProps.isFetching;
   }
 
   render () {
-    const {
-      isFetching,
-      hasProblems,
-      onLoadMoreClick,
-    } = this.props;
+    const { isFetching, hasProblems, onLoadMoreClick } = this.props;
 
-    return (<div className="text-center my-2">
-      {hasProblems ? <ErrorMessage message={words.ThereWasAProblem} /> : null}
-      {isFetching ? <LoadingMessage message={words.LoadingData} sm /> : (<button className="btn btn-outline-info d-print-none" disabled={isFetching} onClick={onLoadMoreClick} type="button">
-        {isFetching ? words.LoadingData : words.LoadMore}
-                                                                         </button>)}
-    </div>);
+    return (
+      <div className="text-center my-2">
+        {hasProblems ? <ErrorMessage message={words.ThereWasAProblem} /> : null}
+        {isFetching ? <LoadingMessage message={words.LoadingData} sm /> : (
+          <button
+            className="btn btn-outline-info d-print-none"
+            disabled={isFetching}
+            onClick={onLoadMoreClick}
+            type="button">
+            {isFetching ? words.LoadingData : words.LoadMore}
+          </button>
+        )}
+      </div>
+    );
   }
 
 }

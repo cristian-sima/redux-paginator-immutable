@@ -9,5 +9,18 @@ import LoadDataItem from "./LoadDataItem";
 import createDataReducer from "./createDataReducer";
 import createItemReducer from "./createItemReducer";
 
-export { Info, LoadingButton, LoadPaginator, LoadDataItem, createPaginator, paginatorMiddleware, paginatorSelectors // util
-  , createDataReducer, manageDataEntity, manipulateDataItems, createItemReducer, manipulateItems, manageEntity };
+export {
+  Info,
+  LoadingButton,
+  LoadPaginator,
+  LoadDataItem,
+  createPaginator,
+  paginatorMiddleware,
+  paginatorSelectors,
+  createDataReducer,
+  manageDataEntity,
+  manipulateDataItems,
+  createItemReducer,
+  manipulateItems,
+  manageEntity,
+};
