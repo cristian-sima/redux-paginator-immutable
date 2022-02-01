@@ -5,20 +5,19 @@ import chaiImmutable from "chai-immutable";
 
 chai.use(chaiImmutable);
 
+import * as Immutable from "immutable";
 import selectors from "../selectors";
 
-const {
-  getCurrentTotalResultsCount,
-  getAllResults,
-  getResultsUpToPage,
-  isPageFetched,
-  isPageFetching,
-  getCurrentView,
-} = selectors;
-
-import * as Immutable from "immutable";
-
-const paginator = Immutable.Map({
+const
+  {
+    getCurrentTotalResultsCount,
+    getAllResults,
+    getResultsUpToPage,
+    isPageFetched,
+    isPageFetching,
+    getCurrentView,
+  } = selectors,
+  paginator = Immutable.Map({
     "foo=bar": Immutable.Map({
       page  : 3,
       token : "foo=bar",
@@ -91,7 +90,7 @@ const paginator = Immutable.Map({
 
 describe("selectors", () => {
 
-  it("getAllResults shoud select all the items ids for pages with same params than the current page", () => {
+  it("getAllResults should select all the items ids for pages with same params than the current page", () => {
     expect(getAllResults(paginator, "foo=bar", items)).
       to.equal(Immutable.List([
         Immutable.Map({
@@ -121,7 +120,7 @@ describe("selectors", () => {
       ]));
   });
 
-  it("getResultsUpToPage shoud select all the items ids for pages with same params than the current page", () => {
+  it("getResultsUpToPage should select all the items ids for pages with same params than the current page", () => {
     expect(getResultsUpToPage(paginator, "foo=bar", items, 2, 2)).
       to.equal(Immutable.List([
         Immutable.Map({

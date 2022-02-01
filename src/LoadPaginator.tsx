@@ -82,31 +82,6 @@ const mapStateToProps = (state : any, { token, settings }: OwnProps) => {
 class LoadPaginator extends Component<LoadPaginatorPropTypes> {
   handleLoadMoreClick: () => void;
 
-  constructor (props: LoadPaginatorPropTypes) {
-    super(props);
-
-    this.handleLoadMoreClick = () => {
-      const
-        { paginator, token, changeView, loadData } = this.props,
-        currentPage = paginator.get("currentPage"),
-        hasProblems = paginator.get("hasProblems"),
-        shouldLoadNext = paginator.get("shouldLoadNext");
-
-      if (hasProblems) {
-        loadData(currentPage);
-      } else {
-        changeView({
-          token,
-          view: currentPage + 1,
-        });
-
-        if (shouldLoadNext) {
-          loadData(currentPage + 1);
-        }
-      }
-    };
-  }
-
   UNSAFE_componentWillMount () {
     const
       { paginator, loadData } = this.props,
@@ -131,6 +106,31 @@ class LoadPaginator extends Component<LoadPaginatorPropTypes> {
     if (shouldFetch) {
       loadData(currentPage);
     }
+  }
+
+  constructor (props: LoadPaginatorPropTypes) {
+    super(props);
+
+    this.handleLoadMoreClick = () => {
+      const
+        { paginator, token, changeView, loadData } = this.props,
+        currentPage = paginator.get("currentPage"),
+        hasProblems = paginator.get("hasProblems"),
+        shouldLoadNext = paginator.get("shouldLoadNext");
+
+      if (hasProblems) {
+        loadData(currentPage);
+      } else {
+        changeView({
+          token,
+          view: currentPage + 1,
+        });
+
+        if (shouldLoadNext) {
+          loadData(currentPage + 1);
+        }
+      }
+    };
   }
 
   shouldComponentUpdate (nextProps: LoadPaginatorPropTypes) {

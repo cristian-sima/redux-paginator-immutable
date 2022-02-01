@@ -1,4 +1,5 @@
 import type { EndPointCb } from "./index";
+
 export type RequestPageAction = {
   type: "@@redux-paginator-immutable/REQUEST_PAGE";
   meta: {
@@ -82,4 +83,13 @@ export type FetchItemDataFulFilled = {
     id: string;
   };
 };
-export type Action = RequestPageAction | ReceivePageAction | ResetViewAction | ChangeViewAction | ClearDataAction | FetchCurrentCompanyInfoPending | FetchItemDataPending | FetchItemDataRejected | FetchItemDataFulFilled;
+export type Action =
+RequestPageAction |
+ReceivePageAction |
+ResetViewAction |
+ChangeViewAction |
+ClearDataAction |
+FetchCurrentCompanyInfoPending |
+FetchItemDataPending |
+FetchItemDataRejected |
+FetchItemDataFulFilled;
