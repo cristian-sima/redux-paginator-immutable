@@ -8,33 +8,35 @@ const
   rowsPerPage = 50,
   pageSelector = createSelector(
     pagesSelector,
-    (state: State, token: string) => token,
+    (_state: State, token: string) => token,
     (pages: PagesState, token: string) => pages.get(token),
   ),
   getAllResults = createSelector(
     pageSelector,
-    (state : State, token : string, items : any) => items,
+    (_state : State, _token : string, items : any) => items,
     (page : any, items : any) => {
       if (typeof page === "undefined") {
         return Immutable.List();
       }
 
-      return page.get("ids").map((id) => items.get(String(id)));
+      return page.get("ids").map((id : number) => items.get(String(id)));
     },
   ),
   getResultsUpToPage = createSelector(
     pageSelector,
-    (state : State, token : string, items : any) => items,
-    (state : State, token : string, items, target) => target,
-    (state : State, token : string, items, target, perPage) => perPage || rowsPerPage,
-    (page : any, items, target, perPage) => {
+    (_state : State, _token : string, items : any) => items,
+    (_state : State, _token : string, _items: any, target: any) => target,
+    (_state : State, _token : string, _items : any, _target : any, perPage : number) => (
+      perPage || rowsPerPage
+    ),
+    (page : any, items : any, target : any, perPage : any) => {
       if (typeof page === "undefined") {
         return Immutable.List();
       }
 
       const ids = page.get("ids").slice(0, perPage * target);
 
-      return ids.map((id) => items.get(String(id)));
+      return ids.map((id : number) => items.get(String(id)));
     }),
   getCurrentTotalResultsCount = createSelector(
     pageSelector,
@@ -47,8 +49,8 @@ const
     }),
   isPageFetching = createSelector(
     pageSelector,
-    (state : State, token : string, target) => target,
-    (page : any, target) => {
+    (_state : State, _token : string, target : any) => target,
+    (page : any, target : any) => {
       if (typeof page === "undefined") {
         return false;
       }
@@ -57,8 +59,8 @@ const
     }),
   isPageFetched = createSelector(
     pageSelector,
-    (state : State, token : string, target) => target,
-    (page : any, target) => {
+    (_state : State, _token : string, target : any) => target,
+    (page : any, target : any) => {
       if (typeof page === "undefined") {
         return false;
       }
@@ -90,7 +92,7 @@ const
   getPaginators = createSelector(
     getPaginatorPaginations,
     getPaginatorEntities,
-    (list, entities) => ({
+    (list : any, entities : any) => ({
       list,
       entities,
     }),

@@ -1,6 +1,16 @@
 import * as Immutable from "immutable";
+import {
+  REQUEST_PAGE,
+  RECEIVE_PAGE,
+  RESET_VIEW,
+  CHANGE_VIEW,
+  CLEAR_DATA,
+  FETCH_CURRENT_COMPANY_INFO_PENDING,
+  FETCH_ITEM_DATA_PENDING,
+  FETCH_ITEM_DATA_REJECTED,
+  FETCH_ITEM_DATA_FULFILLED,
+} from "./actionTypes";
 import type { ItemsState, PagesState, Action } from "./types";
-import { REQUEST_PAGE, RECEIVE_PAGE, RESET_VIEW, CHANGE_VIEW, CLEAR_DATA, FETCH_CURRENT_COMPANY_INFO_PENDING, FETCH_ITEM_DATA_PENDING, FETCH_ITEM_DATA_REJECTED, FETCH_ITEM_DATA_FULFILLED } from "./actionTypes";
 import * as reducerItemData from "./reducerItemData";
 import * as reducerOperations from "./reducerOperations";
 
