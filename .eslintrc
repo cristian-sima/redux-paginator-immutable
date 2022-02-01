@@ -4,10 +4,11 @@
     "es6": true,
     "jest": true
   },
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "eslint:all",
-    'plugin:react/recommended'
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "settings": {
    "react": {
