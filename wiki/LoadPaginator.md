@@ -34,7 +34,6 @@ type LoadPaginatorPropTypes = {
   resetView: (token : string) => void;
 
   loadData: (page : number) => void;
-  changeFilter: (filter : string) => (event : { target : { value : string } }) => void;
 };
 
 # Example:
@@ -70,11 +69,11 @@ where the render method of `List` is:
       </thead>
       <tbody>
         {
-          this.props.items.map((entitiy, index) => (
+          this.props.items.map((entity, index) => (
             <Row
-              data={entitiy}
+              data={entity}
               index={index}
-              key={entitiy.get("ID")}
+              key={entity.get("ID")}
             />
           ))
         }

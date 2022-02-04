@@ -33,6 +33,18 @@ type LoadPaginatorPropTypes = {
   loadData: (page: number) => void;
 };
 
+type List = {
+  token: string;
+  settings: Settings;
+  paginator: any;
+  changeView: (info: {
+    token: string;
+    view: number;
+  }) => void;
+  resetView: (token: string) => void;
+  loadData: (page: number) => void;
+}
+
 const
   mapStateToProps = (state : any, { token, settings }: OwnProps) => {
     const
@@ -168,7 +180,7 @@ class LoadPaginator extends Component<LoadPaginatorPropTypes> {
 
     return (
       <>
-        {React.cloneElement(this.props.children as React.ReactElement<any>, {
+        {React.cloneElement(this.props.children as React.ReactElement<List>, {
            token: this.props.token,
            settings: this.props.settings,
            paginator: this.props.paginator,
