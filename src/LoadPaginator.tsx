@@ -4,7 +4,6 @@ import * as Immutable from "immutable";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
-import { createSubscription } from "create-subscription";
 import selectors from "./selectors";
 import LoadingButton from "./LoadingButton";
 import words from "./words";
@@ -79,15 +78,15 @@ const
     loadData (page : any) {
       dispatch(settings.requestPage(page, token));
     },
-  }), ;
+  });
 
 
 // new
 
-
-/* eslint-disable  */
+/* eslint-disable */
 class LoadPaginator extends Component<LoadPaginatorPropTypes> {
-  handleLoadMoreClick: () => void;
+
+  handleLoadMoreClick: () => any;
 
   componentDidMount () {
     const

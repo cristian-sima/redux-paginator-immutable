@@ -43,7 +43,8 @@ const
     settings,
   }: OwnProps) => ({
     fetchItem () {
-      dispatch(fetchItemAction({ ...settings,
+      dispatch(fetchItemAction({
+        ...settings,
         id,
       }));
     },

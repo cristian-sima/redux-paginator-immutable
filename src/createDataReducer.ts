@@ -11,20 +11,22 @@ import type { PaginatorSettings } from "./types";
 const
   createDataReducer = ({ key }: PaginatorSettings) => {
     const
-      getItems = (state: any) => state.getIn(["entities", key]),
+      getItems = (state: any) : any => (
+        state.getIn(["entities", key])
+      ),
       getItem = createSelector(
         getItems,
-        (_state : any, id : number) => id,
-        (data, id) => data.get(id) || Immutable.Map(),
+        (_state : any, id : string) => id,
+        (data : any, id : string) : any => data.get(id) || Immutable.Map(),
       ),
       getItemsList = createSelector(
         getItems,
-        (data) => data.map((current : any) => current.get("Data")).toList(),
+        (data : any) => data.map((current : any) => current.get("Data")).toList(),
       ),
       getItemData = createSelector(
         getItems,
-        (_state : any, id : number) => id,
-        (data, id) => {
+        (_state : any, id : string) => id,
+        (data : any, id : string) : any => {
           if (typeof data === "undefined") {
             return Immutable.Map();
           }
@@ -34,7 +36,7 @@ const
       ),
       getItemHasError = createSelector(
         getItem,
-        (data : any) => {
+        (data : any) : boolean => {
           if (typeof data === "undefined") {
             return false;
           }
@@ -44,7 +46,7 @@ const
       ),
       getIsFetchingItemInfo = createSelector(
         getItem,
-        (data : any) => {
+        (data : any) : boolean => {
           if (typeof data === "undefined") {
             return false;
           }
@@ -54,7 +56,7 @@ const
       ),
       getItemIsFetched = createSelector(
         getItem,
-        (data : any) => {
+        (data : any) : boolean => {
           if (typeof data === "undefined") {
             return false;
           }
@@ -62,11 +64,23 @@ const
           return data.get("fetched");
         },
       ),
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       getShouldFetchItemInfo = createSelector(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         getIsFetchingItemInfo,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         getItemIsFetched,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         getItemHasError,
-        (isFetching, isFetched, hasError) => !isFetched && !isFetching && !hasError,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        (isFetching : boolean, isFetched : boolean, hasError : boolean) : boolean => (
+          !isFetched && !isFetching && !hasError
+        ),
       );
 
     return {

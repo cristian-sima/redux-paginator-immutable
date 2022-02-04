@@ -10,7 +10,7 @@ var config = {
   module: {
     loaders: [
       {
-        test    : /\.jsx?$/u,
+        test    : /\.tsx?$/u,
         use     : ["babel-loader"],
         include : pathModule.join(__dirname, "lib"),
       },
