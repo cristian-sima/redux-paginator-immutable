@@ -180,14 +180,16 @@ class LoadPaginator extends Component<LoadPaginatorPropTypes> {
 
     return (
       <>
-        {React.cloneElement(this.props.children as React.ReactElement<List>, {
-           token: this.props.token,
-           settings: this.props.settings,
-           paginator: this.props.paginator,
-           changeView: this.props.changeView,
-           resetView: this.props.resetView,
-           loadData: this.props.loadData
-        })}
+        {
+        React.cloneElement(this.props.children as React.ReactElement<List>, {
+            token: this.props.token,
+            settings: this.props.settings,
+            paginator: this.props.paginator,
+            changeView: this.props.changeView,
+            resetView: this.props.resetView,
+            loadData: this.props.loadData
+          })
+         }
         {
           showLoading ? (
             <LoadingButton
