@@ -9,12 +9,12 @@ export type PromiseAction = Promise<Action>;
 export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
 export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;
 export type EndPointCb = ((token?: string) => string) | null;
+
+
 export type PaginatorSettings = {
   key: string;
   manageEntity: any;
   resultsKey: string;
-  dataItemURL: string;
-  normalizeDataItem: any;
   // by default "{rowsPerLoad} from x25/utility/others"
   rowsPerLoad?: number;
   // by default "(items) => items"
@@ -25,4 +25,7 @@ export type PaginatorSettings = {
   pageArgName?: string;
   // default "ID"
   idKey?: string;
+
+  dataItemURL?: string;
+  normalizeDataItem?: any;
 };
