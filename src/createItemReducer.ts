@@ -9,14 +9,14 @@ import type { PaginatorSettings } from "./types";
 const createReducer = ({ key }: PaginatorSettings) => {
   const
     getItems = (state: any) => state.getIn(["entities", key]),
-    getItem = createSelector(
+    getItem : (state : any, id : string) => any = createSelector(
       getItems,
-      (_state : any, id : any) => id,
-      (data : any, id : any) => data.get(id),
+      (_state : any, id : string) => id,
+      (data : any, id : string) => data.get(id),
     ),
     getItemsList = createSelector(
       getItems,
-      (data) => data.toList(),
+      (data : any) => data.toList(),
     );
 
   return {
