@@ -22,7 +22,7 @@ type OwnProps = {
 };
 type LoadPaginatorPropTypes = {
   token: string;
-  children: any;
+  children: React.ReactElement<any>;
   settings: Settings;
   paginator: any;
   changeView: (info: {
@@ -31,11 +31,6 @@ type LoadPaginatorPropTypes = {
   }) => void;
   resetView: (token: string) => void;
   loadData: (page: number) => void;
-  changeFilter: (filter: string) => (event: {
-    target: {
-      value: string;
-    };
-  }) => void;
 };
 
 const
@@ -173,7 +168,14 @@ class LoadPaginator extends Component<LoadPaginatorPropTypes> {
 
     return (
       <>
-        {React.cloneElement(this.props.children, this.props)}
+        {React.cloneElement(this.props.children as React.ReactElement<any>, {
+           token: this.props.token,
+           settings: this.props.settings,
+           paginator: this.props.paginator,
+           changeView: this.props.changeView,
+           resetView: this.props.resetView,
+           loadData: this.props.loadData
+        })}
         {
           showLoading ? (
             <LoadingButton
