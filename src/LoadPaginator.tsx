@@ -1,8 +1,7 @@
 
-import React, { Component } from "react";
+import React, { useEffect, useMemo } from "react";
 import * as Immutable from "immutable";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
 import selectors from "./selectors";
 import LoadingButton from "./LoadingButton";
@@ -15,10 +14,6 @@ type Settings = {
   resetView: (data: any) => void;
   changeView: (data: any) => void;
   requestPage: (page: string, token: string) => any;
-};
-type OwnProps = {
-  token: string;
-  settings: Settings;
 };
 type LoadPaginatorPropTypes = {
   token: string;
@@ -46,126 +41,80 @@ type List = {
 }
 
 const
-  mapStateToProps = (state : any, { token, settings }: OwnProps) => {
+  LoadPaginator = (props : LoadPaginatorPropTypes) => {
     const
-      { list, entities } = selectors.getPaginators(state, settings.key),
-      currentPage = selectors.getCurrentView(list, token),
-      isFetching = selectors.isPageFetching(list, token, currentPage),
-      isFetched = selectors.isPageFetched(list, token, currentPage),
-      isNextFetching = selectors.isPageFetching(list, token, currentPage + 1),
-      isNextFetched = selectors.isPageFetched(list, token, currentPage + 1),
-      // eslint-disable-next-line max-len
-      resultsUpTo = selectors.getResultsUpToPage(list, token, entities, currentPage, settings.rowsPerLoad),
-      items = settings.manipulateItems(resultsUpTo),
-      total = selectors.getCurrentTotalResultsCount(list, token),
-      // currentPage was previously given to the following function
-      hasProblems = selectors.hasPageProblems(list, token),
-      shouldLoadNext = !isNextFetched && !isNextFetching;
+      { token, settings } = props,
 
-    return {
-      paginator: Immutable.Map({
-        currentPage,
-        hasProblems,
-        isFetched,
-        isFetching,
-        items,
-        shouldLoadNext,
-        total,
-      }),
-    };
-  },
-  mapDispatchToProps = (dispatch : any, {
-    token,
-    settings,
-  }: OwnProps) => ({
-    ...bindActionCreators({
-      resetView  : settings.resetView,
-      changeView : settings.changeView,
-    }, dispatch),
-    loadData (page : any) {
-      dispatch(settings.requestPage(page, token));
-    },
-  });
+      { list, entities } = useSelector((state : never) => (
+        selectors.getPaginators(state, settings.key)
+      )),
 
+      paginator = useMemo(() => {
+        const
+          currentPage = selectors.getCurrentView(list, token),
+          isFetching = selectors.isPageFetching(list, token, currentPage),
+          isFetched = selectors.isPageFetched(list, token, currentPage),
+          isNextFetching = selectors.isPageFetching(list, token, currentPage + 1),
+          isNextFetched = selectors.isPageFetched(list, token, currentPage + 1),
+          // eslint-disable-next-line max-len
+          resultsUpTo = selectors.getResultsUpToPage(list, token, entities, currentPage, settings.rowsPerLoad),
+          items = settings.manipulateItems(resultsUpTo),
+          total = selectors.getCurrentTotalResultsCount(list, token),
+          // currentPage was previously given to the following function
+          hasProblems = selectors.hasPageProblems(list, token),
+          shouldLoadNext = !isNextFetched && !isNextFetching;
 
-// new
-
-/* eslint-disable */
-class LoadPaginator extends Component<LoadPaginatorPropTypes> {
-
-  handleLoadMoreClick: () => any;
-
-  componentDidMount () {
-    const
-      { paginator, loadData } = this.props,
-      isFetched = paginator.get("isFetched"),
-      isFetching = paginator.get("isFetching"),
-      currentPage = paginator.get("currentPage"),
-      shouldFetch = !isFetched && !isFetching;
-
-    if (shouldFetch) {
-      loadData(currentPage);
-    }
-  }
-
-  UNSAFE_componentWillReceiveProps (nextProps : LoadPaginatorPropTypes) {
-    const
-      { loadData, paginator } = nextProps,
-      isFetched = paginator.get("isFetched"),
-      isFetching = paginator.get("isFetching"),
-      currentPage = paginator.get("currentPage"),
-      shouldFetch = !isFetched && !isFetching;
-
-    if (shouldFetch) {
-      loadData(currentPage);
-    }
-  }
-
-  constructor (props: LoadPaginatorPropTypes) {
-    super(props);
-
-    this.handleLoadMoreClick = () => {
-      const
-        { paginator, token, changeView, loadData } = this.props,
-        currentPage = paginator.get("currentPage"),
-        hasProblems = paginator.get("hasProblems"),
-        shouldLoadNext = paginator.get("shouldLoadNext");
-
-      if (hasProblems) {
-        loadData(currentPage);
-      } else {
-        changeView({
-          token,
-          view: currentPage + 1,
+        return Immutable.Map({
+          currentPage,
+          hasProblems,
+          isFetched,
+          isFetching,
+          items,
+          shouldLoadNext,
+          total,
         });
+      }, [list, entities]),
 
-        if (shouldLoadNext) {
-          loadData(currentPage + 1);
-        }
-      }
-    };
-  }
+      dispatch = useDispatch(),
+      resetView = (data : any) => dispatch(settings.resetView(data)),
+      changeView = (data : any) => dispatch(settings.changeView(data)),
+      loadData = (page : any) => dispatch(settings.requestPage(page, token)),
 
-  shouldComponentUpdate (nextProps: LoadPaginatorPropTypes) {
-    return this.props.paginator !== nextProps.paginator;
-  }
-
-  componentWillUnmount () {
-    this.props.resetView(this.props.token);
-  }
-
-  render () {
-    const
-      { paginator } = this.props,
       items = paginator.get("items"),
       hasProblems = paginator.get("hasProblems"),
       currentPage = paginator.get("currentPage"),
       isFetching = paginator.get("isFetching"),
-      total = paginator.get("total"),
-      isEmpty = items.size === 0,
-      showLoading = total !== items.size;
+      showLoading = paginator.get("total") !== items.size,
 
-    if (isEmpty && isFetching) {
+      isFetched = paginator.get("isFetched"),
+      shouldFetch = !isFetched && !isFetching,
+      handleLoadMoreClick = () => {
+        const
+          shouldLoadNext = paginator.get("shouldLoadNext");
+
+        if (hasProblems) {
+          loadData(currentPage);
+        } else {
+          changeView({
+            token,
+            view: currentPage + 1,
+          });
+
+          if (shouldLoadNext) {
+            loadData(currentPage + 1);
+          }
+        }
+      };
+
+    useEffect(() => {
+      if (shouldFetch) {
+        loadData(currentPage);
+      }
+
+      return () => resetView(token);
+    }, [shouldFetch, paginator]);
+
+    if (items.size === 0 && isFetching) {
       return <LoadingMessage message={words.LoadingData} />;
     }
 
@@ -173,7 +122,7 @@ class LoadPaginator extends Component<LoadPaginatorPropTypes> {
       return (
         <LargeErrorMessage
           message={words.ThereWasAProblem}
-          onRetry={this.handleLoadMoreClick}
+          onRetry={handleLoadMoreClick}
         />
       );
     }
@@ -181,28 +130,26 @@ class LoadPaginator extends Component<LoadPaginatorPropTypes> {
     return (
       <>
         {
-        React.cloneElement(this.props.children as React.ReactElement<List>, {
-            token: this.props.token,
-            settings: this.props.settings,
-            paginator: this.props.paginator,
-            changeView: this.props.changeView,
-            resetView: this.props.resetView,
-            loadData: this.props.loadData
+          React.cloneElement(props.children as React.ReactElement<List>, {
+            token      : props.token,
+            settings   : props.settings,
+            paginator  : props.paginator,
+            changeView : props.changeView,
+            resetView  : props.resetView,
+            loadData   : props.loadData,
           })
-         }
+        }
         {
           showLoading ? (
             <LoadingButton
               hasProblems={hasProblems}
               isFetching={isFetching}
-              onLoadMoreClick={this.handleLoadMoreClick}
+              onLoadMoreClick={handleLoadMoreClick}
             />
           ) : null
         }
       </>
     );
-  }
+  };
 
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoadPaginator);
+export default LoadPaginator;
