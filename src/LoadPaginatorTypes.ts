@@ -4,7 +4,7 @@ type Settings = {
     manipulateItems: (items: any) => any;
     resetView: (data: any) => any;
     changeView: (data: any) => any;
-    requestPage: (page: string, token: string) => any;
+    requestPage: (page: number, token: string) => any;
 };
 export type LoadPaginatorPropTypes = {
     token: string;

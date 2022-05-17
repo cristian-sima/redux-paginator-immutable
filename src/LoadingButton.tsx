@@ -8,33 +8,23 @@ type LoadingButtonPropTypes = {
 };
 import words from "./words";
 
-class LoadingButton extends React.Component<LoadingButtonPropTypes> {
+const LoadingButton = (props : LoadingButtonPropTypes) => {
+  const { isFetching, hasProblems, onLoadMoreClick } = props;
 
-  shouldComponentUpdate (nextProps: LoadingButtonPropTypes) {
-    const { hasProblems, isFetching } = this.props;
-
-    return hasProblems !== nextProps.hasProblems || isFetching !== nextProps.isFetching;
-  }
-
-  render () {
-    const { isFetching, hasProblems, onLoadMoreClick } = this.props;
-
-    return (
-      <div className="text-center my-2">
-        {hasProblems ? <ErrorMessage message={words.ThereWasAProblem} /> : null}
-        {isFetching ? <LoadingMessage message={words.LoadingData} sm /> : (
-          <button
-            className="btn btn-outline-info d-print-none"
-            disabled={isFetching}
-            onClick={onLoadMoreClick}
-            type="button">
-            {isFetching ? words.LoadingData : words.LoadMore}
-          </button>
-        )}
-      </div>
-    );
-  }
-
-}
+  return (
+    <div className="text-center my-2">
+      {hasProblems ? <ErrorMessage message={words.ThereWasAProblem} /> : null}
+      {isFetching ? <LoadingMessage message={words.LoadingData} sm /> : (
+        <button
+          className="btn btn-outline-info d-print-none"
+          disabled={isFetching}
+          onClick={onLoadMoreClick}
+          type="button">
+          {isFetching ? words.LoadingData : words.LoadMore}
+        </button>
+      )}
+    </div>
+  );
+};
 
 export default LoadingButton;
