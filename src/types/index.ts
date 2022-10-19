@@ -15,7 +15,7 @@ export type PaginatorSettings = {
   key: string;
   manageEntity: any;
   resultsKey: string;
-  // by default "{rowsPerLoad} from x25/utility/others"
+  // by default 25 per page
   rowsPerLoad?: number;
   // by default "(items) => items"
   manipulateItems?: (items: any) => any;

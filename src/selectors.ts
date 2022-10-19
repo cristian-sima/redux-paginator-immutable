@@ -5,7 +5,7 @@ import type { State, PagesState } from "./types";
 const
   pagesSelector = (state: State) => state,
 
-  rowsPerPage = 50,
+  rowsPerPage = 25,
   pageSelector = createSelector(
     pagesSelector,
     (_state: State, token: string) => token,
