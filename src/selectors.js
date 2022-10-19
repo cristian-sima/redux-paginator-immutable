@@ -8,7 +8,7 @@ import { createSelector } from "reselect";
 
 const pagesSelector = (state : State) => state;
 
-const rowsPerPage = 25;
+export const rowsPerPage = 25;
 
 const pageSelector = createSelector(
   pagesSelector,
@@ -32,7 +32,7 @@ const getResultsUpToPage = createSelector(
   pageSelector,
   (state, token, items) => items,
   (state, token, items, target) => target,
-  (state, token, items, target, perPage) => perPage || rowsPerPage,
+  (state, token, items, target, perPage) => perPage,
   (page, items, target, perPage) => {
     if (typeof page === "undefined") {
       return Immutable.List();

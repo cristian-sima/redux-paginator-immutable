@@ -21,7 +21,7 @@ export type PaginatorSettings = {
   dataItemURL: string;
   normalizeDataItem: any;
 
-  // by default "{rowsPerLoad} from x25/utility/others"
+  // by default 25
   rowsPerLoad?: number;
 
   // by default "(items) => items"

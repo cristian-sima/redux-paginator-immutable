@@ -38,7 +38,7 @@ import actions from "./actions";
 
 import * as Immutable from "immutable";
 
-import { rowsPerLoad as defaultRowsPerLoad } from "x25/utility/others";
+import { rowsPerPage as defaultRowsPerLoad } from "./selectors";
 
 export const onlyForEndpoint : OnlyForEndpoint = (endpoint, reducer) => (
   (state = Immutable.Map(), action) => {
