@@ -4,8 +4,6 @@ import type { State, PagesState } from "./types";
 
 const
   pagesSelector = (state: State) => state,
-
-  rowsPerPage = 25,
   pageSelector = createSelector(
     pagesSelector,
     (_state: State, token: string) => token,
@@ -27,7 +25,7 @@ const
     (_state : State, _token : string, items : any) => items,
     (_state : State, _token : string, _items: any, target: any) => target,
     (_state : State, _token : string, _items : any, _target : any, perPage : number) => (
-      perPage || rowsPerPage
+      perPage
     ),
     (page : any, items : any, target : any, perPage : any) => {
       if (typeof page === "undefined") {

@@ -1,6 +1,7 @@
 /* eslint-disable max-lines-per-function,  */
 
-import { rowsPerLoad as defaultRowsPerLoad } from "x25/utility/others";
+const defaultRowsPerLoad = 25;
+
 import * as Immutable from "immutable";
 import { pages as pagesReducer, items as itemsReducer, dataItems as dataItemsReducer } from "./reducers";
 import actions from "./actions";
