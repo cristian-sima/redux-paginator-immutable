@@ -8,7 +8,7 @@ import { createSelector } from "reselect";
 
 const pagesSelector = (state : State) => state;
 
-const rowsPerPage = 50;
+const rowsPerPage = 25;
 
 const pageSelector = createSelector(
   pagesSelector,

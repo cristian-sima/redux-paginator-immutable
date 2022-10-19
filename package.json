@@ -1,6 +1,6 @@
 {
   "name": "redux-paginator-immutable",
-  "version": "2.7.12",
+  "version": "2.7.13",
   "description": "redux-paginator-immutable helps you deal with paginated API by composing your existing reducers",
   "main": "./lib/index.js",
   "babel": {
@@ -39,7 +39,7 @@
     "check": "npm-check -u -i babel-jest -i jest --specials=bin,eslint,babel,webpack",
     "flow": "flow check --color=always",
     "eslint": "eslint --ext .jsx,.js src --fix",
-    "prepublish": "npm run test && npm run eslint && npm run flow && npm run clean && npm run build",
+    "load": "npm run test && npm run eslint  && npm run clean && npm run build && npm publish",
     "test": "mocha --require babel-core/register --recursive --recursive \"src/**/__tests__/*\" --require src/__tests__/setup.js",
     "test:watch": "npm test -- --watch",
     "test:cov": "babel-node ./node_modules/isparta/bin/isparta cover ./node_modules/mocha/bin/_mocha -- --recursive \"src/**/__tests__/*\" --require src/__tests__/setup.js",
