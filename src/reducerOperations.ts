@@ -9,13 +9,10 @@ import type {
 } from "./types";
 
 const requestPage = (state: PagesState, action: RequestPageAction) => {
-    const {
-        payload: {
-          token,
-          page,
-        },
-      } = action,
-      elements = Immutable.Map({
+    const
+      { payload: { token, page } } = action,
+      // it is the type any because ts apparently has a problem
+      elements : any = Immutable.Map({
         page,
         error    : false,
         fetching : true,
