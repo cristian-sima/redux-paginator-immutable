@@ -6,8 +6,7 @@ type InfoPropTypes = {
 };
 
 import React from "react";
-import { words as x25Words } from "x25/utility";
-import words from "./words";
+import { words } from "x25/utility";
 
 const
   getNumberForm = (value: number, one: string, all: string): string => {
@@ -15,7 +14,7 @@ const
       return `1 ${one}`;
     }
 
-    return `${x25Words.getNumberTense(value)} ${all}`;
+    return `${words.getNumberTense(value)} ${all}`;
   },
 
   Info = ({ shown, total, one, all }: InfoPropTypes) => (

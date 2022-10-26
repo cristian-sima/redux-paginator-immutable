@@ -6,7 +6,7 @@ type LoadingButtonPropTypes = {
   hasProblems: boolean;
   onLoadMoreClick: () => void;
 };
-import words from "./words";
+import { words } from "x25/utility";
 
 const LoadingButton = (props : LoadingButtonPropTypes) => {
   const { isFetching, hasProblems, onLoadMoreClick } = props;

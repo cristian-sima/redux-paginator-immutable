@@ -22,8 +22,8 @@ type OwnProps = {
 };
 import { connect } from "react-redux";
 import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
+import { words } from "x25/utility";
 import { fetchItem as fetchItemAction } from "./actions";
-import words from "./words";
 
 const
   mapStateToProps = (state: any, {

@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import * as Immutable from "immutable";
 import { useDispatch, useSelector } from "react-redux";
 import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
+import { words } from "x25/utility";
 import selectors from "./selectors";
 import LoadingButton from "./LoadingButton";
-import words from "./words";
 
 import { ChangeView, List, LoadData, LoadPaginatorPropTypes, ResetView } from "./LoadPaginatorTypes";
 
