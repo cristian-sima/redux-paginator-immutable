@@ -1,6 +1,6 @@
 {
   "name": "redux-paginator-immutable",
-  "version": "17.0.38",
+  "version": "17.0.39",
   "types": "./lib/index.d.ts",
   "description": "redux-paginator-immutable helps you deal with paginated API by composing your existing reducers",
   "main": "./lib/index.js",
@@ -110,6 +110,6 @@
     "redux": "^4.2.0",
     "reselect": "^4.1.6",
     "superagent": "^7.1.3",
-    "x25": "^17.2.32"
+    "x25": "^17.3.2"
   }
 }
