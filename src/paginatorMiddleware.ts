@@ -1,8 +1,8 @@
 /* eslint-disable no-console, max-lines-per-function */
-import type { Dispatch, Action } from "./types";
 import { REQUEST_PAGE } from "./actionTypes";
 import actions from "./actions";
 import { fetchPage } from "./agent";
+import { Action, Dispatch } from "./types";
 
 const
   { receivePage } = actions,

@@ -1,20 +1,40 @@
-/* global __dirname, module */
-
-'use strict'
-
-var pathModule = require("path");
-var webpack = require('webpack');
+var webpack = require('webpack')
 var env = process.env.NODE_ENV
 
 var config = {
   module: {
-    loaders: [
+    rules: [
       {
-        test    : /\.tsx?$/u,
-        use     : ["babel-loader"],
-        include : pathModule.join(__dirname, "lib"),
+        test    : /\.(j|t)s(x)?$/u,
+        exclude : /node_modules/u,
+        use     : {
+          loader: "ts-loader",
+        },
       },
-    ]
+
+      {
+        test : /\.scss$/u,
+        use  : ["style-loader", "css-loader", "sass-loader"],
+      },
+      {
+        test : /\.css$/u,
+        use  : ["style-loader", "css-loader"],
+      },
+      {
+
+        test : /\.(jpe?g|svg|png|gif|ico|eot|ttf|woff2?)(\?v=\d+\.\d+\.\d+)?$/ui,
+        type : "asset/resource",
+      },
+    ],
+  },
+  resolve: {
+    alias: {
+      "react-loadable":"@docusaurus/react-loadable",
+    },
+    extensions: [".js", ".json", ".ts", ".tsx"],
+    modules: [
+      "node_modules",
+    ],
   },
   output: {
     library: 'ReactPaginator',
@@ -26,12 +46,7 @@ var config = {
         "NODE_ENV": JSON.stringify("development"),
       },
     }),
-    new webpack.DefinePlugin({
-      "process.env": {
-        "BABEL_ENV": JSON.stringify("developmentTime"),
-      },
-    })
-  ]
+  ],
 }
 
 if (env === 'production') {
@@ -45,10 +60,6 @@ if (env === 'production') {
       "process.env": {
         "BABEL_ENV": JSON.stringify("production"),
       },
-    }),
-    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /ro/),
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: false,
     }),
   )
 }

@@ -1,12 +1,6 @@
 import * as Immutable from "immutable";
-import type {
-  ItemsState,
-  PagesState,
-  Action,
-  ReceivePageAction,
-  ChangeViewAction,
-  RequestPageAction,
-} from "./types";
+import { Action } from "redux";
+import { PagesState, RequestPageAction, ReceivePageAction, ChangeViewAction, ItemsState } from "./types";
 
 const requestPage = (state: PagesState, action: RequestPageAction) => {
     const

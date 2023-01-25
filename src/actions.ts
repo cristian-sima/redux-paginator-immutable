@@ -1,7 +1,6 @@
 
 import agent from "superagent";
-
-import type { Action, EndPointCb } from "./types";
+import { EndPointCb, Action } from "./types";
 
 type RequestPageArgsTypes = {
   endpoint: string;

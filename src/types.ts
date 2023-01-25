@@ -1,4 +1,39 @@
-import type { EndPointCb } from "./index";
+export type PagesState = any;
+export type ItemsState = any;
+export type State = {
+    readonly pages: PagesState;
+    readonly itemsReducer: ItemsState;
+};
+
+
+export type GetState = () => State;
+export type PromiseAction = Promise<Action>;
+export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
+export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;
+export type EndPointCb = ((token?: string) => string) | null;
+
+
+export type PaginatorSettings = {
+    key: string;
+    manageEntity: any;
+    resultsKey: string;
+    // by default 25 per page
+    rowsPerLoad?: number;
+    // by default "(items) => items"
+    manipulateItems?: (items: any) => any;
+    // by default "Total"
+    totalKey?: string;
+    // by default "page"
+    pageArgName?: string;
+    // default "ID"
+    idKey?: string;
+
+    dataItemURL?: string;
+    normalizeDataItem?: any;
+};
+
+
+// actions
 
 export type RequestPageAction = {
   type: "@@redux-paginator-immutable/REQUEST_PAGE";

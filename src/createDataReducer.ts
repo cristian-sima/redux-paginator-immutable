@@ -1,7 +1,6 @@
-/* eslint-disable max-lines-per-function,  */
 import { createSelector } from "reselect";
 import * as Immutable from "immutable";
-import type { PaginatorSettings } from "./types";
+import { PaginatorSettings } from "./types";
 
 type Selector = (state : any, id : string) => any;
 type ListSelector = (state : any) => any;

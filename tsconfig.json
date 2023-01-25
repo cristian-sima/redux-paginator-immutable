@@ -1,6 +1,18 @@
 {
-  "exclude": ["./lib/*", "./node_modules/*", "./wiki/*", ".vscode/*"],
-  "include": ["./src/*", "./index.d.ts"],
+  "exclude": [
+    "./lib/*",
+    "./node_modules/*",
+    "./wiki/*",
+    ".vscode/*",
+    "conf",
+    "script",
+    "./src/__tests__/**/*"
+  ],
+  "include": [
+    "./src/**/*",
+    "./index.d.ts",
+    "./node_modules"
+  ],
   "compilerOptions": {
     "allowJs": true,
     "noEmit": false,
@@ -11,11 +23,15 @@
     "module": "commonjs",
     "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
     "noImplicitAny": true,
-    "outDir": "./lib",
+    "outDir": "dist",
     "skipLibCheck": true /* Skip type checking of declaration files. */,
     "strict": true /* Enable all strict type-checking options. */,
-    "target": "es6",
+    "target": "es5",
     "declaration": true,
+    "baseUrl": "./",
+    "types": [
+      "jest",
+    ]
     // Ensure that Babel can safely transpile files in the TypeScript project
     // "paths": {
     //   "src/*": [ "./client/_config/*" ],

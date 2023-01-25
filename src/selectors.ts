@@ -1,6 +1,6 @@
 import * as Immutable from "immutable";
 import { createSelector } from "reselect";
-import type { State, PagesState } from "./types";
+import { State, PagesState } from "./types";
 
 const
   pagesSelector = (state: State) => state,

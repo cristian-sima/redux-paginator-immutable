@@ -1,4 +1,5 @@
 import * as Immutable from "immutable";
+import { Action, PagesState, ItemsState } from "./types";
 
 import {
   REQUEST_PAGE,
@@ -12,9 +13,9 @@ import {
   FETCH_ITEM_DATA_FULFILLED,
 } from "./actionTypes";
 
-import type { ItemsState, PagesState, Action } from "./types";
 import * as reducerItemData from "./reducerItemData";
 import * as reducerOperations from "./reducerOperations";
+
 
 export const
   pages = (state: PagesState = Immutable.Map(), action: Action) => {

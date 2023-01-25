@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import type { PaginatorSettings } from "./types";
+import { PaginatorSettings } from "./types";
 
 /*
   Use to create a simple list where you do not need more information about
