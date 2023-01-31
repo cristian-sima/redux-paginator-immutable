@@ -20,10 +20,10 @@ const
       id,
     },
   }: {
-  meta: {
-    id: string;
-  };
-}) => (
+    meta: {
+      id: string;
+    };
+  }) => (
     state.update(id, (current : any) => {
       if (typeof current === "undefined") {
         return defaultOptions;
@@ -37,10 +37,10 @@ const
       id,
     },
   }: {
-  meta: {
-    id: string;
-  };
-}) => state.update(id, (current : any) => {
+    meta: {
+      id: string;
+    };
+  }) => state.update(id, (current : any) => {
     if (typeof current === "undefined") {
       return current;
     }

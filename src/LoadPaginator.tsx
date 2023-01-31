@@ -91,9 +91,9 @@ const
         {
           showLoading ? (
             <LoadingButton
+              fetchMore={handleLoadMoreClick}
               hasProblems={hasProblems}
               isFetching={isFetching}
-              onLoadMoreClick={handleLoadMoreClick}
             />
           ) : null
         }

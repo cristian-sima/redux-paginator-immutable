@@ -1,13 +1,18 @@
 {
     "cSpell.words": [
+        "camelcase",
         "codecov",
         "endpointed",
         "immutablejs",
         "isparta",
         "jsxdev",
+        "linebreak",
+        "multilines",
         "Normalizr",
         "Paginations",
-        "Paginators"
+        "Paginators",
+        "paren",
+        "parens"
     ],
     "files.exclude": {
         "**/.git": true,

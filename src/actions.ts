@@ -97,9 +97,9 @@ const requestPage = ({
     token,
     view,
   }: {
-  token: string;
-  view: number;
-}): Action => ({
+    token: string;
+    view: number;
+  }): Action => ({
     type : "@@redux-paginator-immutable/CHANGE_VIEW",
     meta : {
       endpoint,

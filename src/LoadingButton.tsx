@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable no-useless-constructor */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable react/sort-comp */
 import React from "react";
 import { ErrorMessage, LoadingMessage } from "x25/Messages";
 import { useInView } from "react-intersection-observer";
@@ -5,40 +9,59 @@ import { useInView } from "react-intersection-observer";
 type LoadingButtonPropTypes = {
   isFetching: boolean;
   hasProblems: boolean;
-  onLoadMoreClick: () => void;
+  fetchMore: () => void;
 };
 import { words } from "x25/utility";
 
-const LoadingButton = (props : LoadingButtonPropTypes) => {
-  const
-    { isFetching, hasProblems, onLoadMoreClick } = props,
-    [ref, inView] = useInView({
-    // /* Optional options */
-    // triggerOnce: true,
-    // rootMargin: '0px 0px',
-    });
+class ErrorBoundary extends React.Component {
+  constructor (props : any) {
+    super(props);
+  }
 
-  React.useEffect(() => {
-    if (!isFetching && !hasProblems && inView) {
-      onLoadMoreClick();
-    }
-  }, [isFetching, hasProblems, inView]);
+  componentDidCatch () {
+  }
 
-  return (
-    <div className="text-center my-2">
-      {hasProblems ? <ErrorMessage message={words.ThereWasAProblem} /> : null}
-      {isFetching ? <LoadingMessage message={words.LoadingData} sm /> : (
-        <button
-          className="btn btn-outline-info d-print-none"
-          disabled={isFetching}
-          onClick={onLoadMoreClick}
-          ref={ref}
-          type="button">
-          {isFetching ? words.LoadingData : words.LoadMore}
-        </button>
-      )}
-    </div>
+  static getDerivedStateFromError () {
+    return { hasError: true };
+  }
+
+  render () {
+    return this.props.children;
+  }
+}
+
+const
+  LoadingButton = (props : LoadingButtonPropTypes) => {
+    const
+      { isFetching, hasProblems, fetchMore } = props,
+      [ref, inView] = useInView({ });
+
+    React.useEffect(() => {
+      if (!isFetching && !hasProblems && inView) {
+        fetchMore();
+      }
+    }, [isFetching, hasProblems, inView]);
+
+    return (
+      <div className="text-center my-2">
+        {hasProblems ? <ErrorMessage message={words.ThereWasAProblem} /> : null}
+        {isFetching ? <LoadingMessage message={words.LoadingData} sm /> : (
+          <button
+            className="btn btn-link d-print-none"
+            disabled={isFetching}
+            onClick={fetchMore}
+            ref={ref}
+            type="button">
+            {isFetching ? words.LoadingData : words.LoadMore}
+          </button>
+        )}
+      </div>
+    );
+  },
+  Loading = (props : LoadingButtonPropTypes) => (
+    <ErrorBoundary>
+      <LoadingButton {...props} />
+    </ErrorBoundary>
   );
-};
 
-export default LoadingButton;
+export default Loading;

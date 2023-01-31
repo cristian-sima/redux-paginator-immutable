@@ -5,15 +5,21 @@
     "browser": true
   },
   "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error"
+    ],
+    "import/no-named-as-default-member": 0,
+    "react/jsx-no-bind": 0,
+    "complexity": 0,
+    "no-warning-comments": 0,
     "semi": [
       "error"
     ],
-    "indent": [
+    "indent": "off",
+    "@typescript-eslint/indent": [
       "error",
-      2,
-      {
-        "SwitchCase": 1
-      }
+      2
     ],
     "quotes": [
       "error",
@@ -24,10 +30,7 @@
       "error",
       "global"
     ],
-    "max-len": [
-      "error",
-      105
-    ],
+    "max-len": 0,
     "new-cap": [
       2,
       {
@@ -42,7 +45,10 @@
         ]
       }
     ],
-    "one-var": ["error", "consecutive"],
+    "one-var": [
+      "error",
+      "consecutive"
+    ],
     "camelcase": [
       "error",
       {
@@ -53,7 +59,7 @@
     ],
     "max-lines": [
       2,
-      450
+      600
     ],
     "sort-keys": [
       "off"
@@ -179,6 +185,12 @@
     "object-curly-newline": [
       "off"
     ],
+    "object-property-newline": [
+      2,
+      {
+        "allowAllPropertiesOnSameLine": true
+      }
+    ],
     "@typescript-eslint/no-this-alias": 0,
     "object-curly-spacing": [
       "error",
@@ -252,7 +264,8 @@
       "consistent"
     ],
     "react/destructuring-assignment": 0,
-    "react/jsx-curly-brace-presence": [      2,
+    "react/jsx-curly-brace-presence": [
+      2,
       {
         "props": "never",
         "children": "ignore"
@@ -283,7 +296,6 @@
         "blankLine": "any"
       }
     ],
-    "react/jsx-no-bind": 0,
     "react/jsx-one-expression-per-line": 0,
     "react/no-adjacent-inline-elements": 0,
     "react/jsx-closing-bracket-location": 0,
@@ -292,10 +304,8 @@
     "@typescript-eslint/no-use-before-define": [
       "error"
     ],
-    "import/no-unresolved": 0,
     "import/newline-after-import": 2,
     "import/order": 2
-    
   },
   "parser": "@typescript-eslint/parser",
   "extends": [
@@ -303,7 +313,6 @@
     "plugin:react/all",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended"
   ],
   "plugins": [
@@ -316,12 +325,19 @@
       "pragma": "React",
       "version": "detect"
     },
-     "import/resolver": {
-       "node": {
-         "extensions": [".js",".jsx",".ts",".tsx", ".json"]
-       }
-     },
-    "import/extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
+    },
+    "import/resolver": {
+      "typescript": {
+        "project": [
+          "./tsconfig.json"
+        ]
+      }
+    }
   },
   "parserOptions": {
     "sourceType": "module",

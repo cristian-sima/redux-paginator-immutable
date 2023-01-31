@@ -55,8 +55,8 @@ export const
       );
 
     return promise.then((res: {
-    body: any;
-  }) => ({
+      body: any;
+    }) => ({
       response: res.body,
     }));
   };
