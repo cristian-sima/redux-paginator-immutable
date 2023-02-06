@@ -13,36 +13,32 @@ type LoadingButtonPropTypes = {
   fetchMore: () => void;
 };
 
-class ErrorBoundary extends React.Component {
-  constructor (props : any) {
-    super(props);
-  }
-
-  componentDidCatch () {
-  }
-
-  static getDerivedStateFromError () {
-    return { hasError: true };
-  }
-
-  render () {
-    return this.props.children;
-  }
-}
-
 const
   LoadingButton = (props: LoadingButtonPropTypes) => {
     const
       { isFetching, hasProblems, fetchMore } = props,
-      [ref, inView] = useInView({}),
-      [fetchMoreCalled, setFetchMoreCalled] = React.useState(false);
+      [ref, inView] = useInView({ });
 
     React.useEffect(() => {
-      if (!isFetching && !hasProblems && inView && !fetchMoreCalled) {
+      if (!isFetching && !hasProblems && inView) {
         fetchMore();
-        setFetchMoreCalled(true);
       }
-    }, [isFetching, hasProblems, inView, fetchMoreCalled, fetchMore]);
+
+    }, [isFetching, hasProblems, inView]);
+
+    return (
+      <button
+        className="btn btn-link d-print-none"
+        disabled={isFetching}
+        onClick={fetchMore}
+        ref={ref}
+        type="button" >
+        {isFetching ? words.LoadingData : words.LoadMore}
+      </button>
+    );
+  },
+  LoadingWrapper = (props: LoadingButtonPropTypes) => {
+    const { isFetching, hasProblems } = props;
 
     return (
       <div className="text-center my-2">
@@ -52,22 +48,10 @@ const
         {isFetching ? (
           <LoadingMessage message={words.LoadingData} sm />
         ) : (
-          <button
-            className="btn btn-link d-print-none"
-            disabled={isFetching}
-            onClick={fetchMore}
-            ref={ref}
-            type="button" >
-            {isFetching ? words.LoadingData : words.LoadMore}
-          </button>
+          <LoadingButton {...props} />
         )}
       </div>
     );
-  },
-  Loading = (props : LoadingButtonPropTypes) => (
-    <ErrorBoundary>
-      <LoadingButton {...props} />
-    </ErrorBoundary>
-  );
+  };
 
-export default Loading;
+export default LoadingWrapper;

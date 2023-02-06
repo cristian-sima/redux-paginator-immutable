@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
 import * as Immutable from "immutable";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
 import { words } from "x25/utility";
-import selectors from "./selectors";
 import LoadingButton from "./LoadingButton";
+import selectors from "./selectors";
 
 import { ChangeView, List, LoadData, LoadPaginatorPropTypes, ResetView } from "./LoadPaginatorTypes";
 
@@ -77,7 +77,7 @@ const
     }
 
     return (
-      <>
+      <div className="mb-3">
         {
           React.cloneElement(props.children as React.ReactElement<List>, {
             token    : props.token,
@@ -97,7 +97,7 @@ const
             />
           ) : null
         }
-      </>
+      </div>
     );
   };
 
