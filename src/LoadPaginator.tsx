@@ -43,7 +43,7 @@ const
 
       showLoading = paginator.get("total") !== items.size,
 
-      shouldFetch = !isFetched && !isFetching,
+      shouldFetch = !isFetched && !isFetching && !props.preventFetching,
       handleLoadMoreClick = () => {
         if (hasProblems) {
           loadData(currentPage);
@@ -63,7 +63,20 @@ const
 
     useEffect(() => () => resetView(token), []);
 
-    if (items.size === 0 && isFetching) {
+    if (props.preventAutoLoading) {
+      return (
+        React.cloneElement(props.children as React.ReactElement<List>, {
+          token    : props.token,
+          settings : props.settings,
+          paginator,
+          changeView,
+          resetView,
+          loadData,
+        })
+      );
+    }
+
+    if (items.size === 0 && (isFetching || !isFetched)) {
       return <LoadingMessage message={words.LoadingData} />;
     }
 
@@ -89,7 +102,7 @@ const
           })
         }
         {
-          showLoading ? (
+          showLoading && !props.preventAutoLoading ? (
             <LoadingButton
               fetchMore={handleLoadMoreClick}
               hasProblems={hasProblems}

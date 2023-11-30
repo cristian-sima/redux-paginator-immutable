@@ -29,9 +29,7 @@
     "target": "es5",
     "declaration": true,
     "baseUrl": "./",
-    "types": [
-      "jest",
-    ]
+    "types": []
     // Ensure that Babel can safely transpile files in the TypeScript project
     // "paths": {
     //   "src/*": [ "./client/_config/*" ],

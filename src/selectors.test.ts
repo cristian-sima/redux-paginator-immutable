@@ -1,22 +1,11 @@
 /* eslint-disable max-len, no-undefined, max-lines-per-function, no-magic-numbers */
 
-import chai, { expect } from "chai";
-import chaiImmutable from "chai-immutable";
-
-chai.use(chaiImmutable);
-
 import * as Immutable from "immutable";
-import selectors from "../selectors";
+import { describe, expect, test } from "vitest";
+import selectors from "./selectors";
 
 const
-  {
-    getCurrentTotalResultsCount,
-    getAllResults,
-    getResultsUpToPage,
-    isPageFetched,
-    isPageFetching,
-    getCurrentView,
-  } = selectors,
+  { getCurrentTotalResultsCount, getAllResults, getResultsUpToPage, isPageFetched, isPageFetching, getCurrentView } = selectors,
   paginator = Immutable.Map({
     "foo=bar": Immutable.Map({
       page  : 3,
@@ -47,7 +36,7 @@ const
       total    : 17,
       view     : 1,
     }),
-  }),
+  }) as any,
 
   items = Immutable.Map({
     "1": Immutable.Map({
@@ -90,9 +79,9 @@ const
 
 describe("selectors", () => {
 
-  it("getAllResults should select all the items ids for pages with same params than the current page", () => {
+  test("getAllResults should select all the items ids for pages with same params than the current page", () => {
     expect(getAllResults(paginator, "foo=bar", items)).
-      to.equal(Immutable.List([
+      toEqual(Immutable.List([
         Immutable.Map({
           data : "foo1",
           id   : 1,
@@ -120,9 +109,9 @@ describe("selectors", () => {
       ]));
   });
 
-  it("getResultsUpToPage should select all the items ids for pages with same params than the current page", () => {
+  test("getResultsUpToPage should select all the items ids for pages with same params than the current page", () => {
     expect(getResultsUpToPage(paginator, "foo=bar", items, 2, 2)).
-      to.equal(Immutable.List([
+      toEqual(Immutable.List([
         Immutable.Map({
           data : "foo1",
           id   : 1,
@@ -142,39 +131,39 @@ describe("selectors", () => {
       ]));
   });
 
-  it("getCurrentTotalResultsCount should return the total count for the current params of the provided name", () => {
+  test("getCurrentTotalResultsCount should return the total count for the current params of the provided name", () => {
     expect(getCurrentTotalResultsCount(paginator, "foo=bar")).
-      to.equal(42);
+      toEqual(42);
   });
 
-  it("getCurrentTotalResultsCount should return 0 if current page url is undefined for the provided name", () => {
+  test("getCurrentTotalResultsCount should return 0 if current page url is undefined for the provided name", () => {
     expect(getCurrentTotalResultsCount(paginator, "name3")).
-      to.equal(0);
+      toEqual(0);
   });
 
-  it("isPageFetching should return whether the current page is fetching or not for the provided name", () => {
+  test("isPageFetching should return whether the current page is fetching or not for the provided name", () => {
     expect(isPageFetching(paginator, "foo=bar", 1)).
-      to.equal(false);
+      toEqual(false);
   });
 
-  it("isPageFetched should return whether the current page is fetched or not for the provided name", () => {
+  test("isPageFetched should return whether the current page is fetched or not for the provided name", () => {
     expect(isPageFetched(paginator, "foo=bar", 1)).
-      to.equal(true);
+      toEqual(true);
   });
 
-  it("isPageFetched should return whether the current page is fetched or not for the provided name", () => {
+  test("isPageFetched should return whether the current page is fetched or not for the provided name", () => {
     expect(isPageFetched(paginator, "foo=bar", 4)).
-      to.equal(false);
+      toEqual(false);
   });
 
-  it("getCurrentView should return 1 if there is no view point", () => {
+  test("getCurrentView should return 1 if there is no view point", () => {
     expect(getCurrentView(paginator, "foo=bat")).
-      to.equal(1);
+      toEqual(1);
   });
 
-  it("getCurrentView should return the value if it exists", () => {
+  test("getCurrentView should return the value if it exists", () => {
     expect(getCurrentView(paginator, "foo=bar")).
-      to.equal(2);
+      toEqual(2);
   });
 
 });

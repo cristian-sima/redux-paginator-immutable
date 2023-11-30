@@ -7,8 +7,8 @@ type FetchPageArgs = {
   token: string;
 };
 
-import agent from "superagent";
 import qs from "query-string";
+import agent from "superagent";
 
 export const
   buildSuffix = (pageArgName: string, page: number, params: string) => {

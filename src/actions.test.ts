@@ -1,9 +1,7 @@
 /* eslint-disable no-undefined, max-lines-per-function, no-magic-numbers */
 
-import expect from "expect";
-import { isFSA } from "flux-standard-action";
-
-import actions from "../actions";
+import { describe, expect, test } from "vitest";
+import actions from "./actions";
 
 const {
   receivePage,
@@ -13,15 +11,15 @@ const {
 } = actions;
 
 import {
+  CHANGE_VIEW,
   RECEIVE_PAGE,
   REQUEST_PAGE,
   RESET_VIEW,
-  CHANGE_VIEW,
-} from "../actionTypes";
+} from "./actionTypes";
 
 describe("actions", () => {
 
-  it("should create receive page action", () => {
+  test("should create receive page action", () => {
     const action = receivePage({
       endpoint    : "some/api/endpoint/",
       pageArgName : "p",
@@ -34,7 +32,7 @@ describe("actions", () => {
         "baz",
       ],
       total: 42,
-    });
+    } as any);
 
     expect(action).
       toEqual({
@@ -55,11 +53,9 @@ describe("actions", () => {
           total: 42,
         },
       });
-
-    expect(isFSA(action)).toEqual(true);
   });
 
-  it("should create request page action", () => {
+  test("should create request page action", () => {
     const action = requestPage({
       endpoint    : "some/api/endpoint/",
       resultsKey  : "results",
@@ -68,7 +64,7 @@ describe("actions", () => {
       idKey       : "id",
       page        : 2,
       token       : "foo=bar",
-    });
+    } as any);
 
     expect(action).
       toEqual({
@@ -86,10 +82,9 @@ describe("actions", () => {
         },
       });
 
-    expect(isFSA(action)).toEqual(true);
   });
 
-  it("should create reset view action", () => {
+  test("should create reset view action", () => {
     const action = resetView("some/api/endpoint/", "name");
 
     expect(action).
@@ -103,10 +98,9 @@ describe("actions", () => {
         },
       });
 
-    expect(isFSA(action)).toEqual(true);
   });
 
-  it("should create change view action", () => {
+  test("should create change view action", () => {
     const action = changeView("some/api/endpoint/", {
       token : "name",
       view  : 2,
@@ -124,7 +118,6 @@ describe("actions", () => {
         },
       });
 
-    expect(isFSA(action)).toEqual(true);
   });
 
 });

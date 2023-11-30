@@ -1,26 +1,21 @@
 /* eslint-disable max-len, no-undefined, no-magic-numbers */
 
-import expect from "expect";
 
-import actions from "../actions";
-import {
-  // onlyForEndpoint,
-  createPaginator,
-} from "../createPaginator";
+import { describe, expect, test } from "vitest";
+import actions from "./actions";
+import { createPaginator } from "./createPaginator";
 
-const {
-  requestPage,
-} = actions;
+const { requestPage } = actions;
 
 describe("createPaginator", () => {
 
-  it("should create correct request action creator", () => {
+  test("should create correct request action creator", () => {
     const paginator = createPaginator("some/api/endpoint", {
         pageArgName : "p",
         idKey       : "id_field",
         resultsKey  : "results",
         totalKey    : "count",
-      }),
+      } as any),
       action = paginator.requestPage(42, "foo=bar");
 
     expect(action).
@@ -33,7 +28,7 @@ describe("createPaginator", () => {
         idKey       : "id_field",
         page        : 42,
         token       : "foo=bar",
-      }));
+      } as any));
   });
 
 });

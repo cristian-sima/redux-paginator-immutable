@@ -7,6 +7,9 @@ type Settings = {
   requestPage: (page: number, token: string) => any;
 };
 export type LoadPaginatorPropTypes = {
+  preventAutoLoading?: boolean;
+  preventFetching?: boolean;
+
   token: string;
   settings: Settings;
   children: JSX.Element;

@@ -1,4 +1,8 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
+import { words } from "x25/utility";
+import { fetchItem as fetchItemAction } from "./actions";
 
 type LoadDataItemPropTypes = {
   isFetching: boolean;
@@ -20,10 +24,6 @@ type OwnProps = {
     normalizeDataItem: any;
   };
 };
-import { connect } from "react-redux";
-import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
-import { words } from "x25/utility";
-import { fetchItem as fetchItemAction } from "./actions";
 
 const
   mapStateToProps = (state: any, {
@@ -67,7 +67,11 @@ const
     }, [shouldFetch, isFetching, hasError]);
 
     if (isFetching) {
-      return <LoadingMessage message={words.LoadingData} />;
+      return (
+        <div className="text-center">
+          <LoadingMessage message={words.LoadingData} />
+        </div>
+      );
     }
 
     if (hasError) {
