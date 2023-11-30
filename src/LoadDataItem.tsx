@@ -5,14 +5,14 @@ import { words } from "x25/utility";
 import { fetchItem as fetchItemAction } from "./actions";
 
 type LoadDataItemPropTypes = {
-  isFetching: boolean;
-  fetched: boolean;
-  id: string;
-  hasError: boolean;
-  data: any;
-  children: React.ReactNode;
-  shouldFetch: any;
-  fetchItem: () => void;
+  readonly isFetching: boolean;
+  readonly fetched: boolean;
+  readonly id: string;
+  readonly hasError: boolean;
+  readonly data: any;
+  readonly children: React.ReactNode;
+  readonly shouldFetch: any;
+  readonly fetchItem: () => void;
 };
 type OwnProps = {
   id: string;

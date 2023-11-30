@@ -1,8 +1,8 @@
 type InfoPropTypes = {
-  shown: number;
-  total: number;
-  one: string;
-  all: string;
+  readonly shown: number;
+  readonly total: number;
+  readonly one: string;
+  readonly all: string;
 };
 
 import React from "react";

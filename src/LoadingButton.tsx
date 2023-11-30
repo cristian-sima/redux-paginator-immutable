@@ -8,9 +8,9 @@ import { ErrorMessage, LoadingMessage } from "x25/Messages";
 import { words } from "x25/utility";
 
 type LoadingButtonPropTypes = {
-  isFetching: boolean;
-  hasProblems: boolean;
-  fetchMore: () => void;
+  readonly isFetching: boolean;
+  readonly hasProblems: boolean;
+  readonly fetchMore: () => void;
 };
 
 const
