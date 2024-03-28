@@ -1,22 +1,14 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { LargeErrorMessage, LoadingMessage } from "x25/Messages";
+import { useDispatch, useSelector } from "react-redux";
+import { ErrorMessage, LargeErrorMessage, LoadingMessage } from "x25/Messages";
 import { words } from "x25/utility";
 import { fetchItem as fetchItemAction } from "./actions";
 
 type LoadDataItemPropTypes = {
-  readonly isFetching: boolean;
-  readonly fetched: boolean;
+  readonly sm?: boolean;
   readonly id: string;
-  readonly hasError: boolean;
-  readonly data: any;
   readonly children: React.ReactNode;
-  readonly shouldFetch: any;
-  readonly fetchItem: () => void;
-};
-type OwnProps = {
-  id: string;
-  settings: {
+  readonly settings: {
     selectors: any;
     dataItemURL: string;
     endpoint: string;
@@ -25,48 +17,53 @@ type OwnProps = {
   };
 };
 
-const
-  mapStateToProps = (state: any, {
-    settings: {
-      selectors,
-    },
-    id,
-  }: OwnProps) => ({
-    data        : selectors.getItem(state, id),
-    hasError    : selectors.getItemHasError(state, id),
-    fetched     : selectors.getItemIsFetched(state, id),
-    isFetching  : selectors.getIsFetchingItemInfo(state, id),
-    shouldFetch : selectors.getShouldFetchItemInfo(state, id),
-  }),
-  mapDispatchToProps = (dispatch: any, {
-    id,
-    settings,
-  }: OwnProps) => ({
-    fetchItem () {
-      dispatch(fetchItemAction({
-        ...settings,
-        id,
-      }));
-    },
-  }),
-
+const 
   LoadDataItem = (props: LoadDataItemPropTypes) : any => {
-    const {
-      children,
-      data,
-      isFetching,
-      shouldFetch,
-      hasError,
-      fetchItem,
-    } = props;
+    const 
+      { settings, id } = props,
+      { selectors } = settings,
+      data        = useSelector((state) => selectors.getItem(state, id)),
+      hasError    = useSelector((state) => selectors.getItemHasError(state, id)),
+      isFetched     = useSelector((state) => selectors.getItemIsFetched(state, id)),
+      isFetching  = useSelector((state) => selectors.getIsFetchingItemInfo(state, id)),
+      shouldFetch = useSelector((state) => selectors.getShouldFetchItemInfo(state, id)),
+      isLoading = (
+        isFetching || 
+        data.size === 0 ||
+        !isFetched
+      ),
+      dispatch = useDispatch(),
+      fetchItem = () => {
+        dispatch(fetchItemAction({
+          ...settings,
+          id,
+        // eslint-disable-next-line no-empty-function
+        })).catch(() => {});
+      };
 
     React.useEffect(() => {
       if (shouldFetch) {
         fetchItem();
       }
-    }, [shouldFetch, isFetching, hasError]);
+    }, [shouldFetch]);
 
-    if (isFetching) {
+    if (hasError) {
+      if (props.sm) {
+        return (
+          <ErrorMessage message={(
+            <i className="fa fa fa-exclamation-triangle text-warning" />
+          ) as unknown as any} />
+        );
+      }
+
+      return <LargeErrorMessage message={words.ThereWasAProblem} onRetry={fetchItem} />;
+    }
+
+    if (isLoading) {
+      if (props.sm) {
+        return <LoadingMessage sm />;
+      }
+
       return (
         <div className="text-center">
           <LoadingMessage message={words.LoadingData} />
@@ -74,15 +71,8 @@ const
       );
     }
 
-    if (hasError) {
-      return <LargeErrorMessage message={words.ThereWasAProblem} onRetry={fetchItem} />;
-    }
 
-    if (data.size === 0) {
-      return null;
-    }
-
-    return children;
+    return props.children;
   };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoadDataItem);
+export default LoadDataItem;

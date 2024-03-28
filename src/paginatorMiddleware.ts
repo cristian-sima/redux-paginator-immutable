@@ -77,10 +77,9 @@ const
               items : results,
               total,
             }));
-          }).
-            catch(() => {
-              markAsError();
-            });
+          }).catch(() => {
+            markAsError();
+          });
         } catch (err) {
           markAsError();
         }

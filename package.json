@@ -1,6 +1,6 @@
 {
     "name": "redux-paginator-immutable",
-    "version": "17.1.14",
+    "version": "17.1.25",
     "description": "redux-paginator-immutable",
     "types": "./dist/index.d.ts",
     "scripts": {
