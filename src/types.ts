@@ -6,9 +6,9 @@ export type State = {
 };
 
 
-export type GetState = () => State;
-export type PromiseAction = Promise<Action>;
-export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
+type GetState = () => State;
+type PromiseAction = Promise<Action>;
+type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
 export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;
 export type EndPointCb = ((token?: string) => string) | null;
 
@@ -79,7 +79,7 @@ export type ChangeViewAction = {
     token: string;
   };
 };
-export type ResetViewAction = {
+type ResetViewAction = {
   type: "@@redux-paginator-immutable/RESET_VIEW";
   meta: {
     endpoint: string;
@@ -88,28 +88,28 @@ export type ResetViewAction = {
     token: string;
   };
 };
-export type ClearDataAction = {
+type ClearDataAction = {
   type: "@@redux-paginator-immutable/CLEAR_DATA";
   meta: {
     endpoint: string;
   };
 };
-export type FetchCurrentCompanyInfoPending = {
+type FetchCurrentCompanyInfoPending = {
   type: "FETCH_CURRENT_COMPANY_INFO_PENDING";
 };
-export type FetchItemDataPending = {
+type FetchItemDataPending = {
   type: "@@redux-paginator-immutable/FETCH_ITEM_DATA_PENDING";
   meta: {
     id: string;
   };
 };
-export type FetchItemDataRejected = {
+type FetchItemDataRejected = {
   type: "@@redux-paginator-immutable/FETCH_ITEM_DATA_REJECTED";
   meta: {
     id: string;
   };
 };
-export type FetchItemDataFulFilled = {
+type FetchItemDataFulFilled = {
   type: "@@redux-paginator-immutable/FETCH_ITEM_DATA_FULFILLED";
   payload: {
     Data: any;

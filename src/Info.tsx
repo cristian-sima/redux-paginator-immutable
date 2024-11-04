@@ -19,9 +19,12 @@ const
 
   Info = ({ shown, total, one, all }: InfoPropTypes) => (
     <div className="text-muted">
-      {`${words.Showing} `}
-      {shown === total ? `${words.All} - ` : `${shown} ${words.Of}`}
-      {` ${getNumberForm(total, one, all)}`}
+      <span className="d-none d-lg-inline-block me-1">
+        {`${words.Showing} `}
+        {shown === total ? `${words.All} - ` : `${shown}`}
+        {` ${words.Of} `}
+      </span>
+      {`${getNumberForm(total, one, all)}`}
     </div>
   );
 

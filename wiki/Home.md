@@ -2,7 +2,7 @@ Welcome to the redux-paginator-immutable wiki!
 
 The module exports:
 - `<Info ...props />`
-- `<LoadingButtton ...props />`
+- `<LoadingButton ...props />`
 - `<LoadPaginator ...props />`
 - `createPaginator`
 - `paginatorMiddleware`

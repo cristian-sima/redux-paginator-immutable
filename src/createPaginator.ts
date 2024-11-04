@@ -1,8 +1,8 @@
 const defaultRowsPerLoad = 25;
 
 import * as Immutable from "immutable";
-import { pages as pagesReducer, items as itemsReducer, dataItems as dataItemsReducer } from "./reducers";
 import actions from "./actions";
+import { dataItems as dataItemsReducer, items as itemsReducer, pages as pagesReducer } from "./reducers";
 import { PaginatorSettings } from "./types";
 
 type EndpointData = {
@@ -19,27 +19,27 @@ type Action = {
 }
 
 const getEndpoint = (data: Endpoint) => {
-  if (typeof data === "object") {
+    if (typeof data === "object") {
+      return {
+        path : data.path,
+        cb   : data.cb,
+      };
+    }
+
     return {
-      path : data.path,
-      cb   : data.cb,
+      path : data,
+      cb   : null,
     };
-  }
-
-  return {
-    path : data,
-    cb   : null,
-  };
-};
-
-export const
+  },
   onlyForEndpoint = (endpoint : string, reducer : any) => (state = Immutable.Map(), action : Action) => {
     if (typeof action.meta === "undefined" || action.meta.endpoint !== endpoint) {
       return state;
     }
 
     return reducer(state, action);
-  },
+  };
+
+export const
   createPaginator = (endpointData: Endpoint, settings: PaginatorSettings) => {
     const
       {

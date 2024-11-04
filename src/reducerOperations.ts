@@ -1,6 +1,6 @@
 import * as Immutable from "immutable";
 import { Action } from "redux";
-import { PagesState, RequestPageAction, ReceivePageAction, ChangeViewAction, ItemsState } from "./types";
+import { ChangeViewAction, ItemsState, PagesState, ReceivePageAction, RequestPageAction } from "./types";
 
 const requestPage = (state: PagesState, action: RequestPageAction) => {
     const
@@ -89,4 +89,4 @@ const requestPage = (state: PagesState, action: RequestPageAction) => {
     return state.merge(newItems);
   };
 
-export { requestPage, receivePage, performChangeView, changeView, resetView, receivePageItems };
+export default { requestPage, receivePage, performChangeView, changeView, resetView, receivePageItems };

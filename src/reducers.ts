@@ -1,20 +1,20 @@
 import * as Immutable from "immutable";
-import { Action, PagesState, ItemsState } from "./types";
+import { Action, ItemsState, PagesState } from "./types";
 
 import {
-  REQUEST_PAGE,
-  RECEIVE_PAGE,
-  RESET_VIEW,
   CHANGE_VIEW,
   CLEAR_DATA,
   FETCH_CURRENT_COMPANY_INFO_PENDING,
+  FETCH_ITEM_DATA_FULFILLED,
   FETCH_ITEM_DATA_PENDING,
   FETCH_ITEM_DATA_REJECTED,
-  FETCH_ITEM_DATA_FULFILLED,
+  RECEIVE_PAGE,
+  REQUEST_PAGE,
+  RESET_VIEW,
 } from "./actionTypes";
 
 import * as reducerItemData from "./reducerItemData";
-import * as reducerOperations from "./reducerOperations";
+import { default as reducerOperations } from "./reducerOperations";
 
 
 export const
