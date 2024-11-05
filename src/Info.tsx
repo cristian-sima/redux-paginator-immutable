@@ -18,11 +18,11 @@ const
   },
 
   Info = ({ shown, total, one, all }: InfoPropTypes) => (
-    <div className="text-muted">
-      <span className="d-none d-lg-inline-block me-1">
-        {`${words.Showing} `}
-        {shown === total ? `${words.All} - ` : `${shown}`}
-        {` ${words.Of} `}
+    <div className="text-muted no-wrap">
+      <span className="fw-light">
+        <span className="d-none d-lg-inline-block me-1">
+          {shown === total ? `${words.All} ` : `${words.Showing} ${shown} ${words.Of} `}
+        </span>
       </span>
       {`${getNumberForm(total, one, all)}`}
     </div>
