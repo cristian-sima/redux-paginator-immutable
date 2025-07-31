@@ -21,7 +21,7 @@ const
     <div className="text-muted no-wrap">
       <span className="fw-light">
         <span className="d-none d-lg-inline-block me-1">
-          {shown === total ? `${words.All} ` : `${words.Showing} ${shown} ${words.Of} `}
+          {shown === total ? "" : `${words.Showing} ${shown} ${words.Of} `}
         </span>
       </span>
       {`${getNumberForm(total, one, all)}`}
