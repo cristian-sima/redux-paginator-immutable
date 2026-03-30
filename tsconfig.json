@@ -10,8 +10,7 @@
   ],
   "include": [
     "./src/**/*",
-    "./index.d.ts",
-    "./node_modules"
+    "./index.d.ts"
   ],
   "compilerOptions": {
     "allowJs": true,
@@ -20,16 +19,17 @@
     "forceConsistentCasingInFileNames": true, /* Disallow inconsistently-cased references to the same file. */
     "jsx": "react",
     "sourceMap": true,
-    "module": "commonjs",
-    "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
+    "module": "esnext",
+    "moduleResolution": "bundler" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
     "noImplicitAny": true,
     "outDir": "dist",
     "skipLibCheck": true /* Skip type checking of declaration files. */,
     "strict": true /* Enable all strict type-checking options. */,
-    "target": "es5",
+    "target": "es6",
+    "lib": ["es2016", "dom"],
     "declaration": true,
     "baseUrl": "./",
-    "types": []
+    "types": ["node"]
     // Ensure that Babel can safely transpile files in the TypeScript project
     // "paths": {
     //   "src/*": [ "./client/_config/*" ],
