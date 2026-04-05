@@ -1,6 +1,6 @@
 {
     "name": "redux-paginator-immutable",
-    "version": "18.0.0",
+    "version": "19.0.1",
     "type": "module",
     "description": "redux-paginator-immutable",
     "main": "./index.js",
@@ -11,9 +11,8 @@
         "load-beta": "npm run intern-pre && npm run ts && npm run intern-copy && npm publish ./dist --tag beta",
         "eslint": "eslint --ext .tsx,.ts src --fix",
         "intern-pre": "npm run knip && npm run eslint && npm run intern-clean && npm run intern-build",
-        "intern-build-scss": "node-sass --output-style compressed src -o dist",
         "intern-copy": " copy package.json dist",
-        "intern-build": "npm run intern-build-scss",
+        "intern-build": "echo build done",
         "intern-clean": "rimraf dist dist",
         "intern-test": "vitest",
         "check": "npm run depcheck & npm run check:npm-check",
@@ -105,7 +104,6 @@
         "knip": "^5.36.2",
         "npm-check": "^6.0.1",
         "rimraf": "^3.0.2",
-        "sass": "^1.98.0",
         "style-loader": "^3.3.3",
         "trash-cli": "^6.0.0",
         "ts-loader": "^9.5.1",
@@ -116,12 +114,12 @@
     "dependencies": {
         "immutable": "^4.3.4",
         "query-string": "^8.1.0",
-        "react": "^18.3.1",
+        "react": "^19.2.4",
         "react-intersection-observer": "^9.5.3",
         "react-redux": "^9.2.0",
         "redux": "^5.0.1",
         "reselect": "^5.1.1",
         "superagent": "^8.1.2",
-        "x25": "^18.0.1"
+        "x25": "^19.0.0"
     }
 }

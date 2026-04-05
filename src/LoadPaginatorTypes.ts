@@ -1,3 +1,5 @@
+import React from "react";
+
 type Settings = {
   key: string;
   rowsPerLoad: number;
@@ -12,7 +14,7 @@ export type LoadPaginatorPropTypes = {
 
   token: string;
   settings: Settings;
-  children: JSX.Element;
+  children: React.JSX.Element;
 };
 
 export type ChangeView = (info: {

@@ -19,11 +19,23 @@ const
       getItem : Selector = createSelector(
         getItems,
         (_state : any, id : string) => id,
-        (data : any, id : string) : any => data.get(id) || Immutable.Map(),
+        (data : any, id : string) : any => {
+          if (typeof data === "undefined") {
+            return Immutable.Map();
+          }
+
+          return data.get(id) || Immutable.Map();
+        },
       ),
       getItemsList : ListSelector = createSelector(
         getItems,
-        (data : any) => data.map((current : any) => current.get("Data")).toList(),
+        (data : any) => {
+          if (typeof data === "undefined") {
+            return Immutable.List();
+          }
+
+          return data.map((current : any) => current.get("Data")).toList();
+        },
       ),
       getItemData : Selector = createSelector(
         getItems,
