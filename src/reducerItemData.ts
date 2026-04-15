@@ -29,7 +29,7 @@ const
         return defaultOptions;
       }
 
-      return current.mergeDeep(defaultOptions);
+      return current.merge(defaultOptions);
     })
   ),
   fetchItemDataRejected = (state: any, {
@@ -45,7 +45,7 @@ const
       return current;
     }
 
-    return current.mergeDeep(Immutable.Map({
+    return current.merge(Immutable.Map({
       fetching : false,
       fetched  : false,
       error    : true,
@@ -63,7 +63,7 @@ const
       return current;
     }
 
-    return current.mergeDeep(Immutable.Map({
+    return current.merge(Immutable.Map({
       Data,
       fetching : false,
       fetched  : true,
