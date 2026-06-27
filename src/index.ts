@@ -9,4 +9,5 @@ export { default as paginatorMiddleware } from "./paginatorMiddleware";
 export { default as reducerOperations } from "./reducerOperations";
 export { default as paginatorSelectors } from "./selectors";
 export { manageDataEntity, manageEntity, manipulateDataItems, manipulateItems } from "./util";
+export type { Fetcher, PaginatorSettings } from "./types";
 

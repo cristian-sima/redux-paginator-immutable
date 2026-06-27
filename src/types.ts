@@ -12,11 +12,18 @@ type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
 export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;
 export type EndPointCb = ((token?: string) => string) | null;
 
+// A custom page fetcher. When provided in PaginatorSettings, the middleware
+// calls it instead of the built-in superagent HTTP request. It must resolve
+// to the same response shape the HTTP endpoint would (resultsKey / totalKey).
+export type Fetcher = (token: string, page: number) => Promise<any>;
+
 
 export type PaginatorSettings = {
   key: string;
   manageEntity: any;
   resultsKey: string;
+  // Optional custom fetcher (non-HTTP transports). Omit to use superagent.
+  fetcher?: Fetcher;
   // by default 25 per page
   rowsPerLoad?: number;
   // by default "(items) => items"

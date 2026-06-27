@@ -10,7 +10,7 @@ type FetchPageArgs = {
 import qs from "query-string";
 import agent from "superagent";
 
-export const
+const
   buildSuffix = (pageArgName: string, page: number, params: string) => {
     const parsedParams = qs.parse(params);
     let finalParsedParams = {},
@@ -37,7 +37,9 @@ export const
     }, {
       encode: false,
     }).replace(startString, "");
-  },
+  };
+
+export const
   fetchPage = ({
     endpoint,
     pageArgName,

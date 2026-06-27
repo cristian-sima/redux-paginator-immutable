@@ -2,6 +2,7 @@ const defaultRowsPerLoad = 25;
 
 import * as Immutable from "immutable";
 import actions from "./actions";
+import { registerFetcher } from "./fetcherRegistry";
 import { dataItems as dataItemsReducer, items as itemsReducer, pages as pagesReducer } from "./reducers";
 import { PaginatorSettings } from "./types";
 
@@ -57,6 +58,7 @@ export const
         idKey = "ID",
         rowsPerLoad = defaultRowsPerLoad,
         manipulateItems = (items) => items,
+        fetcher,
       } = settings,
       endpointedActions = {
         requestPage: (page: number, token: string) => actions.requestPage({
@@ -86,6 +88,10 @@ export const
           return actions.clearData(endpoint);
         },
       };
+
+    if (typeof fetcher === "function") {
+      registerFetcher(endpoint, fetcher);
+    }
 
     return {
       key,
