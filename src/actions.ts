@@ -3,6 +3,7 @@ import agent from "superagent";
 import { EndPointCb, Action } from "./types";
 
 type RequestPageArgsTypes = {
+  key: string;
   endpoint: string;
   endpointCb: EndPointCb;
   manageEntity: any;
@@ -10,6 +11,8 @@ type RequestPageArgsTypes = {
   totalKey: string;
   pageArgName: string;
   idKey: string;
+  cursorKey?: string;
+  cursorArgName: string;
   page: number;
   token: string;
 };
@@ -25,9 +28,11 @@ type ReceivePageArgsTypes = {
   items: Array<any>;
   total: number;
   error: boolean;
+  cursor?: string;
 };
 
 const requestPage = ({
+    key,
     endpoint,
     endpointCb,
     manageEntity,
@@ -35,11 +40,14 @@ const requestPage = ({
     totalKey,
     pageArgName,
     idKey,
+    cursorKey,
+    cursorArgName,
     page,
     token,
   }: RequestPageArgsTypes): Action => ({
     type : "@@redux-paginator-immutable/REQUEST_PAGE",
     meta : {
+      key,
       endpoint,
       endpointCb,
       manageEntity,
@@ -47,6 +55,8 @@ const requestPage = ({
       totalKey,
       pageArgName,
       idKey,
+      cursorKey,
+      cursorArgName,
     },
     payload: {
       page,
@@ -65,6 +75,7 @@ const requestPage = ({
     items,
     error,
     total,
+    cursor,
   }: ReceivePageArgsTypes): Action => ({
     type : "@@redux-paginator-immutable/RECEIVE_PAGE",
     meta : {
@@ -80,6 +91,7 @@ const requestPage = ({
       items,
       error,
       total,
+      cursor,
     },
   }),
 

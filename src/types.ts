@@ -12,28 +12,21 @@ type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
 export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;
 export type EndPointCb = ((token?: string) => string) | null;
 
-// A custom page fetcher. When provided in PaginatorSettings, the middleware
-// calls it instead of the built-in superagent HTTP request. It must resolve
-// to the same response shape the HTTP endpoint would (resultsKey / totalKey).
-export type Fetcher = (token: string, page: number) => Promise<any>;
+export type Fetcher = (token: string, page: number, cursor?: string) => Promise<any>;
 
 
 export type PaginatorSettings = {
   key: string;
   manageEntity: any;
   resultsKey: string;
-  // Optional custom fetcher (non-HTTP transports). Omit to use superagent.
   fetcher?: Fetcher;
-  // by default 25 per page
   rowsPerLoad?: number;
-  // by default "(items) => items"
   manipulateItems?: (items: any) => any;
-  // by default "Total"
   totalKey?: string;
-  // by default "page"
   pageArgName?: string;
-  // default "ID"
   idKey?: string;
+  cursorKey?: string;
+  cursorArgName?: string;
 
   dataItemURL?: string;
   normalizeDataItem?: any;
@@ -45,6 +38,7 @@ export type PaginatorSettings = {
 export type RequestPageAction = {
   type: "@@redux-paginator-immutable/REQUEST_PAGE";
   meta: {
+    key: string;
     endpoint: string;
     endpointCb: EndPointCb;
     manageEntity: any;
@@ -52,6 +46,8 @@ export type RequestPageAction = {
     totalKey: string;
     pageArgName: string;
     idKey: string;
+    cursorKey?: string;
+    cursorArgName: string;
   };
   payload: {
     page: number;
@@ -73,6 +69,7 @@ export type ReceivePageAction = {
     items: Array<any>;
     total: number;
     error: boolean;
+    cursor?: string;
     raw?: string;
   };
 };

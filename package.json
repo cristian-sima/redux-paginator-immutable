@@ -1,6 +1,6 @@
 {
     "name": "redux-paginator-immutable",
-    "version": "19.1.0",
+    "version": "19.2.0",
     "type": "module",
     "description": "redux-paginator-immutable",
     "main": "./index.js",

@@ -5,14 +5,27 @@ type FetchPageArgs = {
   pageArgName: string;
   page: number;
   token: string;
+  cursorArgName: string;
+  cursor?: string;
+};
+
+type BuildSuffixOptions = {
+  pageArgName: string;
+  page: number;
+  params: string;
+  cursorArgName: string;
+  cursor?: string;
 };
 
 import qs from "query-string";
 import agent from "superagent";
 
 const
-  buildSuffix = (pageArgName: string, page: number, params: string) => {
-    const parsedParams = qs.parse(params);
+  buildSuffix = (options: BuildSuffixOptions) => {
+    const
+      { pageArgName, page, params, cursorArgName, cursor } = options,
+      parsedParams = qs.parse(params),
+      cursorParams = cursor === undefined ? {} : { [cursorArgName]: cursor };
     let finalParsedParams = {},
       startString = "";
 
@@ -34,6 +47,7 @@ const
 
     return startString + qs.stringify({ ...finalParsedParams,
       [pageArgName]: page,
+      ...cursorParams,
     }, {
       encode: false,
     }).replace(startString, "");
@@ -45,8 +59,10 @@ export const
     pageArgName,
     page,
     token,
+    cursorArgName,
+    cursor,
   }: FetchPageArgs) => {
-    const suffix = buildSuffix(pageArgName, page, token),
+    const suffix = buildSuffix({ pageArgName, page, params: token, cursorArgName, cursor }),
       url = endpoint + suffix,
       promise: any = new Promise(
         (resolve: any, reject: any) => (

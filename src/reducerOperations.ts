@@ -35,15 +35,22 @@ const requestPage = (state: PagesState, action: RequestPageAction) => {
         items,
         total,
         error,
+        cursor,
       },
     } = action;
 
     if (state.has(token)) {
-      const hasError = error === true;
+      const
+        hasError = error === true,
+        keepsCursor = hasError || cursor === undefined,
+        receivedIds = Immutable.List(items.map((pageMember) => String(pageMember[idKey]))),
+        mergeIds = (page : any) => page.get("ids").concat(receivedIds).toOrderedSet().toList(),
+        pickCursor = (page : any) => (keepsCursor ? page.get("cursor") : cursor);
 
       return state.update(token, (
         (current : any) => current.update((page : any) => current.merge(Immutable.Map({
-          ids      : page.get("ids").concat(Immutable.List(items.map((item) => String(item[idKey])))),
+          ids      : mergeIds(page),
+          cursor   : pickCursor(page),
           fetching : false,
           error    : hasError,
           fetched  : true,

@@ -5,8 +5,23 @@ import { fetchPage } from "./agent";
 import { getFetcher } from "./fetcherRegistry";
 import { Action, Dispatch } from "./types";
 
+type CursorAddress = {
+  key: string;
+  token: string;
+};
+
 const
   { receivePage } = actions,
+
+  readSlice = (container: any, name: string) => (
+    typeof container?.get === "function" ? container.get(name) : container?.[name]
+  ),
+
+  readStoredCursor = (storeState: any, address: CursorAddress): string | undefined => {
+    const pages = readSlice(readSlice(storeState, "paginations"), address.key);
+
+    return pages?.getIn?.([address.token, "cursor"]);
+  },
 
   // (endpoint|page|token) of fetches currently in flight. Guards against a
   // remount / fast-nav race firing the same fetch twice (the pages reducer
@@ -30,7 +45,7 @@ const
     });
   },
 
-  paginatorMiddleware = ({ dispatch }: { dispatch: Dispatch;}) => (next: any) => (action: Action) => {
+  paginatorMiddleware = ({ dispatch, getState }: { dispatch: Dispatch; getState: () => any; }) => (next: any) => (action: Action) => {
     if (action.type === CLEAR_DATA) {
       if (action.meta && typeof action.meta.endpoint === "string") {
         clearEndpoint(action.meta.endpoint);
@@ -42,6 +57,7 @@ const
     if (action.type === REQUEST_PAGE) {
       const {
           meta: {
+            key,
             endpoint,
             endpointCb,
             manageEntity,
@@ -49,6 +65,8 @@ const
             totalKey,
             pageArgName,
             idKey,
+            cursorKey,
+            cursorArgName,
           },
           payload: {
             page,
@@ -56,7 +74,8 @@ const
           },
         } = action,
 
-        dedupeKey = `${endpoint}|${page}|${token}`;
+        dedupeKey = `${endpoint}|${page}|${token}`,
+        storedCursor = page > 1 ? readStoredCursor(getState(), { key, token }) : undefined;
 
       if (!inFlight.has(dedupeKey)) {
         inFlight.add(dedupeKey);
@@ -102,6 +121,8 @@ const
                 total = response[totalKey];
               }
 
+              const nextCursor = cursorKey === undefined ? undefined : response[cursorKey];
+
               dispatch2(receivePage({
                 endpoint,
                 endpointCb,
@@ -109,10 +130,11 @@ const
                 pageArgName,
                 idKey,
                 page,
-                error : false,
+                error  : false,
                 token,
-                items : results,
+                items  : results,
                 total,
+                cursor : nextCursor,
               }));
             },
 
@@ -127,12 +149,14 @@ const
 
           try {
             const run = typeof fetcher === "function"
-              ? fetcher(token, page)
+              ? fetcher(token, page, storedCursor)
               : fetchPage({
                 endpoint: path,
                 pageArgName,
                 page,
                 token,
+                cursorArgName,
+                cursor: storedCursor,
               }).then((res: { response: any; }) => res.response);
 
             run.
