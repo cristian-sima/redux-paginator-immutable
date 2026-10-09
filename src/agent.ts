@@ -25,7 +25,7 @@ const
     const
       { pageArgName, page, params, cursorArgName, cursor } = options,
       parsedParams = qs.parse(params),
-      cursorParams = cursor === undefined ? {} : { [cursorArgName]: cursor };
+      cursorParams = typeof cursor === "undefined" ? {} : { [cursorArgName]: cursor };
     let finalParsedParams = {},
       startString = "";
 

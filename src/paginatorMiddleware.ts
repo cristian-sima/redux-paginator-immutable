@@ -8,6 +8,7 @@ import { Action, Dispatch } from "./types";
 type CursorAddress = {
   key: string;
   token: string;
+  page: number;
 };
 
 const
@@ -18,7 +19,7 @@ const
   ),
 
   readStoredCursor = (storeState: any, address: CursorAddress): string | undefined => {
-    const pages = readSlice(readSlice(storeState, "paginations"), address.key);
+    const pages = address.page > 1 ? readSlice(readSlice(storeState, "paginations"), address.key) : null;
 
     return pages?.getIn?.([address.token, "cursor"]);
   },
@@ -75,7 +76,7 @@ const
         } = action,
 
         dedupeKey = `${endpoint}|${page}|${token}`,
-        storedCursor = page > 1 ? readStoredCursor(getState(), { key, token }) : undefined;
+        storedCursor = readStoredCursor(getState(), { key, token, page });
 
       if (!inFlight.has(dedupeKey)) {
         inFlight.add(dedupeKey);
@@ -121,7 +122,7 @@ const
                 total = response[totalKey];
               }
 
-              const nextCursor = cursorKey === undefined ? undefined : response[cursorKey];
+              const cursorArgs = typeof cursorKey === "string" ? { cursor: response[cursorKey] } : {};
 
               dispatch2(receivePage({
                 endpoint,
@@ -130,11 +131,11 @@ const
                 pageArgName,
                 idKey,
                 page,
-                error  : false,
+                error : false,
                 token,
-                items  : results,
+                items : results,
                 total,
-                cursor : nextCursor,
+                ...cursorArgs,
               }));
             },
 
@@ -151,12 +152,12 @@ const
             const run = typeof fetcher === "function"
               ? fetcher(token, page, storedCursor)
               : fetchPage({
-                endpoint: path,
+                endpoint : path,
                 pageArgName,
                 page,
                 token,
                 cursorArgName,
-                cursor: storedCursor,
+                cursor   : storedCursor,
               }).then((res: { response: any; }) => res.response);
 
             run.

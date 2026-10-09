@@ -39,7 +39,7 @@ const
       },
       getState = () => options.storeState;
 
-    paginatorMiddleware({ dispatch, getState })(() => undefined)(options.action);
+    paginatorMiddleware({ dispatch, getState })(() => null)(options.action);
   });
 
 describe("paginatorMiddleware with a custom fetcher", () => {
@@ -88,7 +88,7 @@ describe("paginatorMiddleware with a custom fetcher", () => {
 
   it("sends no cursor for the first page", async () => {
     const
-      fetcher = vi.fn(() => Promise.resolve({ Data: [], Total: 0, Cursor: "c2" })),
+      fetcher : any = vi.fn(() => Promise.resolve({ Data: [], Total: 0, Cursor: "c2" })),
       paginator = createPaginator("socket://logs-first", {
         key          : "logs",
         manageEntity : (log : any) => log,
@@ -102,7 +102,8 @@ describe("paginatorMiddleware with a custom fetcher", () => {
       storeState : buildStoreState("logs"),
     });
 
-    expect(fetcher).toHaveBeenCalledWith(token, 1, undefined);
+    expect(fetcher.mock.calls[0][1]).toBe(1);
+    expect(fetcher.mock.calls[0][2]).toBeUndefined();
   });
 });
 

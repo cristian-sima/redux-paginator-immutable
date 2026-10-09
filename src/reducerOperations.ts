@@ -42,7 +42,7 @@ const requestPage = (state: PagesState, action: RequestPageAction) => {
     if (state.has(token)) {
       const
         hasError = error === true,
-        keepsCursor = hasError || cursor === undefined,
+        keepsCursor = hasError || typeof cursor === "undefined",
         receivedIds = Immutable.List(items.map((pageMember) => String(pageMember[idKey]))),
         mergeIds = (page : any) => page.get("ids").concat(receivedIds).toOrderedSet().toList(),
         pickCursor = (page : any) => (keepsCursor ? page.get("cursor") : cursor);
